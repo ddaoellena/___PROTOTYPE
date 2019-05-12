@@ -1,0 +1,18 @@
+.circle:hover{
+  stroke-width: 2;
+}
+.people-circle:hover{
+  stroke : #FF83D5;
+}
+.event-circle:hover{
+  stroke : #83E1FF;
+}
+.meme-circle:hover, .link-circle:hover{
+  stroke : #FFFFFF;
+}
+.site-circle:hover{
+  stroke : #FFC683;
+}
+.circle-image{
+  filter: grayscale(100%);
+}

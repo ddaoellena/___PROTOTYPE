@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="./stylesheets/reset.css">
+    <link rel="stylesheet" href="./stylesheets/svg.css">
+    <link rel="stylesheet" href="./stylesheets/main.css">
+  </head>
+  <body>
+    <div class="svg-wrapper" id="svg-wrapper">
+    </div>
+
+    <div class="shadow-div shadow-div-left">
+    </div>
+    <div class="shadow-div shadow-div-right">
+    </div>
+    <div class="info-wrapper shadow-top collapsed" id="info-wrapper">
+      <div class="info-title" id="info-title">
+        <h1 class="title" id="title"></h1>
+      </div>
+      <div class="info-description" id="info-description">
+        <p class="description" id="description"></p>
+      </div>
+      <div class="expand-button h-center pointer" onclick="toggleInfoDiv()">
+        <p></p>
+      </div>
+      <div class="shadow-div shadow-div-info shadow-top">
+      </div>
+    </div>
+    <div class="curtain-div" id="curtain-div">
+    </div>
+  </body>
+  <!-- Assets files -->
+  <script src="./assets/data/links.js" charset="utf-8"></script>
+  <script src="./assets/data/memes.js" charset="utf-8"></script>
+  <script src="./assets/data/people.js" charset="utf-8"></script>
+  <script src="./assets/data/events.js" charset="utf-8"></script>
+  <script src="./assets/data/sites.js" charset="utf-8"></script>
+  <!-- Frameworks files -->
+  <script src="./libs/svg.min.js" charset="utf-8"></script>
+  <script src="./libs/d3.min.js" charset="utf-8"></script>
+  <!-- Main scripts files -->
+  <script src="./scripts/init-functions.js" charset="utf-8"></script>
+  <script src="./scripts/init-svg.js" charset="utf-8"></script>
+  <script src="./scripts/navigation.js" charset="utf-8"></script>
+  <script src="./scripts/generate-content.js" charset="utf-8"></script>
+  <script src="./scripts/functions.js" charset="utf-8"></script>
+</html>
