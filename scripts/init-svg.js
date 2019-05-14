@@ -35,8 +35,12 @@ var r = 1;
 var cw = cw;
 var ch = ch;
 
+function cleanSvg(){
+  var mainSvg = document.getElementById('main-svg');
+  mainSvg.innerHTML = '';
+}
 function drawDotsTimeline(cw, ch) {
-  var group = draw.group().attr({id:'dot-grid'});
+  var group = draw.group().attr({class:'grid dot-grid', id:'dot-grid'});
   for (var x = 20; x < vw; x+=cw) {
     for (var y = 20; y < vh*0.6; y+=ch) {
       var circle = draw.circle(r).attr({fill:'#C4C4C4', cx:x, cy:y});
@@ -47,9 +51,11 @@ function drawDotsTimeline(cw, ch) {
 drawDotsTimeline(20,20);
 
 function drawTimeline(cw){
+  var group = draw.group().attr({class:'timeline', id:'timeline'});
   for (var x = cw; x < vw; x+=cw) {
-    var line = draw.line(0, 0, 0, 20).move(x, vh*0.6);
+    var line = draw.line(0, 0, 0, 20).move(x, vh*0.625);
     line.stroke({color: '#BFBFBF', width : 1});
+    group.add(line);
   }
 }
 drawTimeline(20);
@@ -87,15 +93,15 @@ function addCircle(r, x, y, obj){
     default:
   }
 
-  var circleGroup = draw.group().attr({class:'circle '+circleClass+' pointer', 'onclick':'toggleCircle(this); '+'appendInfo('+obj.toString+');', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
+  var circleGroup = draw.group().attr({class:'circle '+circleClass+' generated pointer','onclick':'toggleCircle(this); '+'appendInfo('+obj.toString+');', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
   var circleBlur = draw.circle(r).attr({fill:circleColor, cx:x, cy:y, filter:'url(#fBlur)'})
   var circle = draw.circle(r).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:x, cy:y});
   /*create clip for images*/
-  var circleClip = draw.circle(r).attr({fill:'#FFFFFF', cx:x, cy:y,});
+  var circleClip = draw.circle(r).attr({fill:'#FFFFFF', cx:x, cy:y});
   var clip = draw.clip().add(circleClip);
   var image = draw.image('./assets/pics/'+folderType+'/'+obj.imgThumbnail, r, r);
-  image.attr({class:'cirle-image',  filter:'url(#fGray)'});
-  image.move(x-r/2, y-  r/2);
+  image.attr({class:'cirle-image', filter:'url(#fGray)'});
+  image.move(x-r/2, y-r/2);
   image.clipWith(clip);
   /*add all elements to same group*/
   circleGroup.add(circleBlur).add(circle).add(image);
@@ -137,7 +143,6 @@ function placeCircle(d){
     case 8:
       return([-disAdj, -disAdj]);
       break;
-
     default:
   }
 };
@@ -145,21 +150,30 @@ function placeCircle(d){
 function addRelatedCircles(obj, pos){
   addRelatedProperty(obj);
   for (var i = 0; i < obj.related.length; i++){
-    var circleGroup = draw.group().attr({class:'link-group'});
+    var circleGroup = draw.group().attr({class:'generated link-group'});
     /* add line */
     var line = draw.line(obj.x, obj.y, obj.x+placeCircle(pos+i)[0], obj.y+placeCircle(pos+i)[1]);
     line.stroke({ color: '#888888', width: 1, linecap: 'round'});
-    /* add circle */
-    addCircle(40, obj.x+placeCircle(pos+i)[0], obj.y+placeCircle(pos+i)[1], obj.related[i]);
     /* add link */
     var circle = draw.circle(12).attr({class:'link-circle pointer', fill:'#C4C4C4', 'fill-opacity':"1", cx:obj.x+(placeCircle(pos+i)[0]/2), cy:obj.y+(placeCircle(pos+i)[1]/2)});
+    circleGroup.add(line).add(circle);
+    /* add circle */
+    addCircle(40, obj.x+placeCircle(pos+i)[0], obj.y+placeCircle(pos+i)[1], obj.related[i]);
   }
 };
-
-addRelatedCircles(trump, 5);
-addRelatedCircles(clinton, 2);
-addCircle(50, trump.x, trump.y, trump);
-addCircle(50, clinton.x, clinton.y, clinton);
+function cleanCircles(){
+  var generatedTags = document.getElementsByClassName('generated');
+  for (var i = 0; i < generatedTags.length; i++) {
+    $('.generated').remove();
+  }
+}
+function addAllCircles(type){
+cleanCircles();
+ for (var i = 0; i < type.length; i++) {
+   addRelatedCircles(type[i], 1);
+   addCircle(50, type[i].x, type[i].y, type[i]);
+ }
+}
 
 /*
 * function toggleAllCircles()
@@ -174,7 +188,6 @@ var circleList = document.getElementsByClassName('circle');
    circleList[i].childNodes[2].setAttribute("filter", "url(#fGray)");
  }
 }
-
 /*
 * function toggleCircle()
 * add active class to the targeted circles and add stroke
@@ -184,7 +197,7 @@ function toggleCircle(el){
 
   el.classList.toggle('active');
 
-  if (el.classList[3] == 'active') {
+  if (el.classList[4] == 'active') {
     switch (el.classList[1]) {
       case 'meme-circle':
           el.setAttribute('stroke', '#FFFFFF');
@@ -222,7 +235,7 @@ function colorOn(el){
 * triggred on mouseleave circle
 */
 function colorOff(el){
-  if (el.classList[3] == 'active') {
+  if (el.classList[4] == 'active') {
     el.childNodes[2].setAttribute("filter", "");
   }
   else{

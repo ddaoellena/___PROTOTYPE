@@ -20,6 +20,107 @@ h1, p{
 .pointer:hover{
   cursor: pointer;
 }
+.people-color{
+  background-color: #FF83D5;
+}
+.events-color{
+  background-color: #83E1FF;
+}
+.memes-color{
+  background-color: #FFFFFF;
+}
+.sites-color{
+  background-color: #FFC683;
+}
+/* -------------------------------*/
+
+/*
+* Fonts
+*/
+@font-face {
+  font-family: 'VG5000-Regular';
+  src: url('../assets/fonts/VG5000-Regular_web.otf');
+}
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans');
+.title{
+  font-family: 'VG5000-Regular';
+  font-size: 2em;
+}
+p{
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.8em;
+  line-height: 1.2em;
+}
+/*
+* menus
+*/
+.menu{
+  position: fixed;
+  top: 10px;
+}
+.menu-square{
+  width: 40px;
+  height: 40px;
+}
+
+.menu-left{
+  left: 10px;
+}
+.menu-right{
+  right: 10px;
+}
+.menu-button{
+  position: relative;
+  background-color: #272727;
+  -webkit-box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.75);
+}
+.menu-button:hover{
+  border: solid 0.5px white;
+}
+.menu-active{
+  border: solid 0.5px white;
+}
+.circle-button{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+}
+.button-people, .zoom-minus{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.zoom-plus{
+  margin-top: 5px;
+}
+.search-button, .zoom-button{
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.search-button{
+  background-image: url('../assets/pics/navigation/search-icon.svg');
+}
+.zoom-plus{
+  background-image: url('../assets/pics/navigation/zoom-plus.svg');
+}
+.zoom-minus{
+  background-image: url('../assets/pics/navigation/zoom-minus.svg');
+}
+.zoom-reset{
+  background-image: url('../assets/pics/navigation/zoom-reset.svg');
+}
+.highlight-box{
+  -moz-box-shadow: inset 0.5px 0.5px 0.5px rgba(255, 255, 255, .4), inset 12px -1px 1px rgba(0, 0, 0, .4);
+   -webkit-box-shadow: inset 0.5px 0.5px 0.5px rgba(255, 255, 255, .4), inset -1px -1px 1px rgba(0, 0, 0, .4);
+   box-shadow: inset 0.5px 0.5px 0.5px rgba(255, 255, 255, .4), inset -1px -1px 1px rgba(0, 0, 0, .4);
+}
+/* -------------------------------*/
+
 /*
 * shadow divs
 */
@@ -41,21 +142,61 @@ h1, p{
   bottom: -100px;
   z-index: 0;
 }
+/* -------------------------------*/
+
 /*
-* info-wrapper
+* INFO-WRAPPER
 */
 .info-wrapper{
   position: absolute;
   background-color: #272727;
   left: 0px;
-  bottom: -55%;
+  bottom: -65%;
   border-top: solid 1px rgba(255, 255, 255, 0.33);
   width: 100%;
-  height: 80%;
+  height: 90%;
   z-index: 100;
+  display: flex;
 }
+.info-div{
+  width: 50%;
+}
+.info-element{
+  margin: 10px;
+}
+/* LEFT-INFO-DIV */
+.left-info-div{
 
+}
+.info-description{
+
+}
+.info-title{
+}
+#title{
+ margin-left : 40px;
+}
+/* RIGHT-INFO-DIV */
+.right-info-div{
+  display: flex;
+}
+.info-img{
+  width: 2em;
+  height: 2em;
+  float: left;
+}
+#related-one-div{
+
+}
+#related-two-div{
+
+}
+.related-elements-div{
+  width: 33.33%;
+}
+/* EXPAND BUTTON */
 .expand-button{
+  position: fixed;
   width: 30px;
   height: 30px;
   background-color: #272727;
@@ -64,7 +205,6 @@ h1, p{
   border-radius: 50%;
   z-index: 100;
 }
-
 .expand-button:hover{
   background-color: rgba(255, 255, 255, 0.33);
 }

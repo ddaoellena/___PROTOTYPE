@@ -20,14 +20,13 @@ function addRelatedProperty(obj){
   obj.related = [];
   switch (obj.type) {
     case 1:
-
+    addRelatedMemes(obj);
+    addRelatedPeople(obj);
       break;
-    case 2:
-      for (var i = 0; i < obj.relatedMemes.length; i++) {
-        obj.related.push(allMemes[obj.relatedMemes[i]]);
-      }
-      break;
+    case 2: //for "PEOPLE" type
+      addRelatedMemes(obj);
+      addRelatedEvents(obj)
     default:
   }
-  console.log(obj);
+  // console.log(obj);
 };
