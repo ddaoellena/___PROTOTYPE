@@ -25,7 +25,7 @@ var yangGang = {
   toString : "yangGang",
   id :2,
   description : "hello I'm YangGang",
-  imgThumbnail: "god-emperor.png",
+  imgThumbnail: "yang-gang-small.png",
   img:'yang-gang.png',
   relatedEvents: [],
   relatedPeople: []
@@ -36,6 +36,8 @@ var allMemes= [pepe, godEmperor, yangGang];
 function addTypeMemes(){
   for (var i = 0; i < allMemes.length; i++) {
     allMemes[i].type = 0;
+    allMemes[i].folder = "memes";
+    allMemes[i].description = allMemes[i].toString + ".html"
   }
 }
 addTypeMemes();

@@ -87,8 +87,8 @@ function addCircle(r, x, y, obj){
       break;
     case 3:
       var circleColor = '#FFB054';
-      var circleClass = 'site-circle';
-      var folderType ='sites';
+      var circleClass = 'medias-circle';
+      var folderType ='medias';
       break;
     default:
   }
@@ -147,30 +147,48 @@ function placeCircle(d){
   }
 };
 
-function addRelatedCircles(obj, pos){
-  addRelatedProperty(obj);
-  for (var i = 0; i < obj.related.length; i++){
+// addSubChildrenCircles(donaldTrump);
+// addChildrenCircles(donaldTrump.children[0],1, 30);
+addChildrenCircles(donaldTrump, 1, 40);
+addCircle(50, 200, 200, donaldTrump);
+
+function addChildrenCircles(obj, pos, r) {
+  for (var i = 0; i < obj.children.length; i++) {
     var circleGroup = draw.group().attr({class:'generated link-group'});
-    /* add line */
+    // obj.children[i].link
     var line = draw.line(obj.x, obj.y, obj.x+placeCircle(pos+i)[0], obj.y+placeCircle(pos+i)[1]);
     line.stroke({ color: '#888888', width: 1, linecap: 'round'});
-    /* add link */
-    var circle = draw.circle(12).attr({class:'link-circle pointer', fill:'#C4C4C4', 'fill-opacity':"1", cx:obj.x+(placeCircle(pos+i)[0]/2), cy:obj.y+(placeCircle(pos+i)[1]/2)});
+    var circle = draw.circle(12).attr({class:'link-circle pointer', fill:'#C4C4C4', 'fill-opacity':"1", cx:obj.x+(placeCircle(pos+i)[0]/2), cy:obj.y+(placeCircle(pos+i)[1]/2), "onclick": "addPopUp(this,"+ obj.children[i].linkToString +")"});
     circleGroup.add(line).add(circle);
-    /* add circle */
-    addCircle(40, obj.x+placeCircle(pos+i)[0], obj.y+placeCircle(pos+i)[1], obj.related[i]);
+
+    if (typeof obj.children[i].children !== 'undefined') {
+      for (var j = 0; j < obj.children[i].children.length; j++) {
+        var childX = line.node.x2.baseVal.value;
+        var childY = line.node.y2.baseVal.value;
+        // console.log(line.node, childX, childY);
+        var subCircleGroup = draw.group().attr({class:'generated link-group'});
+        var subLine = draw.line(childX, childY, childX+placeCircle(pos+i)[0]*0.75, childY+placeCircle(pos+i)[1]*0.75);
+        subLine.stroke({ color: '#888888', width: 1, linecap: 'round'});
+        var subCircle = draw.circle(12).attr({class:'link-circle pointer', fill:'#C4C4C4', 'fill-opacity':"1", cx:childX+(placeCircle(pos+i)[0]/2)*0.75, cy:childY+(placeCircle(pos+i)[1]/2)*0.75, "onclick": "addPopUp(this,"+ obj.children[i].children[j].linkToString +")"});
+        subCircleGroup.add(subLine).add(subCircle);
+        addCircle(r*0.75, childX+placeCircle(pos+i)[0]*0.75, childY+placeCircle(pos+i)[1]*0.75, obj.children[i].children[j]);
+      }
+    }
+    addCircle(r, obj.x+placeCircle(pos+i)[0], obj.y+placeCircle(pos+i)[1], obj.children[i]);
   }
-};
+}
+
 function cleanCircles(){
   var generatedTags = document.getElementsByClassName('generated');
   for (var i = 0; i < generatedTags.length; i++) {
     $('.generated').remove();
   }
 }
+
 function addAllCircles(type){
 cleanCircles();
  for (var i = 0; i < type.length; i++) {
-   addRelatedCircles(type[i], 1);
+   addChildrenCircles(type[i], 1, 40);
    addCircle(50, type[i].x, type[i].y, type[i]);
  }
 }

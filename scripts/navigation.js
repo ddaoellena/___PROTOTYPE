@@ -3,6 +3,7 @@
 var infoWrapperDiv = document.getElementById('info-wrapper');
 var curtainDiv = document.getElementById('curtain-div');
 var menuButtons = document.getElementsByClassName('menu-button');
+var descriptionP = document.getElementById('description');
 
 function toggleMenu(a){
   for (var i = 0; i < menuButtons.length; i++) {
@@ -17,11 +18,13 @@ function toggleInfoDiv(){
     infoWrapperDiv.classList.add('expanded');
     infoWrapperDiv.style.bottom = "0%";
     curtainDiv.style.display = "block";
+    descriptionP.classList.remove("fade");
   }
   else if (infoWrapperDiv.classList[2] == 'expanded') {
     infoWrapperDiv.classList.remove('expanded');
     infoWrapperDiv.classList.add('collapsed');
     infoWrapperDiv.style.bottom = "-65%";
     curtainDiv.style.display = "none";
+    descriptionP.classList.add("fade");
   }
 }
