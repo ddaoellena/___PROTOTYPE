@@ -1,3 +1,47 @@
+/* init-functions.js contient toutes les fonctions
+* servant à relier les données entre elles
+*/
+var allTables = [allMemes, allEvents, allPeople, allMedias];
+
+function addProperties(table){
+  var tableType = 0,
+      tableFolder = "";
+  switch (table) {
+    case allMemes:
+      tableType = 0,
+      tableFolder = "memes";
+      break;
+    case allEvents:
+      tableType = 1,
+      tableFolder = "events";
+      break;
+    case allPeople:
+      tableType = 2,
+      tableFolder = "people";
+      break;
+    case allMedias:
+      tableType = 3,
+      tableFolder = "medias";
+      break;
+    default:
+  }
+  for (var i = 0; i < table.length; i++) {
+    table[i].type = tableType;
+    table[i].folder = tableFolder;
+    table[i].description = table[i].toString + ".html";
+    table[i].imgThumbnail = table[i].id.toString() + '-' + table[i].toString + ".png";
+  }
+}
+/*
+* appeler la fonction addProperties pour tous les tableaux
+*/
+for (var i = 0; i < allTables.length; i++) {
+  addProperties(allTables[i]);
+}
+
+/* function addChildrenToObject
+* ajoute les propriétés aux enfants de chaque élément
+*/
 function addChildrenToObject(obj){
   var objChildren = obj.children;
   if (typeof objChildren !== 'undefined') {
@@ -63,8 +107,12 @@ function addChildrenAllObjects(table){
     addChildrenToObject(table[i]);
   }
 }
-
 addChildrenAllObjects(allMemes);
 addChildrenAllObjects(allPeople);
 addChildrenAllObjects(allEvents);
 addChildrenAllObjects(allMedias);
+
+for (var i = 0; i < allTables.length; i++) {
+  console.log(allTables[i]);
+    // addChildrenAllObjects(allTables[i]);
+}
