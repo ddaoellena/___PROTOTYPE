@@ -1,8 +1,12 @@
 var popUpWrapper = document.getElementById('pop-up-wrapper');
+var popUp = draw.group().attr({class:'pop-up-group', id:'pop-up-group'})
+var popUpGroup = document.getElementById('pop-up-group');;
 
 function addPopUp(el, link){
   var x = el.cx.baseVal.value,
       y = el.cy.baseVal.value,
+      divX = el.getBoundingClientRect().x,
+      divY = el.getBoundingClientRect().y,
       rotateVar = el.classList[2],
       rotate = 0,
       originX = el.parentNode.childNodes[0].x1.baseVal.value,
@@ -23,9 +27,6 @@ function addPopUp(el, link){
   var popUpDiv = document.createElement('div');
   popUpDiv.setAttribute('class', 'pop-up-div');
 
-  var drawPopUp = SVG(popUpDiv).size(20, 20).attr({class:'svg-pop-up-icon'});
-  var circle = drawPopUp.circle(20).attr({fill:'#C4C4C4', 'fill-opacity':"0.7"});
-
   var popUpNameDiv = document.createElement('div');
   popUpNameDiv.setAttribute('class', 'pop-up-title-div');
   var popUpName = document.createElement('h2');
@@ -44,17 +45,28 @@ function addPopUp(el, link){
   popUpDiv.append(popUpTextDiv);
 
   popUpTextDiv.append(popUpText);
-  popUpDiv.style.top = y-50+"px";
-  popUpDiv.style.left = x+20+"px";
+
+  if (divY<50) {
+    popUpDiv.style.top = divY+50+"px";
+  } else {
+    popUpDiv.style.top = divY-50+"px";
+  }
+  if (divX>vw*0.9) {
+    popUpDiv.style.left = divX-220+"px";
+  } else {
+    popUpDiv.style.left = divX+20+"px";
+  }
 
   popUpWrapper.append(popUpDiv);
 
-  var draw = SVG('pop-up-wrapper').size(vw, vh).attr({class:'svg-pop-up-bg', 'onclick' : 'removePopUp()'});
-  draw.rect(vw, vh).fill("rgba(0,0,0,0.5)");
+  var hideRect = draw.rect(viewWidth, vh).fill("rgba(0,0,0,0.5)").attr({'onclick':'removePopUp()'});
   var circle = draw.circle(12).attr({class:'link-circle pointer', fill:'#C4C4C4', 'fill-opacity':"1", stroke:"#ffffff", cx:x, cy:y});
   circle.rotate(rotate, originX, originY);
-  console.log(circle.node.cx.baseVal.value, circle.node.cy.baseVal.value)
+  popUp.add(hideRect).add(circle);
+  // console.log(el.getBoundingClientRect());
 }
- function removePopUp(){
-   popUpWrapper.innerHTML = '';
- }
+
+function removePopUp(){
+ popUpGroup.innerHTML = '';
+ popUpWrapper.innerHTML = '';
+}

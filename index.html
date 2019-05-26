@@ -16,17 +16,19 @@
         <div class="highlight-box menu-square"><div class="circle-button circle-people people-color"></div></div></div>
       <div class="menu-button button-memes menu-square pointer" onclick="addAllCircles(allMemes); toggleMenu(this);">
         <div class="highlight-box menu-square"><div class="circle-button circle-memes memes-color"></div></div></div>
+      <div class="menu-button button-filter menu-square pointer" onclick="">
+        <div class="highlight-box menu-square"></div></div>
+      <div class="filter-box" id=""></div>
     </div>
 
     <div class="slider-zoom-wrapper">
-      <input type="range" min="1" max="100" value="0" class="slider zoom-slider">
+      <input type="range" min="1" max="100" value="100" class="slider zoom-slider" id='zoom-slider' onchange="zoomTimeline(this.value);">
     </div>
     <div class="menu menu-right">
-      <div class="menu-square button-filter pointer"></div>
     </div>
 
     <div class="menu-bottom slider-timeline">
-      <input type="range" min="1" max="100" value="0" class="slider pan-slider">
+      <input type="range" min="1" max="100" value="0" class="slider pan-slider" id='pan-slider' onchange="panTimeline(this.value);">
     </div>
 
     <!---------->
@@ -89,13 +91,11 @@
   <script src="./libs/jquery-3.4.1.min.js" charset="utf-8"></script>
   <script src="./libs/svg.min.js" charset="utf-8"></script>
   <script src="./libs/svg-pan-zoom.min.js"></script>
-  <!-- <script src="./libs/TweenLite.min.js" charset="utf-8"></script> -->
-  <!-- <script src="./libs/CSSPlugin.min.js" charset="utf-8"></script> -->
-  <!-- <script src="./libs/Draggable.min.js" charset="utf-8"></script> -->
   <!-- <script src="./libs/d3.min.js" charset="utf-8"></script> -->
   <!-- Main scripts files -->
   <script src="./scripts/init-functions.js" charset="utf-8"></script>
   <script src="./scripts/init-svg.js" charset="utf-8"></script>
+  <script src="./scripts/svg-circles.js" charset="utf-8"></script>
   <script src="./scripts/svg-functions.js" charset="utf-8"></script>
   <script src="./scripts/navigation.js" charset="utf-8"></script>
   <script src="./scripts/generate-content.js" charset="utf-8"></script>

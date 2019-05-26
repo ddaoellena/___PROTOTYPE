@@ -19,10 +19,10 @@ var vw = getDocumentWidth(),
 /*
 * setup SVG div, defs and filter
 */
-var draw = SVG('svg-wrapper').size(vw, vh).attr({id:'main-svg'});
+var draw = SVG('svg-wrapper').size(vw, vh).attr({id:'main-svg'}).viewbox(0,0,vw,vh);
 var defs = draw.defs().attr({id:'main-svg-defs'});
 var mainSvgDefs = document.getElementById('main-svg-defs');
-var filterBlur = '<filter id="fBlur" x="-100%" y="-100%" width="300%" height="300%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB"><feGaussianBlur stdDeviation="10 10" x="0%" y="0%" width="100%" height="100%" in="SourceGraphic" edgeMode="none" result="blur"/></filter>';
+var filterBlur = '<filter id="fBlur" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur in="SourceGraphic" stdDeviation="5" /></filter>';
 var filterGray = '<filter id="fGray"><feColorMatrix type="matrix" values="0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0"/></filter>';
 mainSvgDefs.innerHTML = filterBlur + filterGray;
 
@@ -34,254 +34,52 @@ mainSvgDefs.innerHTML = filterBlur + filterGray;
 var r = 1;
 var cw = cw;
 var ch = ch;
+
+var viewWidth = vw*2;
+
+var coorGroup = draw.group().attr({class:'coor-svg-group', id:'coor-svg-group'});
+
 function cleanSvg(){
   var mainSvg = document.getElementById('main-svg');
   mainSvg.innerHTML = '';
 }
 function drawDotsTimeline(cw, ch) {
   var group = draw.group().attr({class:'grid dot-grid', id:'dot-grid'});
-  for (var x = 20; x < vw; x+=cw) {
+  for (var x = 20; x < viewWidth; x+=cw) {
     for (var y = 20; y < vh*0.6; y+=ch) {
       var circle = draw.circle(r).attr({fill:'#C4C4C4', cx:x, cy:y});
       group.add(circle);
+      coorGroup.add(group);
     }
   }
 }
 drawDotsTimeline(20,20);
 
 function drawTimeline(cw){
-  var dates = ["2016", "2017", "2018", "2019"];
+  var dates = ["2016", "2017", "2018", "2019", "2020", "2021"];
   var group = draw.group().attr({class:'timeline', id:'timeline'});
-  for (var x = cw; x < vw; x+=cw) {
+  var dateOff = 100;
+  for (var x = cw; x < viewWidth; x+=cw) {
     var line = draw.line(0, 0, 0, 20).move(x, vh*0.625);
     line.stroke({color: '#BFBFBF', width : 1});
     group.add(line);
   }
   for (var i = 0; i < dates.length; i++) {
-    var dateLine = draw.line(0, 0, 0, 30).move(cw*24*i, vh*0.625);
+    var dateLine = draw.line(0, 0, 0, 30).move(dateOff + cw*24*i, vh*0.625);
     dateLine.stroke({color: '#BFBFBF', width : 2});
     var dateText = draw.text(dates[i]);
-    dateText.font({ fill: '#fff', anchor: 'middle'}).move(cw*24*i, vh*0.625 + 35);
+    dateText.font({ fill: '#fff', anchor: 'middle'}).move(dateOff + cw*24*i, vh*0.625 + 35);
     group.add(dateLine).add(dateText);
   }
-
+  coorGroup.add(group);
 }
 drawTimeline(20);
 
-/*
-* function addCircle()
-* @params {r} = radius, {x} = position x, {y} = position y,
-* @params type, {int}, 0 = meme, 1 = event, 2 = people, 3 = site
-* @params {img}, string
-*/
-function addCircle(r, x, y, obj){
-  var circleColor = '';
-  var circleClass = '';
-  var folderType = '';
-  switch (obj.type) {
-    case 0:
-      var circleColor = '#FFFFFF';
-      var circleClass = 'meme-circle';
-      var folderType ='memes';
-      break;
-    case 1:
-      var circleColor = '#60F5FF';
-      var circleClass = 'event-circle';
-      var folderType ='events';
-      break;
-    case 2:
-      var circleColor = '#FF5CC8';
-      var circleClass = 'people-circle';
-      var folderType ='people';
-      break;
-    case 3:
-      var circleColor = '#FFB054';
-      var circleClass = 'media-circle';
-      var folderType ='medias';
-      break;
-    default:
-  }
-
-  var circleGroup = draw.group().attr({class:'circle '+circleClass+' generated pointer','onclick':'toggleCircle(this); '+'appendInfo('+obj.toString+');', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
-  var circleBlur = draw.circle(r).attr({fill:circleColor, cx:x, cy:y, filter:'url(#fBlur)'})
-  var circle = draw.circle(r).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:x, cy:y});
-  /*create clip for images*/
-  var circleClip = draw.circle(r).attr({fill:'#FFFFFF', cx:x, cy:y});
-  var clip = draw.clip().add(circleClip);
-  var image = draw.image('./assets/pics/'+folderType+'/'+obj.imgThumbnail, r, r);
-  image.attr({class:'cirle-image', filter:'url(#fGray)'});
-  image.move(x-r/2, y-r/2);
-  image.clipWith(clip);
-  /*add all elements to same group*/
-  circleGroup.add(circleBlur).add(circle).add(image);
-}
-
-function addChildrenCircle(r, x, y, obj, rot, oriX, oriY){
-  var circleColor = '';
-  var circleClass = '';
-  var folderType = '';
-  switch (obj.type) {
-    case 0:
-      var circleColor = '#FFFFFF';
-      var circleClass = 'meme-circle';
-      var folderType ='memes';
-      break;
-    case 1:
-      var circleColor = '#60F5FF';
-      var circleClass = 'event-circle';
-      var folderType ='events';
-      break;
-    case 2:
-      var circleColor = '#FF5CC8';
-      var circleClass = 'people-circle';
-      var folderType ='people';
-      break;
-    case 3:
-      var circleColor = '#FFB054';
-      var circleClass = 'media-circle';
-      var folderType ='medias';
-      break;
-    default:
-  }
-
-  var circleGroup = draw.group().attr({class:'circle '+circleClass+' generated pointer','onclick':'toggleCircle(this); '+'appendInfo('+obj.toString+');', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
-  var circleBlur = draw.circle(r).attr({fill:circleColor, cx:x, cy:y, filter:'url(#fBlur)'})
-  var circle = draw.circle(r).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:x, cy:y});
-  /*create clip for images*/
-  var circleClip = draw.circle(r).attr({fill:'#FFFFFF', cx:x, cy:y});
-  var clip = draw.clip().add(circleClip);
-  var image = draw.image('./assets/pics/'+folderType+'/'+obj.imgThumbnail, r, r);
-  image.attr({class:'cirle-image', filter:'url(#fGray)'});
-  image.move(x-r/2, y-r/2);
-  image.clipWith(clip);
-  /*add all elements to same group*/
-  circleGroup.add(circleBlur).add(circle).add(image);
-  // circleGroup.translate(transX, transY);
-  circleGroup.rotate(rot, oriX, oriY);
-  circleGroup.rotate(0);
-}
-/*
-* function addRelatedCircles()
-* create circle of related elements to the obj
-* @params obj, object; d, distance from the core obj
-*   8 1 2
-*   7 o 3
-*   6 5 4
-*/
-var dis = 90;
-var disAdj = Math.sqrt(dis)*7;
-var radAdj = 67.5 * (Math.PI/180);
-
-function placeCircle(d){
-  switch (d) {
-    case 1:
-      return([0, -dis]);
-      break;
-    case 2:
-      return([+disAdj, -disAdj]);
-      break;
-    case 3:
-      return([dis, 0]);
-      break;
-    case 4:
-      return([+disAdj, +disAdj]);
-      break;
-    case 5:
-      return([0, +dis]);
-      break;
-    case 6:
-      return([-disAdj, +disAdj]);
-      break;
-    case 7:
-      return([-dis, 0]);
-      break;
-    case 8:
-      return([-disAdj, -disAdj]);
-      break;
-    default:
-  }
-};
-
-// addChildrenCircles(donaldTrump, 40);
-// addCircle(50, 200, 200, donaldTrump);
-
-function addChildrenCircles(obj, r) {
-  var pos = [];
-  switch (obj.children.length) {
-    case 1:
-    pos = [1];
-    break;
-    case 2:
-    pos = [1,5];
-      break;
-    case 3:
-    pos = [1, 3, 5];
-      break;
-    case 4:
-    pos = [1, 3, 5, 7];
-      break;
-    default:
-  }
-  for (var i = 0; i < obj.children.length; i++) {
-    // console.log(pos[i]);
-    var circleGroup = draw.group().attr({class:'generated link-group'});
-    var line = draw.line(obj.x, obj.y, obj.x+placeCircle(pos[i])[0], obj.y+placeCircle(pos[i])[1]);
-    line.stroke({ color: '#888888', width: 1, linecap: 'round'});
-    var circle = draw.circle(12).attr({class:'link-circle pointer', fill:'#C4C4C4', 'fill-opacity':"1", cx:obj.x+(placeCircle(pos[i])[0]/2), cy:obj.y+(placeCircle(pos[i])[1]/2), "onclick": "addPopUp(this,"+ obj.children[i].linkToString +")"});
-    circleGroup.add(line).add(circle);
-
-    if (typeof obj.children[i].children !== 'undefined') {
-      var rotation = [];
-      var classRotation = [];
-      var numberChildren = obj.children[i].children.length;
-      switch (numberChildren) {
-        case 1:
-        rotation = [0];
-        classRotation = ["rotate0"];
-        break;
-        case 2:
-        rotation = [-45, 45];
-        classRotation = ["rotate-45", "rotate45"];
-          break;
-        case 3:
-        rotation = [-45, 0, 45];
-        classRotation = ["rotate-45", "rotate0", "rotate45"];
-          break;
-        default:
-      }
-
-      for (var j = 0; j < obj.children[i].children.length; j++) {
-        var childX = line.node.x2.baseVal.value;
-        var childY = line.node.y2.baseVal.value;
-
-        var subCircleGroup = draw.group().attr({class:'generated link-group'});
-        var subLine = draw.line(childX, childY, childX+placeCircle(pos[i])[0]*0.75, childY+placeCircle(pos[i])[1]*0.75);
-        subLine.stroke({ color: '#888888', width: 1, linecap: 'round'});
-        var subCircle = draw.circle(12).attr({class:'link-circle pointer ' + classRotation[j]  , fill:'#C4C4C4','fill-opacity':"1", cx:childX+(placeCircle(pos[i])[0]/2)*0.75, cy:childY+(placeCircle(pos[i])[1]/2)*0.75, "onclick": "addPopUp(this,"+ obj.children[i].children[j].linkToString +")"});
-        subCircleGroup.add(subLine).add(subCircle);
-        subCircleGroup.rotate(rotation[j],childX,childY);
-
-        addChildrenCircle(r*0.75, childX+placeCircle(pos[i])[0]*0.75, childY+placeCircle(pos[i])[1]*0.75, obj.children[i].children[j], rotation[j],childX, childY);
-
-      }
-    }
-    addCircle(r, obj.x+placeCircle(pos[i])[0], obj.y+placeCircle(pos[i])[1], obj.children[i]);
-  }
-}
-
-
-function cleanCircles(){
-  var generatedTags = document.getElementsByClassName('generated');
-  for (var i = 0; i < generatedTags.length; i++) {
-    $('.generated').remove();
-  }
-}
 
 function addAllCircles(type){
 cleanCircles();
  for (var i = 0; i < type.length; i++) {
-   addChildrenCircles(type[i], 40);
-   addCircle(50, type[i].x, type[i].y, type[i]);
+   addCircle(type[i]);
  }
 }
 
@@ -307,7 +105,7 @@ function toggleCircle(el){
 
   el.classList.toggle('active');
 
-  if (el.classList[4] == 'active') {
+  if (el.classList[5] == 'active') {
     switch (el.classList[1]) {
       case 'meme-circle':
           el.setAttribute('stroke', '#FFFFFF');
@@ -345,7 +143,7 @@ function colorOn(el){
 * triggred on mouseleave circle
 */
 function colorOff(el){
-  if (el.classList[4] == 'active') {
+  if (el.classList[5] == 'active') {
     el.childNodes[2].setAttribute("filter", "");
   }
   else{

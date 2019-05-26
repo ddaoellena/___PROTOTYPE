@@ -1,15 +1,20 @@
 
-
 window.onload = function() {
-  // Expose to window namespase for testing purposes
-  window.panZoomInstance = svgPanZoom('#main-svg', {
-    viewportSelector: '.dot-grid',
+  window.panZoomMainGroup = svgPanZoom('#main-svg', {
+    viewportSelector: '.main-svg-group',
     panEnable:false,
     zoomEnabled: false,
-    controlIconsEnabled: true,
-    fit: false,
-    center: false,
-    minZoom: 1,
-    maxZoom: 2
+    controlIconsEnabled: false,
+    disableZoom: true,
+    fit: true,
+    center: true,
   });
+  panZoomMainGroup.disablePan();
 };
+function panTimeline(val) {
+  panZoomMainGroup.pan({x:-((val/220)*viewWidth),y:0})
+}
+// function zoomTimeline(val) {
+//   console.log(val);
+//   panZoomMainGroup.zoom(-0.1*val);
+// }

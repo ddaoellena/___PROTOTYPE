@@ -1,0 +1,16 @@
+MEMES : #FFFFFF type 0
+EVENTS : #83E1FF #60F5FF type1
+PEOPLE : #FF83D5  #FF5CC8 type2
+SITE : #FFC683 #FFB054 type 3
+
+LINE : #BFBFBF
+EMPTY : #C4C4C4
+
+
+name : "Élections présidentielles USA 2016",
+id: 0,
+toString : "usa2016",
+img:'trump',
+relatedPeople : [],
+relatedMemes : [],
+children: []

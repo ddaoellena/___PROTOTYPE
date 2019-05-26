@@ -11,6 +11,7 @@
 }
 .event-circle:hover{
   stroke : #83E1FF;
+  stroke-width: 3;
 }
 .meme-circle:hover, .link-circle:hover{
   stroke : #FFFFFF;
@@ -20,4 +21,7 @@
 }
 .circle-image{
   filter: grayscale(100%);
+}
+tspan{
+  font-size: 1em;
 }
