@@ -79,10 +79,15 @@ drawTimeline(20);
 function addAllCircles(type){
 cleanCircles();
  for (var i = 0; i < type.length; i++) {
-   addCircle(type[i]);
+   addCircle(type[i], 0);
  }
 }
-
+function cleanCircles(){
+  var wrappers = document.getElementsByClassName('wrapper-group');
+  for (var i = 0; i < wrappers.length; i++) {
+    $('.wrapper-group').remove();
+  }
+}
 /*
 * function toggleAllCircles()
 * remove active class from all circles
@@ -109,19 +114,22 @@ function toggleCircle(el){
     switch (el.classList[1]) {
       case 'meme-circle':
           el.setAttribute('stroke', '#FFFFFF');
+          el.setAttribute('stroke-width', '2');
         break;
       case 'event-circle':
           el.setAttribute('stroke', '#83E1FF');
+          el.setAttribute('stroke-width', '3');
         break;
       case 'people-circle':
           el.setAttribute('stroke', '#FF83D5');
+          el.setAttribute('stroke-width', '2');
         break;
       case 'media-circle':
           el.setAttribute('stroke', '#FFC683');
+          el.setAttribute('stroke-width', '2');
         break;
       default:
     }
-    el.setAttribute('stroke-width', '2');
     el.childNodes[2].setAttribute("filter", "");
   }
   else{
@@ -150,3 +158,8 @@ function colorOff(el){
     el.childNodes[2].setAttribute("filter", "url(#fGray)");
   }
 }
+
+// var rect =  draw.rect(200,200).attr({cx:200,cy:200, fill:"#D712D1"});
+// rect.animate().move(200,200);
+// rect.pause();
+// rect.mouseover(function() { this.play() })

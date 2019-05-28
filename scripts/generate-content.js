@@ -86,9 +86,33 @@ function appendRelatedElements(obj, target, array, sourceArray){
   }
 }
 
+function addClassTitle(obj){
+  var titleClass = '';
+  switch (obj.type) {
+    case 0:
+      titleClass = 'meme-title';
+      break;
+    case 1:
+      titleClass = 'event-title';
+      break;
+    case 2:
+      titleClass = 'people-title';
+      break;
+    case 3:
+      titleClass = 'media-title';
+      break;
+    default:
+  }
+  if (titleTarget.classList.length > 1) {
+    titleTarget.classList.remove(titleTarget.classList[1]);
+  }
+  titleTarget.classList.toggle(titleClass);
+}
+
 function appendInfo(obj){
   clearInfo();
   appendImg(obj, 'info-img');
+  addClassTitle(obj);
   titleTarget.innerHTML = obj.name;
   $('#description').load("./assets/html/"+obj.folder+"/"+obj.description)
   /* */
@@ -131,6 +155,5 @@ function appendInfo(obj){
       appendRelatedElements(obj, 2, obj.relatedEvents, allEvents);
       break;
     default:
-
   }
 }

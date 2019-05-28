@@ -32,10 +32,43 @@ function addPopUp(el, link){
   var popUpName = document.createElement('h2');
   popUpName.setAttribute('class', 'pop-up-title');
   popUpName.innerHTML = link.name;
-
-  // popUpNameDiv.append(popUpIconDiv);
   popUpNameDiv.append(popUpName);
+
+  var linkType = document.createElement('div');
+  linkType.setAttribute('class', 'link-type-div');
+  var linkStroke = document.createElement('div');
+  linkStroke.setAttribute('class', 'link-stroke');
+  var linkFirst = document.createElement('div');
+  var linkSecond = document.createElement('div');
+  linkFirst.setAttribute('class', 'link-element link-first');
+  linkFirst.style.backgroundColor = link.firstColor;
+  linkSecond.setAttribute('class', 'link-element link-second');
+  linkSecond.style.backgroundColor = link.secondColor;
+  // console.log(link.firstColor, link.secondColor);
+  linkType.append(linkStroke);
+  linkType.append(linkFirst);
+  linkType.append(linkSecond);
+
+  popUpNameDiv.append(linkType);
   popUpDiv.append(popUpNameDiv);
+
+  var popUpFilterDiv = document.createElement('div');
+  popUpFilterDiv.setAttribute('class', 'pop-up-filter-div');
+  var popUpFilterCircle = document.createElement('div');
+  popUpFilterCircle.setAttribute('class', 'pop-up-filter-circle');
+  popUpFilterCircle.setAttribute('onclick', '');
+  var filterPlus = document.createElement('p');
+  filterPlus.setAttribute('class', 'plus-filter');
+  filterPlus.innerHTML ="+";
+
+  var popUpFilterText = document.createElement('p');
+  popUpFilterText.setAttribute('class', 'pop-up-filter-text');
+  popUpFilterText.innerHTML = "Ajouter aux filtres"
+
+  popUpFilterDiv.append(popUpFilterCircle);
+  popUpFilterCircle.append(filterPlus);
+  popUpFilterDiv.append(popUpFilterText);
+  popUpDiv.append(popUpFilterDiv);
 
   var popUpTextDiv = document.createElement('div');
   popUpTextDiv.setAttribute('class', 'pop-up-text');
@@ -43,8 +76,6 @@ function addPopUp(el, link){
   popUpText.innerHTML = link.description;
   popUpTextDiv.append(popUpText);
   popUpDiv.append(popUpTextDiv);
-
-  popUpTextDiv.append(popUpText);
 
   if (divY<50) {
     popUpDiv.style.top = divY+50+"px";
@@ -63,7 +94,6 @@ function addPopUp(el, link){
   var circle = draw.circle(12).attr({class:'link-circle pointer', fill:'#C4C4C4', 'fill-opacity':"1", stroke:"#ffffff", cx:x, cy:y});
   circle.rotate(rotate, originX, originY);
   popUp.add(hideRect).add(circle);
-  // console.log(el.getBoundingClientRect());
 }
 
 function removePopUp(){

@@ -6,17 +6,55 @@
 */
 var elemsGroup = draw.group().attr({class:'elems-group', id:'elems-group'});
 
+
+var dis = 80;
+var disAdj = Math.sqrt(dis)*7;
+var radAdj = 67.5 * (Math.PI/180);
 var r = 50;
+var rBlur = r;
+var rLink = 12;
 var rFirst = r*0.75;
 var rSecond = r*0.5;
+var rBlurFirst = r*0.75;
+var rBlurSecond = r*0.5;
+var imgVisibility = "visible";
 
-function addCircle(obj){
+function addCircle(obj, expand){
+  var state = "",
+      stroke = "";
+
+  switch (expand) {
+    case 0:
+      dis =50;
+      rLink = 0;
+      rFirst = r*0.5;
+      rSecond = r*0.25;
+      rBlurFirst = r*0.5;
+      rBlurSecond = r*0.25;
+      imgVisibility = "hidden";
+      state = "collapsed";
+      stroke = "";
+      break;
+    case 1:
+      dis =80;
+      rLink = 12;
+      rFirst = r*0.75;
+      rSecond = r*0.5;
+      rBlurFirst = r*0.75;
+      rBlurSecond = r*0.5;
+      imgVisibility = "visible";
+      state = "expanded";
+      stroke = "active";
+      break;
+    default:
+
+  }
   /*
   * Parent group
   */
-  var wrapperGroup = draw.group().attr({id:obj.toString+'-group'});
-  var parentGroup = draw.group().attr({class:'circle '+obj.circleClass+' generated parent pointer', 'onclick':'toggleCircle(this); '+'appendInfo('+obj.toString+');', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
-  var parentBlur = draw.circle(r).attr({fill:obj.color, class:'circle-blur', cx:obj.x, cy:obj.y, filter: 'url(#fBlur)'})
+  var wrapperGroup = draw.group().attr({class:state+ ' wrapper-group', id:obj.toString+'-group', onclick: 'toggleThisCircle(this)', 'data-id':obj.toString});
+  var parentGroup = draw.group().attr({id:obj.toString+'-parent',class:'circle '+obj.circleClass+' generated parent pointer '+stroke, 'onclick':'toggleCircle(this); '+'appendInfo('+obj.toString+');', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
+  var parentBlur = draw.circle(rBlur).attr({fill:obj.color, class:'circle-blur', cx:obj.x, cy:obj.y, filter: 'url(#fBlur)'})
 
   var parentCircle = draw.circle(r).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:obj.x, cy:obj.y});
   /*create clip for images*/
@@ -79,20 +117,20 @@ function addCircle(obj){
     var firstLinkGroup = draw.group().attr({class:'generated link-group'});
     var firstLinkLine = draw.line(obj.x, obj.y, obj.x+placeCircle(pos[i])[0], obj.y+placeCircle(pos[i])[1]);
     firstLinkLine.stroke({ color: '#888888', width: 1, linecap: 'round'});
-    var firstLinkCircle = draw.circle(12).attr({class:'link-circle pointer', fill:'#C4C4C4', 'fill-opacity':"1", cx:obj.x+(placeCircle(pos[i])[0]/2), cy:obj.y+(placeCircle(pos[i])[1]/2), "onclick": "addPopUp(this,"+ obj.children[i].linkToString +")"});
+    var firstLinkCircle = draw.circle(rLink).attr({class:'link-circle pointer', fill:'#C4C4C4', 'fill-opacity':"1", cx:obj.x+(placeCircle(pos[i])[0]/2), cy:obj.y+(placeCircle(pos[i])[1]/2), "onclick": "addPopUp(this,"+ obj.children[i].linkToString +")"});
     firstLinkGroup.add(firstLinkLine).add(firstLinkCircle);
     firstChildrenGroup.add(firstLinkGroup);
     /*
     * First children circle group
     */
     var firstCircleGroup = draw.group().attr({class:'circle '+obj.children[i].circleClass+' generated children pointer','onclick':'toggleCircle(this); '+'appendInfo('+obj.children[i].toString+');', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
-    var firstCircleGroupBlur = draw.circle(r*0.75).attr({fill:obj.children[i].color, class:'circle-blur', cx:obj.x+placeCircle(pos[i])[0], cy:obj.y+placeCircle(pos[i])[1], filter: 'url(#fBlur)'});
+    var firstCircleGroupBlur = draw.circle(rBlurFirst).attr({fill:obj.children[i].color, class:'circle-blur', cx:obj.x+placeCircle(pos[i])[0], cy:obj.y+placeCircle(pos[i])[1], filter: 'url(#fBlur)'});
     var firstCircle = draw.circle(rFirst).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:obj.x+placeCircle(pos[i])[0], cy:obj.y+placeCircle(pos[i])[1]});
     /*create clip for images*/
     var firstCircleClip = draw.circle(rFirst).attr({fill:'#FFFFFF', cx:obj.x+placeCircle(pos[i])[0], cy:obj.y+placeCircle(pos[i])[1]});
     var firstClip = draw.clip().add(firstCircleClip);
     var firstImage = draw.image('./assets/pics/'+obj.children[i].folder+'/'+obj.children[i].imgThumbnail, rFirst, rFirst);
-    firstImage.attr({class:'cirle-image', filter:'url(#fGray)'});
+    firstImage.attr({class:'cirle-image', filter:'url(#fGray)', "visibility": imgVisibility});
     firstImage.move(obj.x+placeCircle(pos[i])[0]-rFirst/2, obj.y+placeCircle(pos[i])[1]-rFirst/2);
     firstImage.clipWith(firstClip);
     firstCircleGroup.add(firstCircleGroupBlur).add(firstCircle).add(firstImage);
@@ -128,18 +166,18 @@ function addCircle(obj){
            var secondLinkGroup = draw.group().attr({class:'generated link-group'});
            var secondLinkLine = draw.line(childX, childY, childX+placeCircle(pos[i])[0]*0.75, childY+placeCircle(pos[i])[1]*0.75);
            secondLinkLine.stroke({ color: '#888888', width: 1, linecap: 'round'});
-           var secondLinkCircle = draw.circle(12).attr({class:'link-circle pointer ' + classRotation[j] , fill:'#C4C4C4','fill-opacity':"1", cx:childX+(placeCircle(pos[i])[0]/2)*0.75, cy:childY+(placeCircle(pos[i])[1]/2)*0.75, "onclick": "addPopUp(this,"+ obj.children[i].children[j].linkToString +")"});
+           var secondLinkCircle = draw.circle(rLink).attr({class:'link-circle pointer ' + classRotation[j] , fill:'#C4C4C4','fill-opacity':"1", cx:childX+(placeCircle(pos[i])[0]/2)*0.75, cy:childY+(placeCircle(pos[i])[1]/2)*0.75, "onclick": "addPopUp(this,"+ obj.children[i].children[j].linkToString +")"});
            secondLinkGroup.add(secondLinkLine).add(secondLinkCircle);
            secondLinkGroup.rotate(rotation[j],childX,childY);
            secondChildrenGroup.add(secondLinkGroup);
            var secondCircleGroup = draw.group().attr({class:'circle '+obj.children[i].children[j].circleClass+' generated children pointer','onclick':'toggleCircle(this); '+'appendInfo('+obj.children[i].children[j].toString+');', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
-           var secondCircleGroupBlur = draw.circle(rSecond).attr({fill:obj.children[i].children[j].color, cx:childX+placeCircle(pos[i])[0]*0.75, cy:childY+placeCircle(pos[i])[1]*0.75, filter:'url(#fBlur)'})
+           var secondCircleGroupBlur = draw.circle(rBlurSecond).attr({fill:obj.children[i].children[j].color, cx:childX+placeCircle(pos[i])[0]*0.75, cy:childY+placeCircle(pos[i])[1]*0.75, filter:'url(#fBlur)'})
            var secondCircle = draw.circle(rSecond).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:childX+placeCircle(pos[i])[0]*0.75, cy:childY+placeCircle(pos[i])[1]*0.75});
            /*create clip for images*/
            var secondCircleClip = draw.circle(rSecond).attr({fill:'#FFFFFF', cx:childX+placeCircle(pos[i])[0]*0.75, cy:childY+placeCircle(pos[i])[1]*0.75});
            var secondClip = draw.clip().add(secondCircleClip);
            var secondImage = draw.image('./assets/pics/'+obj.children[i].children[j].folder+'/'+obj.children[i].children[j].imgThumbnail, rSecond, rSecond);
-           secondImage.attr({class:'cirle-image', filter:'url(#fGray)'});
+           secondImage.attr({class:'cirle-image', filter:'url(#fGray)', "visibility": imgVisibility});
            secondImage.move(childX+placeCircle(pos[i])[0]*0.75-rSecond/2, childY+placeCircle(pos[i])[1]*0.75-rSecond/2);
            secondImage.clipWith(secondClip);
            /*add all elements to same group*/
@@ -147,6 +185,10 @@ function addCircle(obj){
            secondCircleGroup.rotate(rotation[j], childX, childY);
            secondCircleGroup.rotate(0);
            secondChildrenGroup.add(secondCircleGroup);
+
+           function test(){
+             console.log(secondLinkGroup);
+           }
          }
      }
   }
@@ -155,6 +197,11 @@ function addCircle(obj){
   wrapperGroup.add(parentGroup);
 
   elemsGroup.add(wrapperGroup);
+  return{
+    test:test
+  }
+
+
 }
 /*
 * function addRelatedCircles()
@@ -164,9 +211,6 @@ function addCircle(obj){
 *   7 x 3
 *   6 5 4
 */
-var dis = 80;
-var disAdj = Math.sqrt(dis)*7;
-var radAdj = 67.5 * (Math.PI/180);
 
 function placeCircle(d){
   switch (d) {
@@ -198,9 +242,21 @@ function placeCircle(d){
   }
 };
 
-function cleanCircles(){
-  var generatedTags = document.getElementsByClassName('generated');
-  for (var i = 0; i < generatedTags.length; i++) {
-    $('.generated').remove();
+
+function toggleThisCircle(el){
+
+  var obj = window[el.dataset.id];
+  switch (el.classList[0]) {
+    case "collapsed":
+      el.remove();
+      addCircle(obj, 1);
+      break;
+
+    // case :
+    //
+    //   break;
+    default:
+
   }
 }
+var add = addCircle(donaldTrump, 0);

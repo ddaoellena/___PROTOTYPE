@@ -9,32 +9,46 @@
   </head>
   <body>
     <!-- MENUS -->
-    <div class="menu menu-left menu-filter">
+    <div class="menu menu-left menu-filter" id="menu-left">
       <div class="menu-button button-events menu-square pointer" onclick="addAllCircles(allEvents); toggleMenu(this);">
         <div class="highlight-box menu-square"><div class="circle-button circle-events events-color"></div></div></div>
       <div class="menu-button button-people menu-square pointer" onclick="addAllCircles(allPeople); toggleMenu(this);">
         <div class="highlight-box menu-square"><div class="circle-button circle-people people-color"></div></div></div>
       <div class="menu-button button-memes menu-square pointer" onclick="addAllCircles(allMemes); toggleMenu(this);">
         <div class="highlight-box menu-square"><div class="circle-button circle-memes memes-color"></div></div></div>
-      <div class="menu-button button-filter menu-square pointer" onclick="">
+      <div class="menu-button button-filter menu-square pointer" id="button-filter" onclick="toggleFilter()">
         <div class="highlight-box menu-square"></div></div>
-      <div class="filter-box" id=""></div>
+      <div class="filter-box-wrapper collapsed" id="filter-box-wrapper">
+        <div class="filter-box" id="filter-box">
+          <p class="filter-title">Filtres</p>
+            <div class="filter-list" id="filter-list">
+              <p class='filter-text no-filter'>Pas de filtre activé</p>
+            </div>
+        </div>
+      </div>
     </div>
 
     <div class="slider-zoom-wrapper">
       <input type="range" min="1" max="100" value="100" class="slider zoom-slider" id='zoom-slider' onchange="zoomTimeline(this.value);">
     </div>
     <div class="menu menu-right">
+      <div class="button-info" onclick="toggleLabels()"><p class="button-info-span text" id="button-info-span">?</p>
+      <div class="labels-box-wrapper collapsed" id="labels-box-wrapper">
+        <p class="label-info">Légende</p>
+        <div class="labels-box" id="labels-box">
+          </div>
+        </div>
+      </div>
+      </div>
     </div>
 
     <div class="menu-bottom slider-timeline">
       <input type="range" min="1" max="100" value="0" class="slider pan-slider" id='pan-slider' onchange="panTimeline(this.value);">
     </div>
-
-    <!---------->
+    <!--- END MENU --->
 
     <!-- SVG -->
-    <div class="svg-wrapper" id="svg-wrapper">
+    <div class="svg-wrapper" id="svg-wrapper" onclick="toggleOffFilter();turnOffLabels()">
     </div>
     <div class="pop-up-wrapper" id="pop-up-wrapper">
     </div>
@@ -86,6 +100,8 @@
   <script src="./assets/data/people.js" charset="utf-8"></script>
   <script src="./assets/data/events.js" charset="utf-8"></script>
   <script src="./assets/data/medias.js" charset="utf-8"></script>
+  <script src="./assets/data/link-types.js" charset="utf-8"></script>
+  <script src="./assets/data/misc-data.js" charset="utf-8"></script>
   <!-- Frameworks files -->
   <script src="./libs/blazy.min.js" charset="utf-8"></script>
   <script src="./libs/jquery-3.4.1.min.js" charset="utf-8"></script>

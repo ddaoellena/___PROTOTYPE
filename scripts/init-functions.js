@@ -98,7 +98,9 @@ function addChildrenToObject(obj){
           break;
         default:
       }
+
       objChildren[i].linkToString = allLinks[objChildren[i].link].toString;
+
       if (typeof objChildren[i].children !== 'undefined') {
         for (var j = 0; j < objChildren[i].children.length; j++) {
           switch (objChildren[i].children[j].type) {
@@ -142,7 +144,13 @@ function addChildrenToObject(obj){
     }
   }
 }
-
+function addTypeToLinks(){
+  for (var i = 0; i < allLinks.length; i++) {
+    allLinks[i].firstColor = allLinkTypes[allLinks[i].type].firstColor;
+    allLinks[i].secondColor = allLinkTypes[allLinks[i].type].secondColor;
+  }
+}
+addTypeToLinks();
 function addChildrenAllObjects(table){
   for (var i = 0; i < table.length; i++) {
     addChildrenToObject(table[i]);
