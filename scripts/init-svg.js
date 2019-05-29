@@ -34,9 +34,15 @@ mainSvgDefs.innerHTML = filterBlur + filterGray;
 var r = 1;
 var cw = cw;
 var ch = ch;
-
+var heightOffset = 0;
 var viewWidth = vw*2;
 
+function setHeightOffset(){
+  if (vh >= 900) {
+    heightOffset = 20;
+  }
+}
+window.onload = setHeightOffset();
 var coorGroup = draw.group().attr({class:'coor-svg-group', id:'coor-svg-group'});
 
 function cleanSvg(){
@@ -52,6 +58,7 @@ function drawDotsTimeline(cw, ch) {
       coorGroup.add(group);
     }
   }
+  group.move(0, heightOffset);
 }
 drawDotsTimeline(20,20);
 
@@ -72,6 +79,7 @@ function drawTimeline(cw){
     group.add(dateLine).add(dateText);
   }
   coorGroup.add(group);
+  // group.move(0, heightOffset/2);
 }
 drawTimeline(20);
 

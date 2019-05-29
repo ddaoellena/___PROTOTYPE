@@ -30,7 +30,6 @@ var hillaryClinton = {
   name : "Hillary Clinton",
   toString : "hillaryClinton",
   id:1,
-  img:'trump',
   children: [
     {type: 0,
     id:0,
@@ -50,7 +49,6 @@ var andrewYang = {
   name : "Andrew Yang",
   toString : "andrewYang",
   id:2,
-  img:'trump',
   x: 600,
   y: 200,
   children: [
@@ -61,11 +59,22 @@ var andrewYang = {
   ]
 }
 
+var bernieSanders = {
+  name : "Bernie Sanders",
+  toString : "bernieSanders",
+  id:3,
+  relatedMemes : [],
+  relatedEvents: [],
+  children: [
+  ],
+  x:1400,
+  y:100
+}
+
 var shiaLaboeuf = {
   name : "Shia Laboeuf",
   toString : "shiaLaboeuf",
-  id:3,
-  img:'trump',
+  id:4,
   relatedMemes : [],
   relatedEvents: [],
   children: [
@@ -74,16 +83,40 @@ var shiaLaboeuf = {
   y:300
 }
 
-var people = {
-  name : "Shia Laboeuf",
-  toString : "people",
-  id:4,
-  img:'trump',
+var marineLePen={
+  name : "Marine Le Pen",
+  toString : "marineLePen",
+  id:5,
   relatedMemes : [],
   relatedEvents: [],
   children: [
   ],
   x:1400,
-  y:100
+  y:300
 }
-var allPeople = [donaldTrump, hillaryClinton, andrewYang, shiaLaboeuf, people];
+
+var jeanLucMelenchon={
+  name : "Jean-Luc Mélenchon",
+  toString : "jeanLucMelenchon",
+  id:6,
+  relatedMemes : [],
+  relatedEvents: [],
+  children: [
+  ],
+  x:1400,
+  y:300
+}
+
+var florianPhilippot={
+  name : "Florian Philippot",
+  toString : "florianPhilippot",
+  id:7,
+  relatedMemes : [],
+  relatedEvents: [],
+  children: [
+  ],
+  x:1400,
+  y:300
+}
+
+var allPeople = [donaldTrump, hillaryClinton, andrewYang, bernieSanders, shiaLaboeuf, marineLePen, jeanLucMelenchon, florianPhilippot];

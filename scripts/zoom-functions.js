@@ -10,6 +10,7 @@ window.onload = function() {
     center: true,
   });
   panZoomMainGroup.disablePan();
+  panZoomMainGroup.setMaxZoom(1);
 };
 function panTimeline(val) {
   panZoomMainGroup.pan({x:-((val/220)*viewWidth),y:0})

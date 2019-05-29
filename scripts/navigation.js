@@ -85,7 +85,7 @@ function toggleLabels(){
     labelsWrapper.classList.remove('collapsed');
     labelsWrapper.classList.add('expanded');
     addLabels();
-    buttonInfoSpan.setAttribute('style', buttonInfoActive);
+    buttonInfoSpan.classList.toggle("button-info-span-active");
   }
   else if (labelsWrapper.classList[1] == 'expanded') {
     turnOffLabels();
@@ -98,6 +98,6 @@ function turnOffLabels(){
     labelsWrapper.classList.add('collapsed');
     labelsWrapper.style.display = "none";
     labelsBox.innerHTML ='';
-    buttonInfoSpan.setAttribute('style', buttonInfoInactive);
+    buttonInfoSpan.classList.toggle("button-info-span-active");
   }
 };
