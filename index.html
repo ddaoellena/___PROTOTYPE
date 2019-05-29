@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./stylesheets/main.css">
   </head>
   <body>
+    <!-- open /Applications/Google\ Chrome.app/ --args --allow-file-access-from-files -->
     <!-- MENUS -->
     <div class="menu menu-left menu-filter" id="menu-left">
       <div class="menu-button button-events menu-square pointer" onclick="addAllCircles(allEvents); toggleMenu(this);">
@@ -27,7 +28,6 @@
         </div>
       </div>
     </div>
-
     <div class="slider-zoom-wrapper">
       <input type="range" min="1" max="100" value="100" class="slider zoom-slider" id='zoom-slider' onchange="zoomTimeline(this.value);">
     </div>
@@ -41,7 +41,6 @@
       </div>
       </div>
     </div>
-
     <div class="menu-bottom slider-timeline">
       <input type="range" min="1" max="100" value="0" class="slider pan-slider" id='pan-slider' onchange="panTimeline(this.value);">
     </div>
