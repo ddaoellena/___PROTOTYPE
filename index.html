@@ -10,13 +10,15 @@
   <body>
     <!-- open /Applications/Google\ Chrome.app/ --args --allow-file-access-from-files -->
     <!-- MENUS -->
-    <div class="menu menu-left menu-filter" id="menu-left">
+    <div class="menu menu-left menu-filter nav-elems" id="menu-left">
+      <div class="menu-button button-memes menu-square pointer" onclick="d3Init(memesData); toggleMenu(this);">
+        <div class="highlight-box menu-square"><div class="circle-button circle-memes memes-color"></div></div></div>
+      <div class="menu-button button-medias menu-square pointer" onclick="d3Init(mediasData); toggleMenu(this);">
+        <div class="highlight-box menu-square"><div class="circle-button circle-medias medias-color"></div></div></div>
       <div class="menu-button button-events menu-square pointer" onclick="addAllCircles(allEvents); toggleMenu(this);">
         <div class="highlight-box menu-square"><div class="circle-button circle-events events-color"></div></div></div>
       <div class="menu-button button-people menu-square pointer" onclick="addAllCircles(allPeople); toggleMenu(this);">
         <div class="highlight-box menu-square"><div class="circle-button circle-people people-color"></div></div></div>
-      <div class="menu-button button-memes menu-square pointer" onclick="addAllCircles(allMemes); toggleMenu(this);">
-        <div class="highlight-box menu-square"><div class="circle-button circle-memes memes-color"></div></div></div>
       <div class="menu-button button-filter menu-square pointer" id="button-filter" onclick="toggleFilter()">
         <div class="highlight-box menu-square"></div></div>
       <div class="filter-box-wrapper collapsed" id="filter-box-wrapper">
@@ -28,29 +30,26 @@
         </div>
       </div>
     </div>
-    <div class="slider-zoom-wrapper">
+    <div class="zoom-slider-wrapper nav-elems">
       <input type="range" min="1" max="100" value="100" class="slider zoom-slider" id='zoom-slider' onchange="zoomTimeline(this.value);">
     </div>
-    <div class="menu menu-right">
+    <div class="menu menu-right nav-elems">
       <div class="button-info" onclick="toggleLabels()"><p class="button-info-span text" id="button-info-span">?</p>
-      <div class="labels-box-wrapper collapsed" id="labels-box-wrapper">
-        <p class="label-info">Légende</p>
-        <div class="labels-box" id="labels-box">
-          </div>
+        <div class="labels-box-wrapper collapsed" id="labels-box-wrapper">
+          <p class="label-info">Légende</p>
+          <div class="labels-box" id="labels-box"></div>
         </div>
       </div>
-      </div>
     </div>
-    <div class="menu-bottom slider-timeline">
+    <div class="menu-bottom pan-slider-wrapper nav-elems">
       <input type="range" min="1" max="100" value="0" class="slider pan-slider" id='pan-slider' onchange="panTimeline(this.value);">
     </div>
     <!--- END MENU --->
 
     <!-- SVG -->
-    <div class="svg-wrapper" id="svg-wrapper" onclick="toggleOffFilter();turnOffLabels()">
-    </div>
-    <div class="pop-up-wrapper" id="pop-up-wrapper">
-    </div>
+    <div class="svg-coor-wrapper" id="svg-coor-wrapper" onclick="toggleOffFilter();turnOffLabels()"></div>
+    <div class="svg-wrapper" id="svg-wrapper" onclick="toggleOffFilter();turnOffLabels()"></div>
+    <div class="pop-up-wrapper" id="pop-up-wrapper"></div>
     <!---------->
 
     <!-- SIDE SHADOWS DIVS -->
@@ -99,6 +98,8 @@
   <script src="./assets/data/2-people.js" charset="utf-8"></script>
   <script src="./assets/data/3-medias.js" charset="utf-8"></script>
   <script src="./assets/data/4-links.js" charset="utf-8"></script>
+  <script src="./assets/data/a-memes.js" charset="utf-8"></script>
+  <script src="./assets/data/b-medias.js" charset="utf-8"></script>
   <script src="./assets/data/link-types.js" charset="utf-8"></script>
   <script src="./assets/data/misc-data.js" charset="utf-8"></script>
   <!-- Frameworks files -->
@@ -106,15 +107,15 @@
   <script src="./libs/jquery-3.4.1.min.js" charset="utf-8"></script>
   <script src="./libs/svg.min.js" charset="utf-8"></script>
   <script src="./libs/svg-pan-zoom.min.js"></script>
-  <!-- <script src="./libs/d3.min.js" charset="utf-8"></script> -->
+  <script src="https://d3js.org/d3.v5.min.js"></script>
   <!-- Main scripts files -->
   <script src="./scripts/init-functions.js" charset="utf-8"></script>
   <script src="./scripts/init-svg.js" charset="utf-8"></script>
   <script src="./scripts/svg-circles.js" charset="utf-8"></script>
   <script src="./scripts/svg-functions.js" charset="utf-8"></script>
+  <script src="./scripts/d3-functions.js" charset="utf-8"></script>
   <script src="./scripts/navigation.js" charset="utf-8"></script>
   <script src="./scripts/generate-content.js" charset="utf-8"></script>
-  <script src="./scripts/misc-functions.js" charset="utf-8"></script>
   <script src="./scripts/zoom-functions.js" charset="utf-8"></script>
 
 </html>

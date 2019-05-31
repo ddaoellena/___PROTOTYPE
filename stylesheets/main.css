@@ -59,6 +59,9 @@ p{
 /*
 * menus
 */
+.nav-elems{
+  z-index: 1000;
+}
 .menu{
   position: fixed;
   top: 12px;
@@ -243,7 +246,7 @@ transition: opacity .2s;
 .pan-slider::-webkit-slider-thumb:focus{
   opacity: 1;
 }
-.slider-zoom-wrapper{
+.zoom-slider-wrapper{
   position: fixed;
   top: 12px;
   right: 50px;
@@ -320,7 +323,7 @@ transition: opacity .2s;
   position: absolute;
   background-color: #272727;
   left: 0px;
-  bottom: -65%;
+  bottom: -80%;
   border-top: solid 1px rgba(255, 255, 255, 0.33);
   width: 100%;
   height: 90%;

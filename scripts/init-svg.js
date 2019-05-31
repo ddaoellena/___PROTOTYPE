@@ -26,12 +26,12 @@ var filterBlur = '<filter id="fBlur" x="-100%" y="-100%" width="300%" height="30
 var filterGray = '<filter id="fGray"><feColorMatrix type="matrix" values="0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0"/></filter>';
 mainSvgDefs.innerHTML = filterBlur + filterGray;
 
+var coorDraw = SVG('svg-coor-wrapper').size(vw, vh).attr({id:'coor-svg'}).viewbox(0,0,vw,vh);
 /*
 * function drawDotsTimeline()
 * @params cw, ch space between dots
 * can change variables inside the function
 */
-var r = 1;
 var cw = cw;
 var ch = ch;
 var heightOffset = 0;
@@ -43,57 +43,86 @@ function setHeightOffset(){
   }
 }
 window.onload = setHeightOffset();
-var coorGroup = draw.group().attr({class:'coor-svg-group', id:'coor-svg-group'});
 
-function cleanSvg(){
-  var mainSvg = document.getElementById('main-svg');
-  mainSvg.innerHTML = '';
-}
-function drawDotsTimeline(cw, ch) {
-  var group = draw.group().attr({class:'grid dot-grid', id:'dot-grid'});
-  for (var x = 20; x < viewWidth; x+=cw) {
-    for (var y = 20; y < vh*0.6; y+=ch) {
-      var circle = draw.circle(r).attr({fill:'#C4C4C4', cx:x, cy:y});
-      group.add(circle);
-      coorGroup.add(group);
+
+
+function drawTimeline(l){
+  const r = 1;
+  var timelineGroup = coorDraw.group().attr({class:'timeline-svg-group', id:'timeline-svg-group'});
+  timelineGroup.attr({"visibility":"hidden"});
+
+  var dates = ["2016", "2017", "2018", "2019", "2020", "2021"];
+  var dotGroup = draw.group().attr({class:'grid dot-grid', id:'dot-grid'});
+
+  for (var x = 20; x < viewWidth; x+=l) {
+    for (var y = 20; y < vh*0.6; y+=l) {
+      var circle = coorDraw.circle(r).attr({fill:'#C4C4C4', cx:x, cy:y});
+      dotGroup.add(circle);
+      timelineGroup.add(dotGroup);
     }
   }
-  group.move(0, heightOffset);
-}
-drawDotsTimeline(20,20);
+  dotGroup.move(0, heightOffset);
 
-function drawTimeline(cw){
-  var dates = ["2016", "2017", "2018", "2019", "2020", "2021"];
-  var group = draw.group().attr({class:'timeline', id:'timeline'});
+  var tlGroup = coorDraw.group().attr({class:'timeline', id:'timeline'});
   var dateOff = 100;
-  for (var x = cw; x < viewWidth; x+=cw) {
-    var line = draw.line(0, 0, 0, 20).move(x, vh*0.625);
+  for (var x = l; x < viewWidth; x+=l) {
+    var line = coorDraw.line(0, 0, 0, 20).move(x, vh*0.625);
     line.stroke({color: '#BFBFBF', width : 1});
-    group.add(line);
+    tlGroup.add(line);
   }
   for (var i = 0; i < dates.length; i++) {
-    var dateLine = draw.line(0, 0, 0, 30).move(dateOff + cw*24*i, vh*0.625);
+    var dateLine = coorDraw.line(0, 0, 0, 30).move(dateOff + l*24*i, vh*0.625);
     dateLine.stroke({color: '#BFBFBF', width : 2});
     var dateText = draw.text(dates[i]);
-    dateText.font({ fill: '#fff', anchor: 'middle'}).move(dateOff + cw*24*i, vh*0.625 + 35);
-    group.add(dateLine).add(dateText);
+    dateText.font({ fill: '#fff', anchor: 'middle'}).move(dateOff + l*24*i, vh*0.625 + 35);
+    tlGroup.add(dateLine).add(dateText);
   }
-  coorGroup.add(group);
-  // group.move(0, heightOffset/2);
+  timelineGroup.add(tlGroup);
 }
-drawTimeline(20);
+  drawTimeline(20);
 
-
+function toggleTimeline(a){
+  var timelineGroup = document.getElementById('timeline-svg-group');
+  switch (a) {
+    case 0:
+      timelineGroup.setAttribute('visibility', 'hidden');
+      break;
+    case 1:
+      timelineGroup.setAttribute('visibility', 'visible');
+      break;
+    default:
+  }
+}
 function addAllCircles(type){
-cleanCircles();
- for (var i = 0; i < type.length; i++) {
-   addCircle(type[i], 0);
- }
+  cleanSvg();
+  cleanCircles();
+  switch (type) {
+    case allEvents:
+      toggleTimeline(1);
+      break;
+    case allPeople:
+      toggleTimeline(0);
+      break;
+    default:
+
+  }
+   for (var i = 0; i < type.length; i++) {
+
+     addCircle(type[i], 0);
+   }
 }
+
 function cleanCircles(){
-  var wrappers = document.getElementsByClassName('wrapper-group');
-  for (var i = 0; i < wrappers.length; i++) {
-    $('.wrapper-group').remove();
+  $('.wrapper-group').remove();
+  $('.clip-path').remove();
+}
+
+function cleanSvg(){
+  var mainSvg = $('#main-svg');
+  var mainSvgChildren = mainSvg.children();
+  for (var i = 1; i < mainSvgChildren.length; i++) {
+    mainSvgChildren[i].remove();
+    console.log(mainSvgChildren[i]);
   }
 }
 /*
@@ -166,8 +195,3 @@ function colorOff(el){
     el.childNodes[2].setAttribute("filter", "url(#fGray)");
   }
 }
-
-// var rect =  draw.rect(200,200).attr({cx:200,cy:200, fill:"#D712D1"});
-// rect.animate().move(200,200);
-// rect.pause();
-// rect.mouseover(function() { this.play() })

@@ -4,9 +4,6 @@
 * @params type, {int}, 0 = meme, 1 = event, 2 = people, 3 = site
 * @params {img}, string
 */
-var elemsGroup = draw.group().attr({class:'elems-group', id:'elems-group'});
-
-
 var dis = 80;
 var disAdj = Math.sqrt(dis)*7;
 var radAdj = 67.5 * (Math.PI/180);
@@ -20,6 +17,7 @@ var rBlurSecond = r*0.5;
 var imgVisibility = "visible";
 
 function addCircle(obj, expand){
+  var elemsGroup = draw.group().attr({class:'elems-group', id:'elems-group'});
   var state = "",
       stroke = "";
 
@@ -59,7 +57,7 @@ function addCircle(obj, expand){
   var parentCircle = draw.circle(r).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:obj.x, cy:obj.y});
   /*create clip for images*/
   var circleClip = draw.circle(r).attr({fill:'#FFFFFF', cx:obj.x, cy:obj.y});
-  var parentClip = draw.clip().add(circleClip);
+  var parentClip = draw.clip().add(circleClip).attr({class:'clip-path'});
   var parentImage = draw.image('./assets/pics/'+obj.folder+'/'+obj.imgThumbnail, r, r);
   parentImage.attr({class:'cirle-image', filter:'url(#fGray)'});
   parentImage.move(obj.x-r/2, obj.y-r/2);
@@ -127,8 +125,8 @@ function addCircle(obj, expand){
     var firstCircleGroupBlur = draw.circle(rBlurFirst).attr({fill:obj.children[i].color, class:'circle-blur', cx:obj.x+placeCircle(pos[i])[0], cy:obj.y+placeCircle(pos[i])[1], filter: 'url(#fBlur)'});
     var firstCircle = draw.circle(rFirst).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:obj.x+placeCircle(pos[i])[0], cy:obj.y+placeCircle(pos[i])[1]});
     /*create clip for images*/
-    var firstCircleClip = draw.circle(rFirst).attr({fill:'#FFFFFF', cx:obj.x+placeCircle(pos[i])[0], cy:obj.y+placeCircle(pos[i])[1]});
-    var firstClip = draw.clip().add(firstCircleClip);
+    var firstCircleClip = draw.circle(rFirst).attr({fill:'#FFFFFF', cx:obj.x+placeCircle(pos[i])[0], cy:obj.y+placeCircle(pos[i])[1], class:'clip-path'});
+    var firstClip = draw.clip().add(firstCircleClip).attr({class:'clip-path'});
     var firstImage = draw.image('./assets/pics/'+obj.children[i].folder+'/'+obj.children[i].imgThumbnail, rFirst, rFirst);
     firstImage.attr({class:'cirle-image', filter:'url(#fGray)', "visibility": imgVisibility});
     firstImage.move(obj.x+placeCircle(pos[i])[0]-rFirst/2, obj.y+placeCircle(pos[i])[1]-rFirst/2);
@@ -174,8 +172,8 @@ function addCircle(obj, expand){
            var secondCircleGroupBlur = draw.circle(rBlurSecond).attr({fill:obj.children[i].children[j].color, cx:childX+placeCircle(pos[i])[0]*0.75, cy:childY+placeCircle(pos[i])[1]*0.75, filter:'url(#fBlur)'})
            var secondCircle = draw.circle(rSecond).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:childX+placeCircle(pos[i])[0]*0.75, cy:childY+placeCircle(pos[i])[1]*0.75});
            /*create clip for images*/
-           var secondCircleClip = draw.circle(rSecond).attr({fill:'#FFFFFF', cx:childX+placeCircle(pos[i])[0]*0.75, cy:childY+placeCircle(pos[i])[1]*0.75});
-           var secondClip = draw.clip().add(secondCircleClip);
+           var secondCircleClip = draw.circle(rSecond).attr({fill:'#FFFFFF', cx:childX+placeCircle(pos[i])[0]*0.75, cy:childY+placeCircle(pos[i])[1]*0.75, class:'clip-path'});
+           var secondClip = draw.clip().add(secondCircleClip).attr({class:'clip-path'});
            var secondImage = draw.image('./assets/pics/'+obj.children[i].children[j].folder+'/'+obj.children[i].children[j].imgThumbnail, rSecond, rSecond);
            secondImage.attr({class:'cirle-image', filter:'url(#fGray)', "visibility": imgVisibility});
            secondImage.move(childX+placeCircle(pos[i])[0]*0.75-rSecond/2, childY+placeCircle(pos[i])[1]*0.75-rSecond/2);
@@ -197,14 +195,10 @@ function addCircle(obj, expand){
   wrapperGroup.add(parentGroup);
 
   elemsGroup.add(wrapperGroup);
-  return{
-    test:test
-  }
-
 
 }
 /*
-* function addRelatedCircles()
+* function placeCircle()
 * create circle of related elements to the obj
 * @params obj, object; d, distance from the core obj
 *   8 1 2
@@ -252,11 +246,7 @@ function toggleThisCircle(el){
       addCircle(obj, 1);
       break;
 
-    // case :
-    //
-    //   break;
     default:
 
   }
 }
-var add = addCircle(donaldTrump, 0);

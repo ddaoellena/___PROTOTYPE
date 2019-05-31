@@ -1,8 +1,9 @@
 var popUpWrapper = document.getElementById('pop-up-wrapper');
-var popUp = draw.group().attr({class:'pop-up-group', id:'pop-up-group'})
-var popUpGroup = document.getElementById('pop-up-group');;
+var popUpGroup = document.getElementById('pop-up-group');
 
 function addPopUp(el, link){
+  var popUp = draw.group().attr({class:'pop-up-group', id:'pop-up-group'});
+
   var x = el.cx.baseVal.value,
       y = el.cy.baseVal.value,
       divX = el.getBoundingClientRect().x,
