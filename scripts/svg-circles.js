@@ -10,6 +10,7 @@ var radAdj = 67.5 * (Math.PI/180);
 var r = 50;
 var rBlur = r;
 var rLink = 12;
+var opacityLink = 1;
 var rFirst = r*0.75;
 var rSecond = r*0.5;
 var rBlurFirst = r*0.75;
@@ -29,6 +30,7 @@ function addCircle(obj, expand){
       rSecond = r*0.25;
       rBlurFirst = r*0.5;
       rBlurSecond = r*0.25;
+      opacityLink = 0.33;
       imgVisibility = "hidden";
       state = "collapsed";
       stroke = "";
@@ -40,6 +42,7 @@ function addCircle(obj, expand){
       rSecond = r*0.5;
       rBlurFirst = r*0.75;
       rBlurSecond = r*0.5;
+      opacityLink = 1;
       imgVisibility = "visible";
       state = "expanded";
       stroke = "active";
@@ -51,7 +54,7 @@ function addCircle(obj, expand){
   * Parent group
   */
   var wrapperGroup = draw.group().attr({class:state+ ' wrapper-group', id:obj.toString+'-group', onclick: 'toggleThisCircle(this)', 'data-id':obj.toString});
-  var parentGroup = draw.group().attr({id:obj.toString+'-parent',class:'circle '+obj.circleClass+' generated parent pointer '+stroke, 'onclick':'toggleCircle(this); '+'appendInfo('+obj.toString+');', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
+  var parentGroup = draw.group().attr({id:obj.toString+'-parent',class:'circle '+obj.circleClass+' generated parent pointer '+stroke, 'onclick':'toggleCircle(this); toggleInfoDiv(1);'+'appendInfo('+obj.toString+');', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
   var parentBlur = draw.circle(rBlur).attr({fill:obj.color, class:'circle-blur', cx:obj.x, cy:obj.y, filter: 'url(#fBlur)'})
 
   var parentCircle = draw.circle(r).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:obj.x, cy:obj.y});
@@ -102,6 +105,7 @@ function addCircle(obj, expand){
       break;
     default:
   }
+
   /*
   * First children group
   */
@@ -114,14 +118,17 @@ function addCircle(obj, expand){
     */
     var firstLinkGroup = draw.group().attr({class:'generated link-group'});
     var firstLinkLine = draw.line(obj.x, obj.y, obj.x+placeCircle(pos[i])[0], obj.y+placeCircle(pos[i])[1]);
-    firstLinkLine.stroke({ color: '#888888', width: 1, linecap: 'round'});
-    var firstLinkCircle = draw.circle(rLink).attr({class:'link-circle pointer', fill:'#C4C4C4', 'fill-opacity':"1", cx:obj.x+(placeCircle(pos[i])[0]/2), cy:obj.y+(placeCircle(pos[i])[1]/2), "onclick": "addPopUp(this,"+ obj.children[i].linkToString +")"});
-    firstLinkGroup.add(firstLinkLine).add(firstLinkCircle);
+    firstLinkLine.stroke({ color: obj.children[i].linkColor, width: 1, linecap: 'round', opacity:opacityLink});
+    // var firstLinkLineBlur = draw.line(obj.x, obj.y, obj.x+placeCircle(pos[i])[0], obj.y+placeCircle(pos[i])[1]);
+    // firstLinkLineBlur.stroke({ color: obj.children[i].linkColor, width: 3, linecap: 'round', opacity:opacityLink/3});
+    var firstLinkCircle = draw.circle(rLink).attr({class:'link-circle pointer '+ obj.children[i].linkClass, fill:'#C4C4C4', 'fill-opacity':"0.66", cx:obj.x+(placeCircle(pos[i])[0]/2), cy:obj.y+(placeCircle(pos[i])[1]/2), "onclick": "addPopUp(this,"+ obj.children[i].linkToString +")"});
+    var firstLinkCircleBlur = draw.circle(rLink*1.2).attr({class:'link-circle-blur', fill:obj.children[i].linkColor, 'fill-opacity':"1", cx:obj.x+(placeCircle(pos[i])[0]/2), cy:obj.y+(placeCircle(pos[i])[1]/2), filter: 'url(#fBlur)'});
+    firstLinkGroup.add(firstLinkLine).add(firstLinkCircleBlur).add(firstLinkCircle);
     firstChildrenGroup.add(firstLinkGroup);
     /*
     * First children circle group
     */
-    var firstCircleGroup = draw.group().attr({class:'circle '+obj.children[i].circleClass+' generated children pointer','onclick':'toggleCircle(this); '+'appendInfo('+obj.children[i].toString+');', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
+    var firstCircleGroup = draw.group().attr({class:'circle '+obj.children[i].circleClass+' generated children pointer','onclick':'toggleCircle(this); toggleInfoDiv(1);'+'appendInfo('+obj.children[i].toString+');', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
     var firstCircleGroupBlur = draw.circle(rBlurFirst).attr({fill:obj.children[i].color, class:'circle-blur', cx:obj.x+placeCircle(pos[i])[0], cy:obj.y+placeCircle(pos[i])[1], filter: 'url(#fBlur)'});
     var firstCircle = draw.circle(rFirst).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:obj.x+placeCircle(pos[i])[0], cy:obj.y+placeCircle(pos[i])[1]});
     /*create clip for images*/
@@ -163,14 +170,16 @@ function addCircle(obj, expand){
 
            var secondLinkGroup = draw.group().attr({class:'generated link-group'});
            var secondLinkLine = draw.line(childX, childY, childX+placeCircle(pos[i])[0]*0.75, childY+placeCircle(pos[i])[1]*0.75);
-           secondLinkLine.stroke({ color: '#888888', width: 1, linecap: 'round'});
-           var secondLinkCircle = draw.circle(rLink).attr({class:'link-circle pointer ' + classRotation[j] , fill:'#C4C4C4','fill-opacity':"1", cx:childX+(placeCircle(pos[i])[0]/2)*0.75, cy:childY+(placeCircle(pos[i])[1]/2)*0.75, "onclick": "addPopUp(this,"+ obj.children[i].children[j].linkToString +")"});
-           secondLinkGroup.add(secondLinkLine).add(secondLinkCircle);
+           secondLinkLine.stroke({ color: obj.children[i].children[j].linkColor, width: 1, linecap: 'round', opacity:opacityLink});
+           var secondLinkCircle = draw.circle(rLink).attr({class:'link-circle pointer ' + classRotation[j] + ' '+ obj.children[i].children[j].linkClass, fill:'#C4C4C4','fill-opacity':"0.66", cx:childX+(placeCircle(pos[i])[0]/2)*0.75, cy:childY+(placeCircle(pos[i])[1]/2)*0.75, "onclick": "addPopUp(this,"+ obj.children[i].children[j].linkToString +")"});
+           var secondLinkCircleBlur = draw.circle(rLink*1.2).attr({class:'link-circle-blur ' + classRotation[j] , fill:obj.children[i].children[j].linkColor,'fill-opacity':".75", cx:childX+(placeCircle(pos[i])[0]/2)*0.75, cy:childY+(placeCircle(pos[i])[1]/2)*0.75, filter: 'url(#fBlur)'});
+
+           secondLinkGroup.add(secondLinkLine).add(secondLinkCircleBlur).add(secondLinkCircle);
            secondLinkGroup.rotate(rotation[j],childX,childY);
            secondChildrenGroup.add(secondLinkGroup);
-           var secondCircleGroup = draw.group().attr({class:'circle '+obj.children[i].children[j].circleClass+' generated children pointer','onclick':'toggleCircle(this); '+'appendInfo('+obj.children[i].children[j].toString+');', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
+           var secondCircleGroup = draw.group().attr({class:'circle '+obj.children[i].children[j].circleClass+' generated children pointer','onclick':'toggleCircle(this); toggleInfoDiv(1);'+'appendInfo('+obj.children[i].children[j].toString+');', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
            var secondCircleGroupBlur = draw.circle(rBlurSecond).attr({fill:obj.children[i].children[j].color, cx:childX+placeCircle(pos[i])[0]*0.75, cy:childY+placeCircle(pos[i])[1]*0.75, filter:'url(#fBlur)'})
-           var secondCircle = draw.circle(rSecond).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:childX+placeCircle(pos[i])[0]*0.75, cy:childY+placeCircle(pos[i])[1]*0.75});
+           var secondCircle = draw.circle(rSecond).attr({fill:'#C4C4C4', 'fill-opacity':"1", cx:childX+placeCircle(pos[i])[0]*0.75, cy:childY+placeCircle(pos[i])[1]*0.75});
            /*create clip for images*/
            var secondCircleClip = draw.circle(rSecond).attr({fill:'#FFFFFF', cx:childX+placeCircle(pos[i])[0]*0.75, cy:childY+placeCircle(pos[i])[1]*0.75, class:'clip-path'});
            var secondClip = draw.clip().add(secondCircleClip).attr({class:'clip-path'});
@@ -238,14 +247,12 @@ function placeCircle(d){
 
 
 function toggleThisCircle(el){
-
   var obj = window[el.dataset.id];
   switch (el.classList[0]) {
     case "collapsed":
       el.remove();
       addCircle(obj, 1);
       break;
-
     default:
 
   }

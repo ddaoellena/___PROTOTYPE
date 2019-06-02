@@ -13,8 +13,9 @@ var usa2016 = {
     { type: 2, //hillaryClinton
       id:1,
       link : 15,
-      children :[{type:0,id:3,link: 4}, //Pizzagate
-                 {type:3,id:0,link: 22}] //4chan
+      children :[{type:0,id:3,link: 4}, //Pizzagate sabotage
+                 {type:3,id:0,link: 22},//4chan
+                 {type:0,id:0,link: 4}] //Pepe sabotage
     },
     { type: 2, //bernieSanders
       id:3,

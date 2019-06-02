@@ -1,25 +1,25 @@
 const mediasData = {
   nodes : [
+    /* MEDIAS */
+    {id:'meme-1', name:"m", objToString:"fourChan", folder:"./assets/pics/3-medias/",img: '00-fourChan.png', size:'big', type:'media'},
+		{id:'meme-2', name:"", objToString:"pepe", folder:"./assets/pics/3-medias/",img: '00-fourChan.png', size:'big', type:'media'},
     /* MEMES */
-    {id:'meme-1', group:1, hasImg: true, img: 'default.png', size:'big', type:'meme'},
-		{id:'meme-2', group:2, hasImg: true, img: 'default.png', size:'big', type:'meme'},
-    /* MEDIA */
-    {id:'media-1', group:2, size:'medium', type:'media'},
-		{id:'media-2', group:3, size:'medium', type:'media'},
-		{id:'media-3', group:4, size:'medium', type:'media'},
-    {id:'media-4', group:2, size:'medium', type:'media'},
-    {id:'media-5', group:4, size:'medium', type:'media'},
-    {id:'media-6', group:4, size:'medium', type:'media'},
-    {id:'media-7', group:4, size:'medium', type:'media'},
-    {id:'media-8', group:4, size:'medium', type:'media'},
-    {id:'media-9', group:4, size:'medium', type:'media'},
-    {id:'media-10', group:4, size:'medium', type:'media'},
-    {id:'media-11', group:4, size:'medium', type:'media'},
-    {id:'media-12', group:4, size:'medium', type:'media'},
-    {id:'media-13', group:4, size:'medium', type:'media'},
-    {id:'media-14', group:4, size:'medium', type:'media'},
-    {id:'media-15', group:4, size:'medium', type:'media'},
-    {id:'media-16', group:4, size:'medium', type:'media'}
+    {id:'media-1', size:'medium', type:'meme'},
+		{id:'media-2', size:'medium', type:'meme'},
+		{id:'media-3', size:'medium', type:'meme'},
+    {id:'media-4', size:'medium', type:'meme'},
+    {id:'media-5', size:'medium', type:'meme'},
+    {id:'media-6', size:'medium', type:'meme'},
+    {id:'media-7', size:'medium', type:'media'},
+    {id:'media-8', size:'medium', type:'media'},
+    {id:'media-9', size:'medium', type:'media'},
+    {id:'media-10', size:'medium', type:'media'},
+    {id:'media-11', size:'medium', type:'media'},
+    {id:'media-12', size:'medium', type:'media'},
+    {id:'media-13', size:'medium', type:'media'},
+    {id:'media-14', size:'medium', type:'media'},
+    {id:'media-15', size:'medium', type:'media'},
+    {id:'media-16', size:'medium', type:'media'}
     /* PEOPLE */
   ],
   links: [

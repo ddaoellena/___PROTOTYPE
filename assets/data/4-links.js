@@ -7,6 +7,7 @@ var memeEvolueMeme = {
   id:0,
   type: 0,
   description : "Le meme évolue d'un meme.",
+  alignment: "neutral",
   imgThumbnail: ""
 }
 var memeInfluenceMeme = {
@@ -15,6 +16,7 @@ var memeInfluenceMeme = {
   id:1,
   type: 0,
   description : "Le meme influence un meme",
+  alignment:"neutral",
   imgThumbnail: ""
 }
 var memeSabotageEvent = {
@@ -23,6 +25,7 @@ var memeSabotageEvent = {
   id:2,
   type: 1,
   description : "Le meme sabote l'événement.",
+  alignment:"bad",
   imgThumbnail: ""
 }
 var memeSoutienPeople = {
@@ -31,6 +34,7 @@ var memeSoutienPeople = {
   id:3,
   type: 2,
   description : "Le meme soutient la personnalité.",
+  alignment:"good",
   imgThumbnail: ""
 }
 var memeSabotagePeople = {
@@ -39,6 +43,7 @@ var memeSabotagePeople = {
   id:4,
   type: 2,
   description : "Le meme sabote la personnalité.",
+  alignment:"bad",
   imgThumbnail: ""
 }
 var memeVehiculePeople = {
@@ -47,6 +52,7 @@ var memeVehiculePeople = {
   id:5,
   type: 2,
   description : "Le meme véhicule les idées de la personnalité.",
+  alignment:"good",
   imgThumbnail: ""
 }
 var memeAttaqueMedia = {
@@ -55,6 +61,7 @@ var memeAttaqueMedia = {
   id:6,
   type: 3,
   description : "Le meme attaque le média.",
+  alignment:"bad",
   imgThumbnail: ""
 }
 /* ----------------------- */
@@ -67,6 +74,7 @@ var eventCreeMeme = {
   id:7,
   type: 4,
   description : "L'événement crée le meme.",
+  alignment:"good",
   imgThumbnail: ""
 }
 var eventRelaieMeme = {
@@ -75,6 +83,7 @@ var eventRelaieMeme = {
   id:8,
   type: 4,
   description : "L'événement relaie le meme.",
+  alignment:"good",
   imgThumbnail: ""
 }
 var eventReactionEvent = {
@@ -83,6 +92,7 @@ var eventReactionEvent = {
   id:9,
   type: 5,
   description : "L'évenement est en réaction par rapport à un autre évenement.",
+  alignment:"bad",
   imgThumbnail: ""
 }
 var eventAttaquePeople = {
@@ -91,6 +101,7 @@ var eventAttaquePeople = {
   id:10,
   type: 6,
   description : "L'évenement s'attaque à une personnalité.",
+  alignment:"bad",
   imgThumbnail: ""
 }
 
@@ -104,6 +115,7 @@ var peopleReappropriationMeme = {
   id:11,
   type: 8,
   description : "La personnalité s'est réapproprié le meme.",
+  alignment:"good",
   imgThumbnail: ""
 }
 var peopleAnalyseMeme = {
@@ -112,6 +124,7 @@ var peopleAnalyseMeme = {
   id:12,
   type: 8,
   description : "La personnalité a documenté et analysé le meme.",
+  alignment:"good",
   imgThumbnail: ""
 }
 var peopleOrganiseEvent = {
@@ -120,6 +133,7 @@ var peopleOrganiseEvent = {
   id:13,
   type: 9,
   description : "La personnalité a organisé l'événement.",
+  alignment:"good",
   imgThumbnail: ""
 }
 var peopleDocumentationEvent = {
@@ -128,6 +142,7 @@ var peopleDocumentationEvent = {
   id:14,
   type: 9,
   description : "La personnalité a documenté l'événement.",
+  alignment:"good",
   imgThumbnail: ""
 }
 var peopleParticipeEvent = {
@@ -136,14 +151,16 @@ var peopleParticipeEvent = {
   id:15,
   type: 9,
   description : "La personnalité a participé à l'événement.",
+  alignment:"neutral",
   imgThumbnail: ""
 }
 var peopleAttaquePeople = {
   name :"Attaque",
-  toString : "peopleCritiquePeople",
+  toString : "peopleAttaquePeople",
   id:16,
   type: 10,
   description : "La personnalité a attaqué une autre personnalité.",
+  alignment:"bad",
   imgThumbnail: ""
 }
 /* ----------------------- */
@@ -156,8 +173,8 @@ var mediaCreeMeme = {
   id:17,
   type: 12,
   description : "Le média est à l'origine du meme.",
-  imgThumbnail: "",
-  img:''
+  alignment:"good",
+  imgThumbnail: ""
 }
 var mediaVehiculeMeme = {
   name :"Véhicule",
@@ -165,8 +182,8 @@ var mediaVehiculeMeme = {
   id:18,
   type: 12,
   description : "Le média véhicule le meme.",
-  imgThumbnail: "",
-  img:''
+  alignment:"good",
+  imgThumbnail: ""
 }
 var mediaVehiculeEvent = {
   name :"Sabote",
@@ -174,8 +191,8 @@ var mediaVehiculeEvent = {
   id:19,
   type: 13,
   description : "Le site véhicule l'événement.",
-  imgThumbnail: "",
-  img:''
+  alignment:"good",
+  imgThumbnail: ""
 }
 var mediaSaboteEvent = {
   name :"Sabote",
@@ -183,8 +200,8 @@ var mediaSaboteEvent = {
   id:20,
   type: 13,
   description : "Le site sabote l'événement.",
-  imgThumbnail: "",
-  img:''
+  alignment:"bad",
+  imgThumbnail: ""
 }
 var mediaSoutienPeople = {
   name :"Soutien",
@@ -192,8 +209,8 @@ var mediaSoutienPeople = {
   id:21,
   type: 14,
   description : "Le site soutient la personnalité.",
-  imgThumbnail: "",
-  img:''
+  alignment:"good",
+  imgThumbnail: ""
 }
 var mediaSabotePeople = {
   name :"Sabote",
@@ -201,8 +218,8 @@ var mediaSabotePeople = {
   id:22,
   type: 14,
   description : "Le site sabote la personnalité.",
-  imgThumbnail: "",
-  img:''
+  alignment:"bad",
+  imgThumbnail: ""
 }
 var mediaAttaqueMedia = {
   name :"Attaque",
@@ -210,8 +227,8 @@ var mediaAttaqueMedia = {
   id:23,
   type: 15,
   description : "Le site attaque un autre site.",
-  imgThumbnail: "",
-  img:''
+  alignment:"bad",
+  imgThumbnail: ""
 }
 
 /* ----------------------- */

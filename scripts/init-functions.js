@@ -100,6 +100,8 @@ function addChildrenToObject(obj){
       }
 
       objChildren[i].linkToString = allLinks[objChildren[i].link].toString;
+      objChildren[i].linkColor = allLinks[objChildren[i].link].color;
+      objChildren[i].linkClass = allLinks[objChildren[i].link].linkClass;
 
       if (typeof objChildren[i].children !== 'undefined') {
         for (var j = 0; j < objChildren[i].children.length; j++) {
@@ -139,6 +141,8 @@ function addChildrenToObject(obj){
             default:
           }
           objChildren[i].children[j].linkToString = allLinks[objChildren[i].children[j].link].toString;
+          objChildren[i].children[j].linkColor = allLinks[objChildren[i].children[j].link].color;
+          objChildren[i].children[j].linkClass = allLinks[objChildren[i].children[j].link].linkClass;
         }
       }
     }
@@ -150,7 +154,27 @@ function addTypeToLinks(){
     allLinks[i].secondColor = allLinkTypes[allLinks[i].type].secondColor;
   }
 }
+function addColorToLinks(){
+  for (var i = 0; i < allLinks.length; i++) {
+    switch (allLinks[i].alignment) {
+      case "good":
+        allLinks[i].color = "#85FFAA";
+        allLinks[i].linkClass = "good-link";
+        break;
+      case "bad":
+        allLinks[i].color = "#FF6969";
+        allLinks[i].linkClass = "bad-link";
+        break;
+      case "neutral":
+        allLinks[i].color = "#FFFFFF";
+        allLinks[i].linkClass = "neutral-link";
+        break;
+      default:
+    }
+  }
+}
 addTypeToLinks();
+addColorToLinks();
 function addChildrenAllObjects(table){
   for (var i = 0; i < table.length; i++) {
     addChildrenToObject(table[i]);

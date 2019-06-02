@@ -23,4 +23,19 @@ var mediasType = {
   name : "Médias"
 };
 
-var allTypes = [memesType,eventsType,peopleType,mediasType];
+var allTypes = [memesType,mediasType,eventsType,peopleType];
+
+var neutralLink = {
+  color : "#FFFFFF",
+  name : "Neutre"
+}
+var goodLink = {
+  color : "#00FF55",
+  name : "Intérêt"
+}
+var badLink = {
+  color : "#FF3333",
+  name : "Conflit"
+}
+
+var allTypesLink = [neutralLink, goodLink, badLink];

@@ -26,33 +26,32 @@ var filterBlur = '<filter id="fBlur" x="-100%" y="-100%" width="300%" height="30
 var filterGray = '<filter id="fGray"><feColorMatrix type="matrix" values="0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0"/></filter>';
 mainSvgDefs.innerHTML = filterBlur + filterGray;
 
-var coorDraw = SVG('svg-coor-wrapper').size(vw, vh).attr({id:'coor-svg'}).viewbox(0,0,vw,vh);
 /*
-* function drawDotsTimeline()
+* draw coordinates functions
 * @params cw, ch space between dots
 * can change variables inside the function
 */
+var coorDraw = SVG('svg-coor-wrapper').size(vw, vh).attr({id:'coor-svg'}).viewbox(0,0,vw,vh);
 var cw = cw;
 var ch = ch;
-var heightOffset = 0;
+var heightOffset = 40;
 var viewWidth = vw*2;
 
 function setHeightOffset(){
   if (vh >= 900) {
-    heightOffset = 20;
+    heightOffset = 40;
   }
 }
 window.onload = setHeightOffset();
 
-
-
 function drawTimeline(l){
   const r = 1;
-  var timelineGroup = coorDraw.group().attr({class:'timeline-svg-group', id:'timeline-svg-group'});
+
+  var timelineGroup = coorDraw.group().attr({class:'timeline-svg-group', id:'timeline-svg-group',  'onclick':'toggleInfoDiv(0);'});
   timelineGroup.attr({"visibility":"hidden"});
 
   var dates = ["2016", "2017", "2018", "2019", "2020", "2021"];
-  var dotGroup = draw.group().attr({class:'grid dot-grid', id:'dot-grid'});
+  var dotGroup = coorDraw.group().attr({class:'grid dot-grid', id:'timeline-dot-grid'});
 
   for (var x = 20; x < viewWidth; x+=l) {
     for (var y = 20; y < vh*0.6; y+=l) {
@@ -61,8 +60,7 @@ function drawTimeline(l){
       timelineGroup.add(dotGroup);
     }
   }
-  dotGroup.move(0, heightOffset);
-
+  /* Labels timeline */
   var tlGroup = coorDraw.group().attr({class:'timeline', id:'timeline'});
   var dateOff = 100;
   for (var x = l; x < viewWidth; x+=l) {
@@ -78,8 +76,9 @@ function drawTimeline(l){
     tlGroup.add(dateLine).add(dateText);
   }
   timelineGroup.add(tlGroup);
+  timelineGroup.move(0, heightOffset);
 }
-  drawTimeline(20);
+drawTimeline(20);
 
 function toggleTimeline(a){
   var timelineGroup = document.getElementById('timeline-svg-group');
@@ -93,18 +92,80 @@ function toggleTimeline(a){
     default:
   }
 }
+
+function drawCompass(l){
+  const r = 1;
+  const compassW = 1000;
+  const compassH = 600;
+  var compassX = (vw-compassW)/2;
+  var compassY = (vh-compassH)/2;
+  var compassGroup = coorDraw.group().attr({class:'compass-svg-group', id:'compass-svg-group'});
+  compassGroup.attr({"visibility":"hidden"});
+  var dotGroup = coorDraw.group().attr({class:'grid dot-grid', id:'compass-dot-grid'});
+  for (var x = 20; x < compassW; x+=l) {
+    for (var y = 20; y < compassH; y+=l) {
+      var circle = coorDraw.circle(r).attr({fill:'#C4C4C4', cx:x, cy:y});
+      dotGroup.add(circle);
+      compassGroup.add(dotGroup);
+    }
+  }
+  var compassLabels = ["Mainstream", "Underground", "Gauche", "Droite"];
+  var labelW = 120,
+      labelH = 30,
+      labelXOff = labelW/2,
+      labelYOff = labelH/2;
+
+  var compassLabelPos = [{x:compassW/2+labelXOff,y:0+labelYOff},{x:compassW/2+labelXOff,y:compassH+labelYOff},{x:0+labelXOff/2,y:compassH/2+labelYOff},{x:compassW+labelXOff*2, y:compassH/2+labelYOff}];
+
+  for (var i = 0; i < compassLabels.length; i++) {
+    var compassLabelGroup = coorDraw.group().attr({class:'compass-label-group'});
+    var rect = coorDraw.rect(labelW, labelH).attr({'fill':"#FFFFFF"});
+    var text = coorDraw.text(compassLabels[i]).attr({class:'compass-label-text', "font-family": "",anchor: 'middle'}).center(labelXOff, labelYOff);;
+    // text.move(30,0);
+    compassLabelGroup.add(rect).add(text);
+    compassLabelGroup.move(compassLabelPos[i].x, compassLabelPos[i].y)
+    compassGroup.add(compassLabelGroup);
+  }
+  //center compass
+
+  dotGroup.move(compassX,compassY);
+}
+drawCompass(20);
+
+function toggleCompass(a){
+  var compassGroup = document.getElementById('compass-svg-group');
+  switch (a) {
+    case 0:
+      compassGroup.setAttribute('visibility', 'hidden');
+      break;
+    case 1:
+      compassGroup.setAttribute('visibility', 'visible');
+      break;
+    default:
+  }
+}
+
 function addAllCircles(type){
+  toggleInfoDiv(0);
   cleanSvg();
   cleanCircles();
+  cleanD3();
+  toggleOffFilter();
+  turnOffLabels();
   switch (type) {
     case allEvents:
+      toggleInterfaceEl(filterButton, 1);
+      toggleInterfaceEl(panSliderGroup, 1);
+      toggleCompass(0);
       toggleTimeline(1);
       break;
     case allPeople:
+      toggleInterfaceEl(filterButton, 1);
+      toggleInterfaceEl(panSliderGroup, 0);
       toggleTimeline(0);
+      toggleCompass(1)
       break;
     default:
-
   }
    for (var i = 0; i < type.length; i++) {
 
@@ -122,7 +183,6 @@ function cleanSvg(){
   var mainSvgChildren = mainSvg.children();
   for (var i = 1; i < mainSvgChildren.length; i++) {
     mainSvgChildren[i].remove();
-    console.log(mainSvgChildren[i]);
   }
 }
 /*

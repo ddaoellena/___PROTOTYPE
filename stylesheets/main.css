@@ -60,7 +60,7 @@ p{
 * menus
 */
 .nav-elems{
-  z-index: 1000;
+  z-index: 100;
 }
 .menu{
   position: fixed;
@@ -110,14 +110,17 @@ p{
   transform: translate(-50%,-50%);
   border-radius: 50%;
 }
-.button-people{
+.button-medias{
+  margin-top: 6px;
+}
+.button-events{
   margin-top: 6px;
   margin-bottom: 6px;
 }
 .highlight-box{
   -moz-box-shadow: inset 0.5px 0.5px 0.5px rgba(255, 255, 255, .4), inset 12px -1px 1px rgba(0, 0, 0, .4);
-   -webkit-box-shadow: inset 0.5px 0.5px 0.5px rgba(255, 255, 255, .4), inset -1px -1px 1px rgba(0, 0, 0, .4);
-   box-shadow: inset 0.5px 0.5px 0.5px rgba(255, 255, 255, .4), inset -1px -1px 1px rgba(0, 0, 0, .4);
+  -webkit-box-shadow: inset 0.5px 0.5px 0.5px rgba(255, 255, 255, .4), inset -1px -1px 1px rgba(0, 0, 0, .4);
+  box-shadow: inset 0.5px 0.5px 0.5px rgba(255, 255, 255, .4), inset -1px -1px 1px rgba(0, 0, 0, .4);
 }
 .button-filter{
   margin-top: 6px;
@@ -170,7 +173,7 @@ p{
 /* ---------Labels box---------*/
 .labels-box-wrapper{
  margin-top: 6px;
- margin-left: -100px;
+ margin-left: -150px;
  width: auto;
  height: auto;
  right:  0px;
@@ -192,15 +195,45 @@ p{
   margin-top: 10px;
   height: 1.5em;
 }
-.label-circle{
+.label-circle-elem{
   height: 1.5em;
   width: 1.5em;
   border-radius: 1.5em;
   float: left;
 }
-.label-text{
+.link-wrapper{
+  width: 1.5em;
+  height: 100%;
+}
+.label-link-stroke{
+  height: 1px;
+  width: 1.5em;
+  position: relative;
+  left: 0%;
+  top: 50%;
+  -webkit-transform: translate(-0, -50%);
+  transform: translate(0, -50%);
+  opacity: .7;
+}
+.label-circle-link{
+  height: .7em;
+  width: .7em;
+  border-radius: 1.5em;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+}
+.label-text-elem{
   margin-left: 2.5em;
   line-height: 1.9em;
+  vertical-align: middle;
+}
+.label-text-link{
+  margin-left: 2.5em;
+  line-height: 1.5em;
   vertical-align: middle;
 }
 /* ---------Sliders---------*/
@@ -276,7 +309,12 @@ transition: opacity .2s;
 .zoom-slider::-webkit-slider-thumb:hover{
   border: 1px solid rgba(255, 255, 255, 1);
 }
-
+.visible{
+  display: block;
+}
+.hidden{
+  display: none;
+}
 /* -------------------------------*/
 
 /*
@@ -288,7 +326,6 @@ transition: opacity .2s;
   width: 50px;
   z-index: 0;
   top: 0px;
-
 }
 .shadow-div-left{
   -webkit-box-shadow: 5px 0px 50px 0px rgba(0,0,0,0.9);
@@ -323,12 +360,24 @@ transition: opacity .2s;
   position: absolute;
   background-color: #272727;
   left: 0px;
-  bottom: -80%;
   border-top: solid 1px rgba(255, 255, 255, 0.33);
   width: 100%;
   height: 90%;
-  z-index: 100;
+  z-index: 500;
   display: flex;
+  -webkit-transition: all 0.5s ease 0s;
+  -moz-transition: all 0.5s ease 0s;
+  -o-transition: all 0.5s ease 0s;
+  transition: all 0.5s ease 0s;
+}
+.info-wrapper.full-collapsed{
+  bottom: -95%;
+}
+.info-wrapper.collapsed{
+  bottom: -80%;
+}
+.info-wrapper.expanded{
+  bottom: 0%;
 }
 .info-div{
   width: 50%;
@@ -348,18 +397,6 @@ transition: opacity .2s;
 #title{
  margin-left : 40px;
 }
-/* .meme-title{
-  -webkit-text-stroke: 1px #ffffff;
-}
-.event-title{
-  -webkit-text-stroke: 1px #83E1FF;
-}
-.people-title{
-  -webkit-text-stroke: 1px #FF83D5;
-}
-.media-title{
-  -webkit-text-stroke: 1px #FFC683;
-} */
 .fade{
   -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
   mask-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
@@ -393,21 +430,31 @@ transition: opacity .2s;
 }
 /* EXPAND BUTTON */
 .expand-button{
-  position: fixed;
-  width: 30px;
-  height: 30px;
+  position: absolute;
+  width: 40px;
+  height: 40px;
   background-color: #272727;
   border: solid 1px rgba(255, 255, 255, 0.33);
-  /* margin-top: 10%; */
   border-radius: 50%;
   z-index: 100;
-	bottom: 0;
+	top: -15px;
 	left: 0;
 	right: 0;
 	margin: auto;
 }
 .expand-button:hover{
-  background-color: rgba(255, 255, 255, 0.33);
+  background-color: #C4C4C4;
+}
+/* EXPAND BUTTON */
+.curtain-div{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
 }
 /* POP-UP DIV */
 .pop-up-curtain{
@@ -503,15 +550,4 @@ transition: opacity .2s;
   color: rgba(255, 255, 255, 0.33);
   margin-left: 2.5em;
   line-height: 1.9em;
-}
-/* EXPAND BUTTON */
-.curtain-div{
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-  z-index: 50;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: none;
 }

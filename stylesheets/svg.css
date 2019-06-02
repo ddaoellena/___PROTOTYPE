@@ -24,6 +24,15 @@
 .circle-image{
   filter: grayscale(100%);
 }
+.neutral-link:hover{
+  fill : #FFFFFF;
+}
+.good-link:hover{
+  fill : #85FFAA;
+}
+.bad-link:hover{
+  fill : #FF6969;
+}
 tspan{
   font-size: 1em;
 }

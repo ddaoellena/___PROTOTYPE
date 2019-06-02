@@ -92,12 +92,12 @@ function addPopUp(el, link){
   popUpWrapper.append(popUpDiv);
 
   var hideRect = draw.rect(viewWidth, vh).fill("rgba(0,0,0,0.5)").attr({'onclick':'removePopUp()'});
-  var circle = draw.circle(12).attr({class:'link-circle pointer', fill:'#C4C4C4', 'fill-opacity':"1", stroke:"#ffffff", cx:x, cy:y});
+  var circle = draw.circle(12).attr({class:'link-circle pointer', fill:link.color, 'fill-opacity':"1", stroke:"#ffffff", cx:x, cy:y});
   circle.rotate(rotate, originX, originY);
   popUp.add(hideRect).add(circle);
 }
 
 function removePopUp(){
- popUpGroup.innerHTML = '';
- popUpWrapper.innerHTML = '';
+  $('.pop-up-group').empty();
+  $('.pop-up-wrapper').empty();
 }

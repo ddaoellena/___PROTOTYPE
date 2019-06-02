@@ -6,20 +6,21 @@
     <link rel="stylesheet" href="./stylesheets/reset.css">
     <link rel="stylesheet" href="./stylesheets/svg.css">
     <link rel="stylesheet" href="./stylesheets/main.css">
+    <link rel="stylesheet" href="./stylesheets/d3.css">
   </head>
   <body>
     <!-- open /Applications/Google\ Chrome.app/ --args --allow-file-access-from-files -->
     <!-- MENUS -->
     <div class="menu menu-left menu-filter nav-elems" id="menu-left">
-      <div class="menu-button button-memes menu-square pointer" onclick="d3Init(memesData); toggleMenu(this);">
+      <div class="menu-button button-memes menu-square pointer" onclick="d3Init(memesData); toggleMenu(this); ">
         <div class="highlight-box menu-square"><div class="circle-button circle-memes memes-color"></div></div></div>
-      <div class="menu-button button-medias menu-square pointer" onclick="d3Init(mediasData); toggleMenu(this);">
+      <div class="menu-button button-medias menu-square pointer" onclick="d3Init(mediasData); toggleMenu(this); ">
         <div class="highlight-box menu-square"><div class="circle-button circle-medias medias-color"></div></div></div>
       <div class="menu-button button-events menu-square pointer" onclick="addAllCircles(allEvents); toggleMenu(this);">
         <div class="highlight-box menu-square"><div class="circle-button circle-events events-color"></div></div></div>
       <div class="menu-button button-people menu-square pointer" onclick="addAllCircles(allPeople); toggleMenu(this);">
         <div class="highlight-box menu-square"><div class="circle-button circle-people people-color"></div></div></div>
-      <div class="menu-button button-filter menu-square pointer" id="button-filter" onclick="toggleFilter()">
+      <div class="menu-button button-filter menu-square pointer hidden" id="button-filter" onclick="toggleFilter()">
         <div class="highlight-box menu-square"></div></div>
       <div class="filter-box-wrapper collapsed" id="filter-box-wrapper">
         <div class="filter-box" id="filter-box">
@@ -30,25 +31,27 @@
         </div>
       </div>
     </div>
-    <div class="zoom-slider-wrapper nav-elems">
+    <div class="zoom-slider-wrapper nav-elems" id="zoom-slider-wrapper">
       <input type="range" min="1" max="100" value="100" class="slider zoom-slider" id='zoom-slider' onchange="zoomTimeline(this.value);">
     </div>
     <div class="menu menu-right nav-elems">
       <div class="button-info" onclick="toggleLabels()"><p class="button-info-span text" id="button-info-span">?</p>
         <div class="labels-box-wrapper collapsed" id="labels-box-wrapper">
-          <p class="label-info">Légende</p>
-          <div class="labels-box" id="labels-box"></div>
+          <p class="label-info">Éléments</p>
+          <div class="labels-box labels-box-elem" id="labels-box-elem"></div>
+          <p class="label-info">Liens</p>
+          <div class="labels-box labels-box-link" id="labels-box-link"></div>
         </div>
       </div>
     </div>
-    <div class="menu-bottom pan-slider-wrapper nav-elems">
+    <div class="menu-bottom pan-slider-wrapper nav-elems hidden" id="pan-slider-wrapper">
       <input type="range" min="1" max="100" value="0" class="slider pan-slider" id='pan-slider' onchange="panTimeline(this.value);">
     </div>
     <!--- END MENU --->
 
     <!-- SVG -->
-    <div class="svg-coor-wrapper" id="svg-coor-wrapper" onclick="toggleOffFilter();turnOffLabels()"></div>
-    <div class="svg-wrapper" id="svg-wrapper" onclick="toggleOffFilter();turnOffLabels()"></div>
+    <div class="svg-coor-wrapper" id="svg-coor-wrapper" onclick="toggleOffFilter();turnOffLabels();"></div>
+    <div class="svg-wrapper" id="svg-wrapper" onclick="toggleOffFilter();turnOffLabels();"></div>
     <div class="pop-up-wrapper" id="pop-up-wrapper"></div>
     <!---------->
 
@@ -60,7 +63,8 @@
     <!----------------------->
 
     <!-- INFO DIV -->
-    <div class="info-wrapper shadow-top collapsed" id="info-wrapper">
+    <div class="info-wrapper shadow-top full-collapsed" id="info-wrapper">
+      <div class="expand-button h-center pointer" onclick="toggleInfoDiv(2)"></div>
       <div class="info-div left-info-div" id="left-info-div">
         <div class="info-element title-div" id="title-div">
           <div class="info-img" id="info-img"></div>
@@ -82,14 +86,11 @@
         </div>
       </div>
 
-      <div class="expand-button h-center pointer" onclick="toggleInfoDiv()">
-        <p></p>
-      </div>
       <div class="shadow-div shadow-div-info shadow-top">
       </div>
     </div>
     <!------------->
-    <div class="curtain-div" id="curtain-div" onclick="toggleInfoDiv();">
+    <div class="curtain-div" id="curtain-div" onclick="toggleInfoDiv(0);">
     </div>
   </body>
   <!-- Assets files -->
@@ -107,7 +108,7 @@
   <script src="./libs/jquery-3.4.1.min.js" charset="utf-8"></script>
   <script src="./libs/svg.min.js" charset="utf-8"></script>
   <script src="./libs/svg-pan-zoom.min.js"></script>
-  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="./libs/d3.v5.min.js"></script>
   <!-- Main scripts files -->
   <script src="./scripts/init-functions.js" charset="utf-8"></script>
   <script src="./scripts/init-svg.js" charset="utf-8"></script>
@@ -117,5 +118,6 @@
   <script src="./scripts/navigation.js" charset="utf-8"></script>
   <script src="./scripts/generate-content.js" charset="utf-8"></script>
   <script src="./scripts/zoom-functions.js" charset="utf-8"></script>
+  <script src="./scripts/init.js" charset="utf-8"></script>
 
 </html>
