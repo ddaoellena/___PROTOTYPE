@@ -7,22 +7,26 @@ var donaldTrump = {
     { type: 0,
       id:0,
       link : 0,
+      linkDetail: 0,
       children :[{type:3,id:0,link : 0},{type:3,id:0,link : 0}]},
     { type: 0,
       id:1,
       link : 1,
+      linkDetail: 0,
       children :[{type:3,id:0,link : 0},{type:0,id:0,link: 2}]},
     { type: 1,
       id:0,
       link : 0,
+      linkDetail: 0,
       children :[{type:3,id:0,link : 0},{type:0,id:0,link: 2},{type:0,id:0,link:2}]},
     { type: 0,
       id:1,
       link : 1,
+      linkDetail: 0,
       children :[{type:3,id:0,link : 0}, {type:0,id:0,link: 2}]}
   ],
-  x: 200,
-  y: 200,
+  x: 1000,
+  y: 80,
   or : ""
 }
 
@@ -33,15 +37,17 @@ var hillaryClinton = {
   children: [
     {type: 0,
     id:0,
-    link : 1
+    link : 1,
+    linkDetail: 0
   },
     {type: 1,
     id:0,
-    link : 0
+    link : 0,
+    linkDetail: 0
   }
   ],
   x: 400,
-  y: 200,
+  y: 80,
   or : "down"
 }
 
@@ -49,12 +55,13 @@ var andrewYang = {
   name : "Andrew Yang",
   toString : "andrewYang",
   id:2,
-  x: 600,
-  y: 200,
+  x: 500,
+  y: 80,
   children: [
     {type: 0,
     id:2,
-    link : 0
+    link : 0,
+    linkDetail: 0
   }
   ]
 }
@@ -67,8 +74,8 @@ var bernieSanders = {
   relatedEvents: [],
   children: [
   ],
-  x:1400,
-  y:100
+  x:240,
+  y:80
 }
 
 var shiaLaboeuf = {
@@ -79,8 +86,8 @@ var shiaLaboeuf = {
   relatedEvents: [],
   children: [
   ],
-  x:1400,
-  y:300
+  x:580,
+  y:160
 }
 
 var marineLePen={
@@ -91,8 +98,8 @@ var marineLePen={
   relatedEvents: [],
   children: [
   ],
-  x:1400,
-  y:300
+  x:1080,
+  y:80
 }
 
 var jeanLucMelenchon={
@@ -103,8 +110,8 @@ var jeanLucMelenchon={
   relatedEvents: [],
   children: [
   ],
-  x:1400,
-  y:300
+  x:320,
+  y:80
 }
 
 var florianPhilippot={
@@ -115,8 +122,24 @@ var florianPhilippot={
   relatedEvents: [],
   children: [
   ],
-  x:1400,
-  y:300
+  x:1080,
+  y:160
 }
 
-var allPeople = [donaldTrump, hillaryClinton, andrewYang, bernieSanders, shiaLaboeuf, marineLePen, jeanLucMelenchon, florianPhilippot];
+var emmanuelMacron={
+  name : "Emmanuel Macron",
+  toString : "emmanuelMacron",
+  id:8,
+  relatedMemes : [],
+  relatedEvents: [],
+  children: [
+  ],
+  x:580,
+  y:80
+}
+
+var allPeople = [
+  //USA
+  donaldTrump, hillaryClinton, andrewYang, bernieSanders, shiaLaboeuf,
+  //France
+  marineLePen, jeanLucMelenchon, florianPhilippot, emmanuelMacron];

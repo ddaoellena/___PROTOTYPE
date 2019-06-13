@@ -1,103 +1,112 @@
 var popUpWrapper = document.getElementById('pop-up-wrapper');
 var popUpGroup = document.getElementById('pop-up-group');
 
-function addPopUp(el, link){
-  var popUp = draw.group().attr({class:'pop-up-group', id:'pop-up-group'});
+function addPopUp(el){
+  // console.log(el.dataset);
+  var svgPlusW = plusSvg.getBoundingClientRect().width,
+      svgPlusH = plusSvg.getBoundingClientRect().height;
 
-  var x = el.cx.baseVal.value,
-      y = el.cy.baseVal.value,
-      divX = el.getBoundingClientRect().x,
-      divY = el.getBoundingClientRect().y,
-      rotateVar = el.classList[2],
-      rotate = 0,
-      originX = el.parentNode.childNodes[0].x1.baseVal.value,
-      originY = el.parentNode.childNodes[0].y1.baseVal.value;
+  var plusDraw = SVG('plus-svg').size(svgPlusW, svgPlusH).attr({id:'pop-up-svg'}).viewbox(0,0,svgPlusW,svgPlusH);
+  var popUp = plusDraw.group().attr({class:'pop-up-group', id:'pop-up-group'});
 
-  switch (rotateVar) {
-    case "rotate0":
-    rotate = 0;
-      break;
-    case "rotate-45":
-    rotate = -45;
-      break;
+  var hideRect = plusDraw.rect(svgPlusW, svgPlusH).fill("rgba(0,0,0,0.75)").attr({'onclick':'removePopUp()'});
+  var maskRect = plusDraw.rect(svgPlusW, svgPlusH).fill("rgba(255,255,255,1)");
+
+  if (el.dataset.type == "link") {
+    var x = el.cx.baseVal.value,
+        y = el.cy.baseVal.value;
+    var rotateVar = el.classList[2],
+        rotate = 0,
+        originX = el.parentNode.childNodes[0].x1.baseVal.value,
+        originY = el.parentNode.childNodes[0].y1.baseVal.value;
+    switch (rotateVar) {
+      case "rotate0":
+      rotate = 0;
+        break;
+      case "rotate-30":
+      rotate = -30;
+        break;
+      case "rotate30":
+      rotate = 30;
+        break;
+      case "rotate-45":
+      rotate = -45;
+        break;
       case "rotate45":
       rotate = 45;
         break;
-    default:
+      case "rotate-90":
+      rotate = -90;
+        break;
+      case "rotate90":
+      rotate = 90;
+        break;
+      default:
+    }
+    var linkStroke = plusDraw.line(el.dataset.lineX1, el.dataset.lineY1, el.dataset.lineX2, el.dataset.lineY2).stroke({ color:'#000000', width: 1});
+    var firstCircle = plusDraw.circle(el.dataset.firstRadius*2).attr({fill:'#000000','fill-opacity':"1", cx:el.dataset.firstX, cy:el.dataset.firstY});
+    var circle = plusDraw.circle(rLink).attr({fill:'#000000','fill-opacity':"1", cx:x, cy:y});
+    var secondCircle = plusDraw.circle(el.dataset.secondRadius*2).attr({fill:'#000000','fill-opacity':"1", cx:el.dataset.secondX, cy:el.dataset.secondY});
+    linkStroke.rotate(rotate, originX, originY);
+    secondCircle.rotate(rotate, originX, originY);
+    circle.rotate(rotate, originX, originY);
+    var mask = plusDraw.mask().add(maskRect).add(linkStroke).add(firstCircle).add(circle).add(secondCircle);
+    hideRect.maskWith(mask);
+    var linkCircle = plusDraw.circle(rLink).attr({class:'link-circle pointer', fill:el.dataset.linkColor, 'fill-opacity':"1", stroke:"#ffffff", cx:x, cy:y});
+    linkCircle.rotate(rotate, originX, originY);
+    popUp.add(hideRect).add(linkCircle);
+
+    var firstNode = document.getElementById(el.dataset.firstNode),
+        secondNode = document.getElementById(el.dataset.secondNode);
+    var inactiveNodes= [firstNode, secondNode];
+    for (var i = 0; i < inactiveNodes.length; i++) {
+      colorOn(inactiveNodes[i]);
+      inactiveNodes[i].classList.add("color-on");
+    }
+  } else if (el.dataset.type == "group") {
+    var circle = plusDraw.circle(el.dataset.groupRadius*2).attr({fill:'#000000','fill-opacity':"1", cx:el.dataset.groupX, cy:el.dataset.groupY});
+      if (el.dataset.rotation == "true") {
+        var rotate = 0;
+        switch (el.dataset.classRotation) {
+          case "rotate0":
+          rotate = 0;
+            break;
+          case "rotate-30":
+          rotate = -30;
+            break;
+          case "rotate30":
+          rotate = 30;
+            break;
+          case "rotate-45":
+          rotate = -45;
+            break;
+          case "rotate45":
+          rotate = 45;
+            break;
+          case "rotate-90":
+          rotate = -90;
+            break;
+          case "rotate90":
+          rotate = 90;
+            break;
+          default:
+        }
+        circle.rotate(rotate, el.dataset.originX, el.dataset.originY);
+      }
+    var mask = plusDraw.mask().add(maskRect).add(circle);
+    hideRect.maskWith(mask);
+    popUp.add(hideRect);
   }
-  var popUpDiv = document.createElement('div');
-  popUpDiv.setAttribute('class', 'pop-up-div');
-
-  var popUpNameDiv = document.createElement('div');
-  popUpNameDiv.setAttribute('class', 'pop-up-title-div');
-  var popUpName = document.createElement('h2');
-  popUpName.setAttribute('class', 'pop-up-title');
-  popUpName.innerHTML = link.name;
-  popUpNameDiv.append(popUpName);
-
-  var linkType = document.createElement('div');
-  linkType.setAttribute('class', 'link-type-div');
-  var linkStroke = document.createElement('div');
-  linkStroke.setAttribute('class', 'link-stroke');
-  var linkFirst = document.createElement('div');
-  var linkSecond = document.createElement('div');
-  linkFirst.setAttribute('class', 'link-element link-first');
-  linkFirst.style.backgroundColor = link.firstColor;
-  linkSecond.setAttribute('class', 'link-element link-second');
-  linkSecond.style.backgroundColor = link.secondColor;
-  // console.log(link.firstColor, link.secondColor);
-  linkType.append(linkStroke);
-  linkType.append(linkFirst);
-  linkType.append(linkSecond);
-
-  popUpNameDiv.append(linkType);
-  popUpDiv.append(popUpNameDiv);
-
-  var popUpFilterDiv = document.createElement('div');
-  popUpFilterDiv.setAttribute('class', 'pop-up-filter-div');
-  var popUpFilterCircle = document.createElement('div');
-  popUpFilterCircle.setAttribute('class', 'pop-up-filter-circle');
-  popUpFilterCircle.setAttribute('onclick', '');
-  var filterPlus = document.createElement('p');
-  filterPlus.setAttribute('class', 'plus-filter');
-  filterPlus.innerHTML ="+";
-
-  var popUpFilterText = document.createElement('p');
-  popUpFilterText.setAttribute('class', 'pop-up-filter-text');
-  popUpFilterText.innerHTML = "Ajouter aux filtres"
-
-  popUpFilterDiv.append(popUpFilterCircle);
-  popUpFilterCircle.append(filterPlus);
-  popUpFilterDiv.append(popUpFilterText);
-  popUpDiv.append(popUpFilterDiv);
-
-  var popUpTextDiv = document.createElement('div');
-  popUpTextDiv.setAttribute('class', 'pop-up-text');
-  var popUpText = document.createElement('p');
-  popUpText.innerHTML = link.description;
-  popUpTextDiv.append(popUpText);
-  popUpDiv.append(popUpTextDiv);
-
-  if (divY<50) {
-    popUpDiv.style.top = divY+50+"px";
-  } else {
-    popUpDiv.style.top = divY-50+"px";
-  }
-  if (divX>vw*0.9) {
-    popUpDiv.style.left = divX-220+"px";
-  } else {
-    popUpDiv.style.left = divX+20+"px";
-  }
-
-  popUpWrapper.append(popUpDiv);
-
-  var hideRect = draw.rect(viewWidth, vh).fill("rgba(0,0,0,0.5)").attr({'onclick':'removePopUp()'});
-  var circle = draw.circle(12).attr({class:'link-circle pointer', fill:link.color, 'fill-opacity':"1", stroke:"#ffffff", cx:x, cy:y});
-  circle.rotate(rotate, originX, originY);
-  popUp.add(hideRect).add(circle);
 }
 
 function removePopUp(){
+  var activeNodes = document.getElementsByClassName("color-on");
+  for (var i = 0; i < activeNodes.length; i++) {
+    colorOffPlus(activeNodes[i]);
+  }
+  $(".color-on").removeClass("color-on");
+  // activeNodes[i].classList.remove("color-on");
+  $('#pop-up-svg').remove();
   $('.pop-up-group').empty();
   $('.pop-up-wrapper').empty();
 }

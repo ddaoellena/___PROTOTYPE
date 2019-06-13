@@ -6,36 +6,61 @@
     <link rel="stylesheet" href="./stylesheets/reset.css">
     <link rel="stylesheet" href="./stylesheets/svg.css">
     <link rel="stylesheet" href="./stylesheets/main.css">
+    <link rel="stylesheet" href="./stylesheets/tippy.css">
+    <link rel="stylesheet" href="./stylesheets/scrollbar.css">
     <link rel="stylesheet" href="./stylesheets/d3.css">
   </head>
   <body>
     <!-- open /Applications/Google\ Chrome.app/ --args --allow-file-access-from-files -->
     <!-- MENUS -->
+    <div class="menu-top shadow-bottom" id="menu-top">
+      <p class="menu-top-text title-text">Memes view tool</p>
+      <div class="dropdown-menu" id="dropdown-menu">
+        <button class="dropdown-btn pointer">Filtrer par&emsp;&#9660;</button>
+        <div class="dropdown-content">
+          <a href="#" class="dropdown-el pointer active" onclick="d3Init(memesData); changeDropdown(0);"></span>Memes</a>
+          <a href="#" class="dropdown-el pointer" onclick="d3Init(mediasData); changeDropdown(1);"></span>Sites</a>
+        </div>
+      </div>
+      <p class="menu-top-text about-text" onclick="toggleAbout()">À propos</p>
+    </div>
     <div class="menu menu-left menu-filter nav-elems" id="menu-left">
-      <div class="menu-button button-memes menu-square pointer" onclick="d3Init(memesData); toggleMenu(this); ">
-        <div class="highlight-box menu-square"><div class="circle-button circle-memes memes-color"></div></div></div>
-      <div class="menu-button button-medias menu-square pointer" onclick="d3Init(mediasData); toggleMenu(this); ">
-        <div class="highlight-box menu-square"><div class="circle-button circle-medias medias-color"></div></div></div>
-      <div class="menu-button button-events menu-square pointer" onclick="addAllCircles(allEvents); toggleMenu(this);">
-        <div class="highlight-box menu-square"><div class="circle-button circle-events events-color"></div></div></div>
-      <div class="menu-button button-people menu-square pointer" onclick="addAllCircles(allPeople); toggleMenu(this);">
-        <div class="highlight-box menu-square"><div class="circle-button circle-people people-color"></div></div></div>
+      <p class="menu-text menu-left-text">Vue en&thinsp;:</p>
+      <div class="menu-button menu-button-left button-memes menu-square pointer" id="button-memes" data-tippy-content="Réseau" onclick="d3Init(memesData); toggleMenu(this); toggleDropdown(1);">
+        <div class="highlight-box menu-square"></div><!-- <div class="circle-button circle-memes memes-color"></div> -->
+      </div>
+      <!-- <div class="menu-button menu-button-left button-medias menu-square pointer" id="button-medias" data-tippy-content="Tooltip" onclick="d3Init(mediasData); toggleMenu(this);">
+        <div class="highlight-box menu-square"><div class="circle-button circle-medias medias-color"></div></div>
+      </div> -->
+      <div class="menu-button menu-button-left button-events menu-square pointer" id="button-events" data-tippy-content="Chronologie" onclick="addAllCircles(allEvents); toggleMenu(this);">
+        <div class="highlight-box menu-square"></div><!-- <div class="circle-button circle-events events-color"></div> -->
+      </div>
+      <div class="menu-button menu-button-left button-people menu-square pointer" id="button-people" data-tippy-content="Échiquier" onclick="addAllCircles(allPeople); toggleMenu(this);">
+        <div class="highlight-box menu-square"></div><!-- <div class="circle-button circle-people people-color"></div> -->
+      </div>
+    </div>
+    <!-- MENU RIGHT -->
+    <div class="menu menu-right nav-elems" id="menu-right">
+      <p class="menu-text menu-left-text">Outils et légende&thinsp;:</p>
+      <div class="zoom-slider-wrapper nav-elems" id="zoom-slider-wrapper">
+        <input type="range" min="1" max="100" value="100" class="slider zoom-slider" id='zoom-slider' onchange="zoomTimeline(this.value);">
+      </div>
       <div class="menu-button button-filter menu-square pointer hidden" id="button-filter" onclick="toggleFilter()">
-        <div class="highlight-box menu-square"></div></div>
+        <div class="highlight-box menu-square"></div>
+        <div class="button-filter-ghost off" id="button-filter-ghost"></div>
+      </div>
       <div class="filter-box-wrapper collapsed" id="filter-box-wrapper">
         <div class="filter-box" id="filter-box">
-          <p class="filter-title">Filtres</p>
+          <p class="filter-title">Filtre</p>
             <div class="filter-list" id="filter-list">
-              <p class='filter-text no-filter'>Pas de filtre activé</p>
+              <div class="filter-element no-filter" id="filter-element">
+                <div class="filter-img" id="filter-img"></div><p class="filter-text" id="filter-text"></p><div class="filter-remove-btn pointer" onclick="emptyFilter();"></div>
+              </div>
+              <p class='filter-text-placeholder no-filter' id="filter-text-placeholder">Pas de filtre activé</p>
             </div>
         </div>
       </div>
-    </div>
-    <div class="zoom-slider-wrapper nav-elems" id="zoom-slider-wrapper">
-      <input type="range" min="1" max="100" value="100" class="slider zoom-slider" id='zoom-slider' onchange="zoomTimeline(this.value);">
-    </div>
-    <div class="menu menu-right nav-elems">
-      <div class="button-info" onclick="toggleLabels()"><p class="button-info-span text" id="button-info-span">?</p>
+      <div class="button-info with-zoom" id="button-info" onclick="toggleLabels()"><p class="button-info-span text" id="button-info-span">?</p>
         <div class="labels-box-wrapper collapsed" id="labels-box-wrapper">
           <p class="label-info">Éléments</p>
           <div class="labels-box labels-box-elem" id="labels-box-elem"></div>
@@ -51,7 +76,19 @@
 
     <!-- SVG -->
     <div class="svg-coor-wrapper" id="svg-coor-wrapper" onclick="toggleOffFilter();turnOffLabels();"></div>
-    <div class="svg-wrapper" id="svg-wrapper" onclick="toggleOffFilter();turnOffLabels();"></div>
+    <div class="svg-wrapper" id="svg-wrapper" onclick="toggleOffFilter();turnOffLabels();turnOffAbout();"></div>
+    <div class="plus-svg-wrapper hidden" id="plus-svg-wrapper">
+      <div class="plus-svg" id="plus-svg"></div>
+      <div class="plus-info without-content" id="plus-info">
+        <div class="plus-header" id="plus-header">
+          <div class="plus-title-div" id="plus-title-div"><h1 class="title plus-title" id="plus-title"></h1></div>
+          <div class="plus-category-div" id="plus-category-div"></div>
+        </div>
+        <div class="plus-participants-div" id="plus-participants-div"></div>
+        <div class="plus-info-content" id="plus-info-content"></div>
+      </div>
+      <div class="plus-placeholder-div visible" id="plus-placeholder-div"><p class="plus-placeholder" id="placeholder-text"></p></div>
+    </div>
     <div class="pop-up-wrapper" id="pop-up-wrapper"></div>
     <!---------->
 
@@ -65,29 +102,22 @@
     <!-- INFO DIV -->
     <div class="info-wrapper shadow-top full-collapsed" id="info-wrapper">
       <div class="expand-button h-center pointer" onclick="toggleInfoDiv(2)"></div>
-      <div class="info-div left-info-div" id="left-info-div">
-        <div class="info-element title-div" id="title-div">
+        <div class="title-div" id="title-div">
           <div class="info-img" id="info-img"></div>
-          <h1 class="title" id="title"></h1>
+          <h1 class="title info-title" id="info-title"></h1>
+          <p class="info-category" id="info-category"></p>
         </div>
-        <div class="info-element description-div" id="description-div">
-          <p class="description fade" id="description"></p>
-        </div>
-      </div>
-      <div class="info-div right-info-div" id="right-info-div">
-        <div class="related-elements-div info-element" id="related-one-div">
-          <div class="info-element" id="related-one"></div>
-        </div>
-        <div class="related-elements-div info-element" id="related-two-div">
-          <div class="info-element" id="related-two"></div>
-        </div>
-        <div class="related-elements-div info-element" id="related-three-div">
-          <div class="info-element" id="related-three"></div>
-        </div>
+        <div class="content-div" id="content-div"></div>
       </div>
 
       <div class="shadow-div shadow-div-info shadow-top">
       </div>
+    </div>
+    <!------------->
+
+    <!--- ABOUT --->
+    <div class="about-wrapper collapsed" id="about-wrapper">
+
     </div>
     <!------------->
     <div class="curtain-div" id="curtain-div" onclick="toggleInfoDiv(0);">
@@ -99,16 +129,19 @@
   <script src="./assets/data/2-people.js" charset="utf-8"></script>
   <script src="./assets/data/3-medias.js" charset="utf-8"></script>
   <script src="./assets/data/4-links.js" charset="utf-8"></script>
+  <script src="./assets/data/5-link-details.js" charset="utf-8"></script>
   <script src="./assets/data/a-memes.js" charset="utf-8"></script>
   <script src="./assets/data/b-medias.js" charset="utf-8"></script>
   <script src="./assets/data/link-types.js" charset="utf-8"></script>
   <script src="./assets/data/misc-data.js" charset="utf-8"></script>
-  <!-- Frameworks files -->
+  <!-- Librairies files -->
   <script src="./libs/blazy.min.js" charset="utf-8"></script>
   <script src="./libs/jquery-3.4.1.min.js" charset="utf-8"></script>
   <script src="./libs/svg.min.js" charset="utf-8"></script>
   <script src="./libs/svg-pan-zoom.min.js"></script>
   <script src="./libs/d3.v5.min.js"></script>
+  <script src="./libs/popper.min.js"></script>
+  <script src="./libs/index.all.min.js"></script>
   <!-- Main scripts files -->
   <script src="./scripts/init-functions.js" charset="utf-8"></script>
   <script src="./scripts/init-svg.js" charset="utf-8"></script>
@@ -118,6 +151,8 @@
   <script src="./scripts/navigation.js" charset="utf-8"></script>
   <script src="./scripts/generate-content.js" charset="utf-8"></script>
   <script src="./scripts/zoom-functions.js" charset="utf-8"></script>
+  <script src="./scripts/tooltip.js" charset="utf-8"></script>
+  <script src="./scripts/filter.js" charset="utf-8"></script>
   <script src="./scripts/init.js" charset="utf-8"></script>
 
 </html>

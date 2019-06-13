@@ -2,54 +2,62 @@ var usa2016 = {
   name : "Élections présidentielles USA 2016",
   id: 0,
   toString : "usa2016",
-  date:'',
+  date:'Novembre 2016',
   children: [
     { type: 2, //trump
       id:0,
-      link : 15,
-      children :[{type:0,id:0,link: 3}, //Pepe soutien
-                 {type:0,id:1,link: 3}] //GodEmperor
+      link : 15, //participation
+      linkDetail : 0, //trumpUsa2016
+      children :[{type:3,id:0,link: 3, linkDetail : 4}, //4chan soutien
+                 {type:3,id:4,link: 3, linkDetail : 5}, //rTheDonald soutien
+                 {type:0,id:0,link: 3, linkDetail : 3} //Pepe soutien
+                 // {type:0,id:1,link: 3, linkDetail : 4} //GodEmperor
+               ]
     },
     { type: 2, //hillaryClinton
       id:1,
-      link : 15,
-      children :[{type:0,id:3,link: 4}, //Pizzagate sabotage
-                 {type:3,id:0,link: 22},//4chan
-                 {type:0,id:0,link: 4}] //Pepe sabotage
+      link : 15, //participation
+      linkDetail : 1, //clintonUsa2016
+      children :[{type:0,id:3,link: 4, linkDetail : 6}, //Pizzagate sabotage
+                 {type:3,id:4,link: 4, linkDetail : 7}, //rTheDonald sabotage
+                 {type:3,id:0,link: 4, linkDetail : 8},//4chan
+                 {type:0,id:0,link: 4, linkDetail : 9}] //Pepe sabotage
     },
     { type: 2, //bernieSanders
       id:3,
-      link : 15,
-      children :[{type:3,id:1,link: 21}] //reddit
+      link : 15, //participation
+      linkDetail : 2, //sandersUsa2016
+      children :[{type:3,id:5,link: 21}] //sandersStash
     }],
-  relatedMemes : [0,1,3],
-  relatedPeople : [0,1,3],
   x: 500,
-  y: 200,
-  or: "left"
+  y: 90,
+  or: "right"
 }
 
 var hwndu = {
   name: "He Will Not Divide Us",
   id :1,
   toString : 'hwndu',
-  date:'',
+  date:'Janvier 2017',
   children : [
     { type: 2, //shiaLaboeuf
       id:4,
       link : 13,
-      children :[{type:0,id:0,link: 4}] //pepe
-  },
-    { type: 2, //Trump
-      id:0,
-      link : 10
-  },
-  { type: 3, //4chan
+      linkDetail : 11,
+      children :[{type:0,id:0,link: 4, linkDetail : 14},{type: 2, id:0,link : 10, linkDetail : 15}] //pepe & Trump
+    },
+  { type: 3, //4chan sabotage
     id:0,
-    link : 20
+    link : 4,
+    linkDetail : 12
+  },
+  { type: 3, //JVC sabotage
+    id:3,
+    link : 4,
+    linkDetail : 13
   }],
   x: 600,
-  y: 200,
+  y: 90,
   or: "right"
 }
 
@@ -57,7 +65,7 @@ var fra2017= {
   name : "Élections présidentielles françaises 2016",
   id :2,
   toString : "fra2017",
-  date:'',
+  date:'Mai 2017',
   children : [
     { type: 2, //marineLePen
       id:5,
@@ -75,9 +83,14 @@ var fra2017= {
       id:7,
       link : 15,
       children :[{type:0,id:4,link: 11}]//Risitas réappropriation
+  },
+    { type: 2, //emmanuelMacron
+      id:8,
+      link : 15, //participation
+      children :[{type:3,id:0,link: 22}] //Risitas réappropriation
   }],
     x: 800,
-    y: 200,
+    y: 90,
     or: "right"
 }
 
@@ -89,7 +102,7 @@ var mediaLayoffs= {
   children : [
   ],
     x: 1560,
-    y: 200
+    y: 90
 }
 
 var usa2020= {
@@ -108,7 +121,7 @@ var usa2020= {
   },
     ],
     x: 2400,
-    y: 200,
+    y: 90,
     or: "down"
 }
 

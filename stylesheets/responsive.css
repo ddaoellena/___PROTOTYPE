@@ -1,6 +1,19 @@
 @media screen and (min-width: 1400px) {
+  p{
+    font-size: 0.8em;
+    line-height: 1.2em;
+  }
+  .related-title{
+    font-size: 1.2em;
+  }
   .description{
     font-size: 3em;
     line-height: 1.5em;
+  }
+  /*
+  * menus
+  */
+  .menu-button{
+      background-size: 66%;
   }
 }

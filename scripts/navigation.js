@@ -16,6 +16,17 @@ var buttonInfoSpan = document.getElementById('button-info-span');
 var buttonInfoInactive = 'color: #272727; -webkit-text-stroke-width: 0.5px;';
 var buttonInfoActive = 'color: #ffffff; -webkit-text-stroke-width: 0px;';
 
+var plusSvgWrapper = document.getElementById('plus-svg-wrapper');
+var plusSvg = document.getElementById('plus-svg');
+var plusInfo = document.getElementById('plus-info');
+var plusPlaceholderDiv = document.getElementById('plus-placeholder-div');
+
+tippy('.menu-button-left',{
+   placement: 'right',
+   animateFill: false,
+   duration:200,
+   theme: 'google',
+});
 
 function toggleMenu(a){
   for (var i = 0; i < menuButtons.length; i++) {
@@ -71,9 +82,6 @@ function toggleOffFilter(){
     filterWrapper.style.display = "none";
     buttonFilter.setAttribute('style',blackShadow);
   }
-}
-function toggleFilterShadow(){
-  buttonFilter.setAttribute('style', whiteShadow);
 }
 
 function addLabels(){
@@ -152,6 +160,128 @@ function toggleInterfaceEl(el, state){
     case 1:
       el.classList.remove("hidden");
       el.classList.add("visible");
+      break;
+    default:
+  }
+}
+
+function toggleZoomSlider(a){
+  var zoomSlider = document.getElementById('zoom-slider-wrapper');
+  var menuRight = document.getElementById('menu-right');
+  var buttonInfo = document.getElementById('button-info');
+
+  switch (a) {
+    case 0:
+      zoomSlider.style.display = "none";
+      buttonInfo.classList.remove("with-zoom");
+      buttonInfo.classList.add("without-zoom");
+      break;
+    case 1:
+      zoomSlider.style.display = "block";
+      buttonInfo.classList.remove("without-zoom");
+      buttonInfo.classList.add("with-zoom");
+      break;
+    default:
+  }
+}
+
+var aboutDiv = document.getElementById('about-wrapper');
+
+function turnOnAbout(){
+  aboutDiv.classList.remove("collapsed");
+  aboutDiv.classList.add("expanded");
+}
+
+function turnOffAbout(){
+  aboutDiv.classList.remove("expanded");
+  aboutDiv.classList.add("collapsed");
+}
+
+function toggleAbout(a){
+  switch (aboutDiv.classList[1]) {
+    case "collapsed":
+      turnOnAbout();
+      break;
+    case "expanded":
+      turnOffAbout();
+      break;
+    default:
+  }
+}
+
+function toggleStrokeDivSvg(a){
+  switch (a) {
+    case 0:
+      plusInfo.classList.remove("with-content");
+      plusInfo.classList.add("without-content");
+      break;
+    case 1:
+      plusInfo.classList.remove("without-content");
+      plusInfo.classList.add("with-content");
+      break;
+    default:
+  }
+}
+
+function togglePlusSvg(a){
+  switch (a) {
+    case 0:
+      toggleInterfaceEl(plusPlaceholderDiv,1);
+      toggleStrokeDivSvg(0);
+      clearPlusInfo();
+      break;
+    case 1:
+      toggleInterfaceEl(plusPlaceholderDiv,0);
+      toggleStrokeDivSvg(1);
+      break;
+    default:
+  }
+}
+
+function toggleDropdown(a){
+  var dropdownMenu = document.getElementById('dropdown-menu');
+  switch (a) {
+    case 0:
+      dropdownMenu.style.display = "none";
+      break;
+    case 1:
+      dropdownMenu.style.display = "inline-block";
+      break;
+    default:
+  }
+}
+
+function changeDropdown(a){
+  var dropdownElements = document.getElementsByClassName('dropdown-el');
+  switch (a) {
+    case 0:
+      dropdownElements[1].classList.remove("active");
+      dropdownElements[0].classList.add("active");
+      break;
+    case 1:
+      dropdownElements[0].classList.remove("active");
+      dropdownElements[1].classList.add("active");
+      break;
+    default:
+  }
+}
+
+function toggleTypeInfo(a){
+  var infoRessources = document.getElementById('info-ressources-div');
+  var infoGallery = document.getElementById('info-gallery-div');
+  var infoTypes = document.getElementsByClassName('info-type');
+  switch (a) {
+    case 0:
+      infoGallery.classList.remove("active");
+      infoRessources.classList.add("active");
+      infoTypes[1].classList.remove("active");
+      infoTypes[0].classList.add("active");
+      break;
+    case 1:
+      infoRessources.classList.remove("active");
+      infoGallery.classList.add("active");
+      infoTypes[0].classList.remove("active");
+      infoTypes[1].classList.add("active");
       break;
     default:
   }

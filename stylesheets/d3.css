@@ -98,3 +98,38 @@
 .big-pop-up-curtain{
   opacity: 0;
 }
+.add-filter-div{
+  margin-left: 20px;
+  height: 1.5em;
+  opacity: 0.33;
+  cursor: pointer;
+  -webkit-transition: opacity .3s ease 0s, left 0.5s ease 0s;
+  -moz-transition: opacity .3s ease 0s, left 0.5s ease 0s;
+  -o-transition: opacity .3s ease 0s, left 0.5s ease 0s;
+  transition: opacity .3s ease 0s, left 0.5s ease 0s;
+}
+.add-filter-div:hover{
+  opacity: 1;
+}
+.add-filter-circle{
+  position: relative;
+  height: 1.5em;
+  width: 1.5em;
+  border: 1px solid;
+  color: rgb(255, 255, 255);
+  border-radius: 1.5em;
+  float: left;
+}
+.add-filter-circle::after{
+  line-height: 1.4em;
+  position: absolute;
+  content: "+";
+  height: 1.5em;
+  width: 1.5em;
+  text-align: center;
+}
+.add-filter-text{
+  margin-left: 2.5em;
+  color: rgb(255, 255, 255);
+  line-height: 2em;
+}

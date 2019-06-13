@@ -38,13 +38,16 @@ function addProperties(table){
   for (var i = 0; i < table.length; i++) {
     table[i].type = tableType;
     table[i].folder = tableFolder;
-    table[i].description = table[i].toString + ".html";
     table[i].color = color;
     table[i].circleClass = circleClass;
     if (table[i].id.toString().length == 1) {
+      table[i].html = "0" + table[i].id.toString() + '-' + table[i].toString + ".html";
+      table[i].htmlPlus = "0" + table[i].id.toString() + '-' + table[i].toString + "Plus.html";
       table[i].imgThumbnail = "0" + table[i].id.toString() + '-' + table[i].toString + ".png";
     }
     else {
+      table[i].html =  table[i].id.toString() + '-' + table[i].toString + ".html";
+      table[i].htmlPlus =  table[i].id.toString() + '-' + table[i].toString + "Plus.html";
       table[i].imgThumbnail = table[i].id.toString() + '-' + table[i].toString + ".png";
     }
   }
@@ -103,6 +106,10 @@ function addChildrenToObject(obj){
       objChildren[i].linkColor = allLinks[objChildren[i].link].color;
       objChildren[i].linkClass = allLinks[objChildren[i].link].linkClass;
 
+      if (typeof objChildren[i].linkDetail !== 'undefined') {
+        objChildren[i].linkDetailToString = linkDetails[objChildren[i].linkDetail].toString;
+      }
+
       if (typeof objChildren[i].children !== 'undefined') {
         for (var j = 0; j < objChildren[i].children.length; j++) {
           switch (objChildren[i].children[j].type) {
@@ -143,6 +150,9 @@ function addChildrenToObject(obj){
           objChildren[i].children[j].linkToString = allLinks[objChildren[i].children[j].link].toString;
           objChildren[i].children[j].linkColor = allLinks[objChildren[i].children[j].link].color;
           objChildren[i].children[j].linkClass = allLinks[objChildren[i].children[j].link].linkClass;
+          if (typeof objChildren[i].children[j].linkDetail !== 'undefined') {
+            objChildren[i].children[j].linkDetailToString = linkDetails[objChildren[i].children[j].linkDetail].toString;
+          }
         }
       }
     }
@@ -185,7 +195,26 @@ addChildrenAllObjects(allPeople);
 addChildrenAllObjects(allEvents);
 addChildrenAllObjects(allMedias);
 
-// for (var i = 0; i < allTables.length; i++) {
-//   console.log(allTables[i]);
-//     // addChildrenAllObjects(allTables[i]);
-// }
+function addPropertiesToLinkExamples(){
+  for (var i = 0; i < linkDetails.length; i++) {
+    var elements  = [linkDetails[i].first, linkDetails[i].second];
+    if (linkDetails[i].id < 10) {
+      linkDetails[i].html = "0" + linkDetails[i].id + "-"+ linkDetails[i].toString + ".html";
+    } else {
+      linkDetails[i].html = linkDetails[i].id + "-"+ linkDetails[i].toString + ".html";
+    }
+    for (var j = 0; j < elements.length; j++) {
+      if (elements[j].type == 0) {
+        elements[j].class = "meme-icon-participant";
+      } else if (elements[j].type == 1) {
+        elements[j].class = "event-icon-participant";
+      } else if (elements[j].type == 2) {
+        elements[j].class = "people-icon-participant";
+      } else if (elements[j].type == 3) {
+        elements[j].class = "media-icon-participant";
+      }
+    }
+  }
+}
+
+addPropertiesToLinkExamples();

@@ -1,0 +1,45 @@
+// function toggleButtonLabel(el, a){
+//   var buttonLabelMemes = document.getElementById('button-label-memes');
+//   var buttonLabelMedias = document.getElementById('button-label-medias');
+//   var buttonLabelEvents = document.getElementById('button-label-events');
+//   var buttonLabelPeople = document.getElementById('button-label-people');
+//   switch (el.id) {
+//     case "button-memes":
+//       if (a == 0) {
+//         buttonLabelMemes.classList.remove("show");
+//         buttonLabelMemes.classList.add("hide");
+//       } else if (a == 1) {
+//         buttonLabelMemes.classList.remove("hide");
+//         buttonLabelMemes.classList.add("show");
+//       }
+//       break;
+//     case "button-medias":
+//       if (a == 0) {
+//         buttonLabelMedias.classList.remove("show");
+//         buttonLabelMedias.classList.add("hide");
+//       } else if (a == 1) {
+//         buttonLabelMedias.classList.remove("hide");
+//         buttonLabelMedias.classList.add("show");
+//       }
+//       break;
+//     case "button-events":
+//       if (a == 0) {
+//         buttonLabelEvents.classList.remove("show");
+//         buttonLabelEvents.classList.add("hide");
+//       } else if (a == 1) {
+//         buttonLabelEvents.classList.remove("hide");
+//         buttonLabelEvents.classList.add("show");
+//       }
+//       break;
+//     case "button-people":
+//       if (a == 0) {
+//         buttonLabelPeople.classList.remove("show");
+//         buttonLabelPeople.classList.add("hide");
+//       } else if (a == 1) {
+//         buttonLabelPeople.classList.remove("hide");
+//         buttonLabelPeople.classList.add("show");
+//       }
+//       break;
+//     default:
+//   }
+// }

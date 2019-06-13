@@ -1,8 +1,17 @@
-var titleTarget = document.getElementById('title');
-var descTarget = document.getElementById('description');
+var titleTarget = document.getElementById('info-title');
+var contentTarget = document.getElementById('content-div');
+var categoryTarget =  document.getElementById('info-category');
 var imgTarget = document.getElementById('info-img');
-var targetDivs = [titleTarget, descTarget, imgTarget];
+var targetDivs = [titleTarget, categoryTarget, imgTarget, contentTarget];
 
+// event-plus-info
+var titlePlusTarget = document.getElementById('plus-title');
+var categoryDivTarget = document.getElementById('plus-category-div');
+var participantsDivTarget = document.getElementById('plus-participants-div');
+var contentDivTarget = document.getElementById('plus-info-content');
+
+// var participantsPlusTarget = document.getElementById('plus-participants');
+var targetPlusDivs = [titlePlusTarget, categoryDivTarget, participantsDivTarget, contentDivTarget];
 
 function clearInfo(){
   for (var i = 0; i < targetDivs.length; i++) {
@@ -10,7 +19,15 @@ function clearInfo(){
   }
 }
 
-function appendImg(obj, target){
+function clearPlusInfo(){
+  for (var i = 0; i < targetPlusDivs.length; i++) {
+    targetPlusDivs[i].innerHTML = '';
+  }
+  $('#expand-button-plus').remove();
+  $('#add-filter-div').remove();
+}
+
+function appendImg(obj, target, scale){
   switch (obj.type) {
     case 0:
       var circleColor = '#FFFFFF';
@@ -35,7 +52,7 @@ function appendImg(obj, target){
     default:
   }
 
-  var imgPx = imgTarget.clientWidth;
+  var imgPx = imgTarget.clientWidth*scale;
   var draw = SVG(target).size(imgPx, imgPx);
   var circleGroup = draw.group().attr({class:'circle-info-img'});
   var circleClip = draw.circle(imgPx-2).attr({fill:'#FFFFFF', cx:imgPx/2, cy:imgPx/2});
@@ -47,33 +64,148 @@ function appendImg(obj, target){
   circleGroup.add(circleBlur).add(circle).add(image);
 }
 
-function addClassTitle(obj){
-  var titleClass = '';
-  switch (obj.type) {
-    case 0:
-      titleClass = 'meme-title';
-      break;
-    case 1:
-      titleClass = 'event-title';
-      break;
-    case 2:
-      titleClass = 'people-title';
-      break;
-    case 3:
-      titleClass = 'media-title';
-      break;
-    default:
-  }
-  if (titleTarget.classList.length > 1) {
-    titleTarget.classList.remove(titleTarget.classList[1]);
-  }
-  titleTarget.classList.toggle(titleClass);
-}
-
 function appendInfo(obj){
   clearInfo();
-  appendImg(obj, 'info-img');
-  addClassTitle(obj);
+  appendImg(obj, 'info-img', 1);
   titleTarget.innerHTML = obj.name;
-  // $('#description').load("./assets/html/"+obj.folder+"/"+obj.description)  
+  if (obj.type == 0) {
+    categoryTarget.innerHTML = "Meme";
+  } else if (obj.type == 1) {
+    categoryTarget.innerHTML = "Événement";
+  }
+  else if (obj.type == 2) {
+    categoryTarget.innerHTML = "Personnalité";
+  }
+  else if (obj.type == 3) {
+    categoryTarget.innerHTML = "Site";
+  }
+  console.log(obj);
+  $('#content-div').load("./assets/html/"+obj.folder+"/"+obj.html);
+}
+/* Plus div */
+/* FILTER BUTTON*/
+var filterDiv = document.createElement("div");
+filterDiv.setAttribute('class', 'add-filter-div');
+filterDiv.setAttribute('id', 'add-filter-div');
+var filterCircle = document.createElement("div");
+filterCircle.setAttribute('class', 'add-filter-circle');
+var addFilterText = document.createElement("p");
+addFilterText.setAttribute('class', 'add-filter-text');
+addFilterText.innerHTML = "Trouver les récurrences";
+filterDiv.appendChild(filterCircle);
+filterDiv.appendChild(addFilterText);
+
+function appendPlusInfo(obj){
+  clearPlusInfo();
+  titlePlusTarget.innerHTML = obj.name;
+  var classType = "";
+  var iconDiv = document.createElement("div");
+  var categoryP = document.createElement("p");
+  categoryP.setAttribute('class', 'plus-category');
+  // <p class="plus-category" id="plus-category"></p>
+  if (obj.type == 0) {
+    classType = "icon-meme";
+    categoryP.innerHTML = "Meme";
+  } else if (obj.type == 1) {
+    classType = "icon-event";
+    categoryP.innerHTML = "Événement";
+  }
+  else if (obj.type == 2) {
+    classType = "icon-people";
+    categoryP.innerHTML = "Personnalité";
+  }
+  else if (obj.type == 3) {
+    classType = "icon-media";
+    categoryP.innerHTML = "Site";
+  }
+  iconDiv.setAttribute('class', 'icon-div ' + classType);
+  categoryDivTarget.appendChild(iconDiv);
+  categoryDivTarget.appendChild(categoryP);
+
+  if (obj.type == 0 || obj.type == 3) {
+    filterDiv.setAttribute("onclick", "addToFilter("+obj.toString+")");
+    $('#plus-header').after(filterDiv);
+  }
+
+  var expandButtonDiv = document.createElement("div");
+  expandButtonDiv.setAttribute('class', 'expand-button-plus-div pointer');
+  expandButtonDiv.setAttribute('id', 'expand-button-plus');
+  expandButtonDiv.setAttribute('onclick', 'toggleInfoDiv(2)');
+  var expandButtonText = document.createElement("p");
+  expandButtonText.innerHTML = "Voir davantage";
+  expandButtonText.setAttribute('class', 'expand-button-text');
+  expandButtonDiv.appendChild(expandButtonText);
+  plusInfo.appendChild(expandButtonDiv);
+  $(".circle-span").after("&nbsp;");
+  $('#plus-info-content').load("./assets/html/"+obj.folder+"/"+obj.htmlPlus);
+}
+
+
+function appendLinkInfo(link, detail){
+  clearPlusInfo();
+  titlePlusTarget.innerHTML = link.name;
+  var iconDiv = document.createElement("div");
+  iconDiv.setAttribute('class', 'icon-link-div');
+  var firstCircleDiv = document.createElement("div");
+  firstCircleDiv.setAttribute('class', 'circle-icon-link first-circle-link');
+  var linkDiv = document.createElement("div");
+  linkDiv.setAttribute('class', 'link-div');
+  var secondCircleDiv = document.createElement("div");
+  secondCircleDiv.setAttribute('class', 'circle-icon-link second-circle-link');
+
+  var categoryP = document.createElement("p");
+  categoryP.setAttribute('class', 'plus-category');
+
+  if (link.alignment == "neutral") {
+    categoryP.innerHTML = "Lien neutre";
+    linkDiv.style.backgroundColor = "#FFFFFF";
+  } else if (link.alignment == "good") {
+    categoryP.innerHTML = "Lien d'intérêt";
+    linkDiv.style.backgroundColor = "#00FF55 ";
+  } else if (link.alignment == "bad") {
+    categoryP.innerHTML = "Lien de conflit";
+    linkDiv.style.backgroundColor = "#FF3333";
+  }
+
+  iconDiv.appendChild(firstCircleDiv);
+  iconDiv.appendChild(linkDiv);
+  iconDiv.appendChild(secondCircleDiv);
+  categoryDivTarget.appendChild(iconDiv);
+  categoryDivTarget.appendChild(categoryP);
+  /* append participants */
+  var detailParticipants = [detail.first, detail.second];
+  var participantClass = ["first-participant-div", "second-participant-div"];
+
+  var participantsLabel = document.createElement("p");
+  participantsLabel.setAttribute('class', 'participant-label');
+  participantsLabel.innerHTML = "Acteurs&thinsp;:";
+  participantsDivTarget.appendChild(participantsLabel);
+  for (var i = 0; i < detailParticipants.length; i++) {
+    var participantDiv = document.createElement("div");
+    participantDiv.setAttribute('class', 'participant-div ' + participantClass[i]);
+    var iconDiv = document.createElement("div");
+    iconDiv.setAttribute('class', 'icon-participant-div ' +  detailParticipants[i].class );
+    var participantText = document.createElement("p");
+    participantText.setAttribute('class', 'icon-participant-text');
+    participantText.innerHTML = detailParticipants[i].name;
+    participantDiv.appendChild(iconDiv);
+    participantDiv.appendChild(participantText);
+    participantsDivTarget.appendChild(participantDiv);
+  }
+  $('#plus-info-content').load('./assets/html/link-details/'+detail.html);
+}
+
+function addMaxHeightScroll(){
+  var plusInfoHeight = document.getElementById('plus-info').getBoundingClientRect().height;
+  var plusHeaderHeight = document.getElementById('plus-header').getBoundingClientRect().height;
+  var plusParticipantsHeight = document.getElementById('plus-participants-div').getBoundingClientRect().height;
+  var plusContentText = document.getElementById('plus-content-text').getBoundingClientRect().height;
+  var sourceLabel = document.getElementById('source-label').getBoundingClientRect().height;
+
+  var plusInfoSource = document.getElementById('plus-info-source');
+  var plusInfoSourceWidth = document.getElementById('plus-info-source').getBoundingClientRect().width;
+
+  var maxHeight = (plusInfoHeight-(plusHeaderHeight+plusParticipantsHeight+plusContentText+sourceLabel+50))*0.7;
+  // plusInfoSource.setAttribute('style', 'max-width:'+plusInfoSourceWidth+'px;');
+  plusInfoSource.setAttribute('style', 'max-height:'+maxHeight+'px;');
 }

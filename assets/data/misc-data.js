@@ -27,15 +27,19 @@ var allTypes = [memesType,mediasType,eventsType,peopleType];
 
 var neutralLink = {
   color : "#FFFFFF",
-  name : "Neutre"
+  name : "Lien neutre"
 }
 var goodLink = {
   color : "#00FF55",
-  name : "Intérêt"
+  name : "Lien d'intérêt"
 }
 var badLink = {
   color : "#FF3333",
-  name : "Conflit"
+  name : "Lien de conflit"
 }
 
 var allTypesLink = [neutralLink, goodLink, badLink];
+
+// var culturelTag = {
+//
+// }

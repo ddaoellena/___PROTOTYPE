@@ -1,6 +1,7 @@
 /* script file for every function related to SVG manipulation*/
 /* declare global variables here */
 var svgDivWrapper = document.getElementById('svg-wrapper');
+var menuTop = document.getElementById('menu-top');
 
 /*
 * functions getDocumentWidth() and getDocumentHeight()
@@ -15,6 +16,8 @@ function getDocumentHeight() {
 };
 var vw = getDocumentWidth(),
     vh = getDocumentHeight();
+var midW = vw/2,
+    midH = vh/2;
 
 /*
 * setup SVG div, defs and filter
@@ -23,8 +26,9 @@ var draw = SVG('svg-wrapper').size(vw, vh).attr({id:'main-svg'}).viewbox(0,0,vw,
 var defs = draw.defs().attr({id:'main-svg-defs'});
 var mainSvgDefs = document.getElementById('main-svg-defs');
 var filterBlur = '<filter id="fBlur" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur in="SourceGraphic" stdDeviation="5" /></filter>';
+var filterBlurSmall = '<filter id="fBlurSmall" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur in="SourceGraphic" stdDeviation="3" /></filter>';
 var filterGray = '<filter id="fGray"><feColorMatrix type="matrix" values="0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0"/></filter>';
-mainSvgDefs.innerHTML = filterBlur + filterGray;
+mainSvgDefs.innerHTML = filterBlur + filterBlurSmall + filterGray;
 
 /*
 * draw coordinates functions
@@ -34,51 +38,71 @@ mainSvgDefs.innerHTML = filterBlur + filterGray;
 var coorDraw = SVG('svg-coor-wrapper').size(vw, vh).attr({id:'coor-svg'}).viewbox(0,0,vw,vh);
 var cw = cw;
 var ch = ch;
-var heightOffset = 40;
+var topOffset = menuTop.getBoundingClientRect().height;
 var viewWidth = vw*2;
+var scale;
+var disScale, xOffset, yOffset, coordSquare, coorSq;
 
-function setHeightOffset(){
-  if (vh >= 900) {
+function setSVGVariables(){
+  if (vw >= 900 && vw <= 1400) {
     heightOffset = 40;
+    scale = 1;
+    disScale = scale*1.2;
+    xOffset = scale*1;
+    yOffset = scale*1;
+    coordSquare = 20;
+    coorSq = coordSquare*scale;
+  }
+  if (vw >= 1400) {
+    heightOffset = 40;
+    scale = 1.5;
+    disScale = scale*1.2;
+    xOffset = scale*1;
+    yOffset = scale*0.85;
+    coordSquare = 20;
+    coorSq = coordSquare*scale;
   }
 }
-window.onload = setHeightOffset();
+window.onload = setSVGVariables();
+
+var timelineGroup = coorDraw.group().attr({class:'timeline-svg-group', id:'timeline-svg-group',  'onclick':'toggleInfoDiv(0);'});
+var dotGroup = coorDraw.group().attr({class:'grid dot-grid', id:'timeline-dot-grid'});
+var tlGroup = coorDraw.group().attr({class:'timeline', id:'timeline'});
 
 function drawTimeline(l){
-  const r = 1;
+  const r = 1,
+        tlHeight= l*5;
 
-  var timelineGroup = coorDraw.group().attr({class:'timeline-svg-group', id:'timeline-svg-group',  'onclick':'toggleInfoDiv(0);'});
   timelineGroup.attr({"visibility":"hidden"});
 
   var dates = ["2016", "2017", "2018", "2019", "2020", "2021"];
-  var dotGroup = coorDraw.group().attr({class:'grid dot-grid', id:'timeline-dot-grid'});
 
-  for (var x = 20; x < viewWidth; x+=l) {
-    for (var y = 20; y < vh*0.6; y+=l) {
+  for (var x = l; x < viewWidth; x+=l) {
+    for (var y = l; y < tlHeight; y+=l) {
       var circle = coorDraw.circle(r).attr({fill:'#C4C4C4', cx:x, cy:y});
       dotGroup.add(circle);
       timelineGroup.add(dotGroup);
     }
   }
   /* Labels timeline */
-  var tlGroup = coorDraw.group().attr({class:'timeline', id:'timeline'});
-  var dateOff = 100;
+  var dateOff = 5*l;
   for (var x = l; x < viewWidth; x+=l) {
-    var line = coorDraw.line(0, 0, 0, 20).move(x, vh*0.625);
+    var line = coorDraw.line(0, 0, 0, l).move(x, tlHeight);
     line.stroke({color: '#BFBFBF', width : 1});
     tlGroup.add(line);
   }
   for (var i = 0; i < dates.length; i++) {
-    var dateLine = coorDraw.line(0, 0, 0, 30).move(dateOff + l*24*i, vh*0.625);
+    var dateLine = coorDraw.line(0, 0, 0, l*1.5).move(dateOff + l*24*i, tlHeight);
     dateLine.stroke({color: '#BFBFBF', width : 2});
     var dateText = draw.text(dates[i]);
-    dateText.font({ fill: '#fff', anchor: 'middle'}).move(dateOff + l*24*i, vh*0.625 + 35);
+    dateText.font({ fill: '#fff', anchor: 'middle'}).move(dateOff + l*24*i, tlHeight + 50);
     tlGroup.add(dateLine).add(dateText);
   }
+
   timelineGroup.add(tlGroup);
-  timelineGroup.move(0, heightOffset);
+  timelineGroup.move(0, topOffset);
 }
-drawTimeline(20);
+drawTimeline(coorSq);
 
 function toggleTimeline(a){
   var timelineGroup = document.getElementById('timeline-svg-group');
@@ -95,27 +119,35 @@ function toggleTimeline(a){
 
 function drawCompass(l){
   const r = 1;
-  const compassW = 1000;
-  const compassH = 600;
+  const compassW = vw*0.9;
+  const compassH = 200*scale;
   var compassX = (vw-compassW)/2;
-  var compassY = (vh-compassH)/2;
+  var compassY = topOffset;
+  var midCompass = vw/2;
+
   var compassGroup = coorDraw.group().attr({class:'compass-svg-group', id:'compass-svg-group'});
   compassGroup.attr({"visibility":"hidden"});
   var dotGroup = coorDraw.group().attr({class:'grid dot-grid', id:'compass-dot-grid'});
-  for (var x = 20; x < compassW; x+=l) {
-    for (var y = 20; y < compassH; y+=l) {
-      var circle = coorDraw.circle(r).attr({fill:'#C4C4C4', cx:x, cy:y});
+  for (var x = l; x < compassW; x+=l) {
+    for (var y = l; y < compassH; y+=l) {
+      var circle = coorDraw.circle(r).attr({fill:'#C4C4C4', cx:x, cy:y, opacity: 1});
       dotGroup.add(circle);
       compassGroup.add(dotGroup);
     }
   }
-  var compassLabels = ["Mainstream", "Underground", "Gauche", "Droite"];
-  var labelW = 120,
-      labelH = 30,
+  var nodeWidth = dotGroup.node.getBoundingClientRect().width,
+      nodeHeight = dotGroup.node.getBoundingClientRect().height;
+
+  console.log();
+  var line = coorDraw.line(0,0, 0, nodeHeight).stroke({ width: 2, color:"#848484", linecap: 'round'});
+  dotGroup.add(line);
+  var compassLabels = ["Gauche", "Droite"];
+  var labelW = 120*scale,
+      labelH = 30*scale,
       labelXOff = labelW/2,
       labelYOff = labelH/2;
 
-  var compassLabelPos = [{x:compassW/2+labelXOff,y:0+labelYOff},{x:compassW/2+labelXOff,y:compassH+labelYOff},{x:0+labelXOff/2,y:compassH/2+labelYOff},{x:compassW+labelXOff*2, y:compassH/2+labelYOff}];
+  var compassLabelPos = [{x:nodeWidth/4,y:nodeHeight+labelH*2.5},{x:nodeWidth*3/4, y:nodeHeight+labelH*2.5}];
 
   for (var i = 0; i < compassLabels.length; i++) {
     var compassLabelGroup = coorDraw.group().attr({class:'compass-label-group'});
@@ -127,10 +159,10 @@ function drawCompass(l){
     compassGroup.add(compassLabelGroup);
   }
   //center compass
-
+  line.move(nodeWidth/2-0.5,l);
   dotGroup.move(compassX,compassY);
 }
-drawCompass(20);
+drawCompass(coorSq);
 
 function toggleCompass(a){
   var compassGroup = document.getElementById('compass-svg-group');
@@ -146,31 +178,41 @@ function toggleCompass(a){
 }
 
 function addAllCircles(type){
+  toggleDropdown(0);
   toggleInfoDiv(0);
   cleanSvg();
+  toggleZoomSlider(0);
   cleanCircles();
   cleanD3();
   toggleOffFilter();
   turnOffLabels();
+  togglePlusSvg(0);
+  removePopUp();
+  emptyFilter();
   switch (type) {
     case allEvents:
       toggleInterfaceEl(filterButton, 1);
       toggleInterfaceEl(panSliderGroup, 1);
+      $('#placeholder-text').html('Cliquer sur un événement pour voir les liens');
+      toggleInterfaceEl(plusSvgWrapper,1);
       toggleCompass(0);
       toggleTimeline(1);
+      currentFilter = "events";
       break;
     case allPeople:
       toggleInterfaceEl(filterButton, 1);
       toggleInterfaceEl(panSliderGroup, 0);
+      $('#placeholder-text').html('Cliquer sur une personnalité pour voir les liens');
+      toggleInterfaceEl(plusSvgWrapper,1);
       toggleTimeline(0);
-      toggleCompass(1)
+      toggleCompass(1);
+      currentFilter = "people";
       break;
     default:
   }
-   for (var i = 0; i < type.length; i++) {
-
-     addCircle(type[i], 0);
-   }
+  for (var i = 0; i < type.length; i++) {
+    addSingleCircle(type[i]);
+  }
 }
 
 function cleanCircles(){
@@ -254,4 +296,8 @@ function colorOff(el){
   else{
     el.childNodes[2].setAttribute("filter", "url(#fGray)");
   }
+}
+
+function colorOffPlus(el){
+    el.childNodes[2].setAttribute("filter", "url(#fGray)");
 }

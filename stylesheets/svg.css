@@ -1,9 +1,201 @@
+.circle{
+  outline: none;
+}
 .svg-coor-wrapper
 ,.svg-wrapper,
 .pop-up-wrapper{
   position: fixed;
-  top: 0px;
+  top: 40px;
   left: 0px;
+  display: inline-block;
+  padding-bottom: 100%;
+  vertical-align: middle;
+  overflow: hidden;
+}
+.plus-svg-wrapper{
+  position: fixed;
+  width: 100%;
+  height: 54.5%;
+  top: 45%;
+  left: 0px;
+  border-top: 0.5px solid rgba(255, 255, 255, 0.33);
+}
+.plus-svg{
+  position: absolute;
+  width: 34%;
+  height: 100%;
+  float: left;
+  display: inline-block;
+}
+.plus-info.with-content{
+  border-left: 0.5px solid rgba(255, 255, 255, 0.33);
+}
+.plus-info.without-content{
+  border-left: 0px;
+}
+.plus-info{
+  position: absolute;
+  width: 66%;
+  height: 100%;
+  right: 0;
+  float: right;
+  display: inline-block;
+}
+.plus-header{
+  margin: 20px 0px 10px 20px;
+}
+.plus-title-div{
+  width: auto;
+  display: inline-block;
+}
+.plus-title{
+  font-size: 1.8em;
+}
+
+.plus-category-div{
+  margin-left: 10px;
+  height: 1.3em;
+  display: inline-block;
+  width: auto;
+}
+.icon-div{
+  position: relative;
+  height: 1.3em;
+  width: 1.3em;
+  display: inline-block;
+  border-radius: 1.3em;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.icon-meme, .meme-span, .meme-icon-participant{
+  background-image: url('../assets/pics/navigation/meme.svg');
+}
+.icon-event, .event-span, .event-icon-participant{
+  background-image: url('../assets/pics/navigation/event.svg');
+}
+.icon-people, .people-span, .people-icon-participant{
+  background-image: url('../assets/pics/navigation/people.svg');
+  background-size: 110%;
+}
+.icon-media, .media-span, .media-icon-participant{
+  background-image: url('../assets/pics/navigation/media.svg');
+}
+.plus-category{
+  margin-left: 10px;
+  position: relative;
+  top: -33%;
+  display: inline;
+}
+.icon-link-div{
+  height: 1.3em;
+  display: inline-block;
+}
+.link-div{
+  width: 1.3em;
+  display: inline-block;
+  height: 2px;
+  position: relative;
+  top: -40%;
+  z-index: 0;
+}
+.circle-icon-link{
+  position: relative;
+  top: -0.2em;
+  height: 0.8em;
+  width: 0.8em;
+  display: inline-block;
+  border-radius: 0.8em;
+  background-color: #C4C4C4;
+  z-index: 10;
+}
+.plus-participants-div{
+  margin: 0px 0px 0px 20px;
+}
+.participant-label{
+  display: inline-block;
+  color: rgba(255,255,255,0.33);
+}
+.participant-div{
+  display: inline-block;
+  height: 1em;
+  width: auto;
+  line-height: 1em;
+  margin: 0px 10px 0px 10px;
+}
+.first-participant-div::after{
+  content: "→";
+  height: 1em;
+  position: relative;
+  margin-left: 10px;
+  color: rgba(255,255,255,0.33);
+  line-height: 1em;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+.second-participant-div{
+  margin: 0px 0px 0px 0px;
+}
+.icon-participant-div{
+  position: relative;
+  top: 25%;
+  height: 1em;
+  width: 1em;
+  border-radius: 1em;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.icon-meme, .meme-icon-participant, .meme-span{
+  background-color: #FFFFFF;
+}
+.icon-people, .people-icon-participant, .people-span{
+  background-color: #FF83D5;
+}
+.icon-event, .event-icon-participant, .event-span{
+  background-color: #83E1FF;
+}
+.icon-media, .media-icon-participant, .media-span{
+  background-color: #FFC683;
+}
+.icon-participant-text{
+  margin-left: 5px;
+  display: inline-block;
+}
+.plus-category{
+  color: rgba(255,255,255,0.33);
+}
+.plus-placeholder-div {
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.plus-placeholder{
+  text-align: center;
+  color: rgba(255,255,255,0.5);
+  font-size: 1.7em;
+}
+.expand-button-plus-div{
+  position: absolute;
+  padding: 0px 20px 0px 20px;
+  bottom: 20px;
+  right: 40%;
+  height: 40px;
+  width: auto;
+  border-radius: 20px;
+  border: 1px solid white;
+  opacity: 0.5;
+  -webkit-transition: opacity .75s ease 0s;
+  -moz-transition: opacity .75s ease 0s;
+  -o-transition: opacity .75s ease 0s;
+  transition: opacity .75s ease 0s;
+}
+.expand-button-text{
+  line-height: 40px;
+}
+.expand-button-plus-div:hover{
+  opacity: 1;
 }
 .circle:hover{
   stroke-width: 2;
@@ -35,4 +227,103 @@
 }
 tspan{
   font-size: 1em;
+}
+#pop-up-svg{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+.svg-pop-up-bg{
+  z-index: 100;
+}
+.svg-pop-up-icon{
+  float: left;
+  margin: 10px 10px 0px 10px;
+}
+
+.plus-info-content{
+  margin: 20px 40px 20px 20px;
+}
+.plus-content-text, .info-description-plus{
+  font-size: 1.0em;
+  line-height: 1.5em;
+}
+.content-source{
+  text-align: right;
+  color: rgba(255,255,255,0.33);
+}
+.circle-span{
+  height: 1em;
+  width: 1em;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+  margin-left: 2px;
+  opacity: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  /* -webkit-transform: translate(0, 25%);
+  transform: translate(0, 25%); */
+}
+
+.plus-info-source{
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-overflow: ellipsis;
+  /* white-space: nowrap; */
+  margin-top: 20px;
+}
+.source-list{
+  margin-top: 20px;
+}
+.source-label{
+  font-size: 0.8em;
+  color: rgba(255,255,255,0.33);
+}
+.source-item{
+  margin-top: 10px;
+  display: block;
+  line-height: 1.5em;
+}
+.source-item.first-item{
+  margin-top: -10px;
+}
+.source-author{
+  color: rgba(255,255,255,0.5);
+}
+.info-stats-plus-div{
+  margin-top: 20px;
+}
+.info-stats{
+  margin-top: 10px;
+}
+.link-icon{
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 5px;
+  position: relative;
+  top: 5px;
+  content: "";
+  /* content: "↗"; */
+  font-size: 1.4em;
+  /* color: rgba(255,255,255,0.33); */
+  opacity: 0.5;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.wiki-icon{
+  background-image: url('../assets/pics/navigation/wiki.svg');
+}
+.news-icon{
+  background-image: url('../assets/pics/navigation/newspaper.svg');
+}
+.video-icon{
+  background-image: url('../assets/pics/navigation/video.svg');
+}
+.radio-icon{
+  background-image: url('../assets/pics/navigation/radio.svg');
+}
+.website-icon{
+  background-image: url('../assets/pics/navigation/website.svg');
 }

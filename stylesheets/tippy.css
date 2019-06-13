@@ -1,0 +1,56 @@
+.tippy-tooltip.light-theme{
+  color:#26323d;
+  -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,1);
+  -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,1);
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,1);
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 0px;
+}
+
+.tippy-tooltip.light-theme[x-placement^=top] .tippy-arrow{
+  border-top:8px solid #fff;border-right:8px solid transparent;border-left:8px solid transparent}
+
+.tippy-tooltip.light-theme[x-placement^=bottom] .tippy-arrow{
+  border-bottom:8px solid #fff;
+  border-right:8px solid transparent;border-left:8px solid transparent}
+
+.tippy-tooltip.light-theme[x-placement^=left] .tippy-arrow{
+    border-left:8px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent}
+
+.tippy-tooltip.light-theme[x-placement^=right] .tippy-arrow{
+  border-right:8px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent}
+
+.tippy-tooltip.light-theme .tippy-backdrop{
+  border-radius: 0px;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.tippy-tooltip.light-theme .tippy-roundarrow{fill:#fff}
+
+.tippy-tooltip.light-theme[data-animatefill]{background-color:transparent}
+
+.tippy-content{
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 1.3em;
+}
+.tippy-content-name{
+  color: rgba(0, 0, 0, 1);
+}
+.tippy-content-date{
+  color: rgba(0, 0, 0, 0.66);
+  text-align: left;
+}
+
+.tippy-tooltip.google-theme{
+  /* background-color:#505355; */
+  border-radius: 0px;
+  padding:10px 0px 10px 0px;
+  background-color: #272727;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.7em;
+}
+
+
+
+.tippy-tooltip.google-theme[data-size=small]{font-size:.75rem;padding:.1875rem .375rem}
+.tippy-tooltip.google-theme[data-size=large]{font-size:1rem;padding:.375rem .75rem}
