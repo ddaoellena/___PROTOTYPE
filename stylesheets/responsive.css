@@ -16,6 +16,12 @@
   .menu{
     top: 65px;
   }
+  .title-text{
+    margin-left: 15px;
+  }
+  .about-text{
+    margin-right: 15px;
+  }
   .menu-top{
     top: 0px;
     height: 50px;
@@ -29,6 +35,11 @@
   }
   .menu-top-text{
     line-height: 50px;
+    font-size: 1em;
+  }
+  .menu-text{
+    margin-bottom: 15px;
+    font-size: 0.9em;
   }
   .menu-left{
     left: 15px;
@@ -39,8 +50,11 @@
   .info-wrapper.collapsed{
     bottom: -83%;
   }
-  .focus.menu{
+  .focus-menu{
     height: 50px;
     margin: 13px 0px 0px 20px;
+  }
+  .zoom-slider-wrapper{
+    
   }
 }
