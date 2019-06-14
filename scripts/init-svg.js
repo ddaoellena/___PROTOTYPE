@@ -77,7 +77,7 @@ function setSVGVariables(){
     scale = 1.25;
     disScale = scale*1.5;
     xOffset = scale*1;
-    yOffset = scale*1.1;
+    yOffset = scale*1;
     dSquare = 20;
     coorSq = dSquare*scale;
     tlR= 2;
