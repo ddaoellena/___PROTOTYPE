@@ -1,9 +1,9 @@
 const memesData = {
   nodes : [
     /* MEMES */
-    {id:'pepe-the-frog', name:"Pepe The Frog", objToString:"pepe", type:'meme', folder:"./assets/pics/0-memes/", img: '00-pepe.png', size:'big'},
-		{id:'yang-gang', name:"Yang Gang", objToString:"yangGang", type:'meme', folder:"./assets/pics/0-memes/", img: '02-yangGang.png', size:'big'},
-    /* PEPE THE FRONG */
+    {id:'pepe-the-frog', name:"Pepe The Frog", objToString:"pepe", mainNode: true, type:'meme', folder:"./assets/pics/0-memes/", img: '00-pepe.png', size:'big', related:{events:[0, 1, 2]}},
+		{id:'yang-gang', name:"Yang Gang", objToString:"yangGang", mainNode: true, type:'meme', folder:"./assets/pics/0-memes/", img: '02-yangGang.png', size:'big', related:{events:[3]}},
+    /* PEPE THE FROG */
     {id:'media-1', size:'medium', type:'media', subType:'news', imgPopUp:'./assets/pics/screens/pepe-1.png', name:"Facebook a une règle spéciale pour Pepe the Frog, la grenouille récupérée par l’extrême-droite américaine", author:"Numerama", link:'https://www.numerama.com/politique/379949-facebook-a-une-regle-speciale-pour-pepe-the-frog-la-grenouille-recuperee-par-lextreme-droite-americaine.html'},
 		{id:'media-2', size:'medium', type:'media', subType:'news', imgPopUp:'./assets/pics/screens/pepe-2.png', name:"Le créateur de Pepe The Frog tue sa grenouille, contaminée <br>par l’extrême droite", author:"Le Monde", link:'https://www.lemonde.fr/big-browser/article/2017/05/08/le-createur-de-pepe-the-frog-tue-sa-grenouille-contaminee-par-l-extreme-droite_5124342_4832693.html'},
 		{id:'media-3', size:'medium', type:'media', subType:'news', imgPopUp:'./assets/pics/screens/pepe-3.png', name:"De \"Pepe The Frog\" à \"Pepe Le Pen\" : comment une grenouille est <br>devenue un emblème de la fachosphère", author:"Les Inrocks", link:'https://www.lesinrocks.com/2017/01/21/actualite/actualite/de-pepe-the-frog-a-pepe-pen-grenouille-devenue-embleme-de-fachosphere/'},

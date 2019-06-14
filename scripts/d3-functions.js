@@ -1,18 +1,24 @@
 function d3Init(table){
   toggleInfoDiv(0);
-  toggleInterfaceEl(filterButton, 0);
   toggleInterfaceEl(panSliderGroup, 0);
   toggleInterfaceEl(plusSvgWrapper,0);
   toggleZoomSlider(1);
-  toggleCompass(0);
-  toggleTimeline(0);
   togglePlusSvg(0);
   cleanD3();
   removePopUp();
-  toggleOffFilter();
   turnOffLabels();
   cleanSvg();
   run(table);
+  switch (table) {
+    case memesData:
+      setCurrentView(0);
+      return;
+    case mediasData:
+      setCurrentView(3);
+      return ;
+    default:
+      return;
+  }
 }
 var svg = d3.select("#main-svg");
 
@@ -64,7 +70,10 @@ function run(graph) {
                      .selectAll("circle");
 
   var blurNode = nodeGroup.data(graph.nodes).enter().append("circle")
-                        .attr("class", "blur-circle")
+                        .attr("class", function(d){return "blur-circle "+ d.type+"-blur"})
+                        .attr("id", function(d){if (d.mainNode == true) {
+                          return d.id+"-blur"
+                        }})
                         .attr("r", 2)
 
  var node = nodeGroup.data(graph.nodes).enter().append("circle")
@@ -211,7 +220,7 @@ function run(graph) {
            default:
          }
        })
-       .style("opacity", "0.75")
+       .attr("opacity", "0.75")
        .style("stroke", function(d){
          switch (d.type) {
            case "meme":

@@ -13,53 +13,35 @@
   <body>
     <!-- open /Applications/Google\ Chrome.app/ --args --allow-file-access-from-files -->
     <!-- MENUS -->
-    <div class="menu-top shadow-bottom" id="menu-top">
+    <div class="menu-top shadow-bottom" id="menu-top" data-foo="foo, bar">
       <p class="menu-top-text title-text">Memes view tool</p>
-      <div class="dropdown-menu" id="dropdown-menu">
-        <button class="dropdown-btn pointer">Filtrer par&emsp;&#9660;</button>
-        <div class="dropdown-content">
-          <a href="#" class="dropdown-el pointer active" onclick="d3Init(memesData); changeDropdown(0);"></span>Memes</a>
-          <a href="#" class="dropdown-el pointer" onclick="d3Init(mediasData); changeDropdown(1);"></span>Sites</a>
-        </div>
+      <div class="focus-menu wo-focus pointer" id="focus-menu">
+        <p class="focus-text" id="focus-text">Focus</p>
+        <div class="focus-img" id="focus-img"></div>
+        <p class="focus-label" id="focus-label"></p>
+        <div class="focus-remove-btn" id="focus-remove-btn" onclick="removeFocus()"></div>
       </div>
       <p class="menu-top-text about-text" onclick="toggleAbout()">À propos</p>
     </div>
     <div class="menu menu-left menu-filter nav-elems" id="menu-left">
       <p class="menu-text menu-left-text">Vue en&thinsp;:</p>
-      <div class="menu-button menu-button-left button-memes menu-square pointer" id="button-memes" data-tippy-content="Réseau" onclick="d3Init(memesData); toggleMenu(this); toggleDropdown(1);">
-        <div class="highlight-box menu-square"></div><!-- <div class="circle-button circle-memes memes-color"></div> -->
+      <div class="menu-button menu-button-left button-memes menu-square pointer" id="button-memes" data-tippy-content="Réseau" onclick="d3Init(memesData); toggleMenu(this);">
+        <div class="highlight-box menu-square"></div>
       </div>
-      <!-- <div class="menu-button menu-button-left button-medias menu-square pointer" id="button-medias" data-tippy-content="Tooltip" onclick="d3Init(mediasData); toggleMenu(this);">
-        <div class="highlight-box menu-square"><div class="circle-button circle-medias medias-color"></div></div>
-      </div> -->
       <div class="menu-button menu-button-left button-events menu-square pointer" id="button-events" data-tippy-content="Chronologie" onclick="addAllCircles(allEvents); toggleMenu(this);">
-        <div class="highlight-box menu-square"></div><!-- <div class="circle-button circle-events events-color"></div> -->
+        <div class="highlight-box menu-square"></div>
       </div>
-      <div class="menu-button menu-button-left button-people menu-square pointer" id="button-people" data-tippy-content="Échiquier" onclick="addAllCircles(allPeople); toggleMenu(this);">
-        <div class="highlight-box menu-square"></div><!-- <div class="circle-button circle-people people-color"></div> -->
+      <div class="menu-button menu-button-left button-people menu-square pointer" id="button-people" data-tippy-content="Échiquier" onclick="toggleMenu(this);">
+        <div class="highlight-box menu-square"></div>
       </div>
     </div>
     <!-- MENU RIGHT -->
     <div class="menu menu-right nav-elems" id="menu-right">
       <p class="menu-text menu-left-text">Outils et légende&thinsp;:</p>
       <div class="zoom-slider-wrapper nav-elems" id="zoom-slider-wrapper">
-        <input type="range" min="1" max="100" value="100" class="slider zoom-slider" id='zoom-slider' onchange="zoomTimeline(this.value);">
+        <input type="range" min="1" max="100" value="100" class="slider zoom-slider" id='zoom-slider' onchange="">
       </div>
-      <div class="menu-button button-filter menu-square pointer hidden" id="button-filter" onclick="toggleFilter()">
-        <div class="highlight-box menu-square"></div>
-        <div class="button-filter-ghost off" id="button-filter-ghost"></div>
-      </div>
-      <div class="filter-box-wrapper collapsed" id="filter-box-wrapper">
-        <div class="filter-box" id="filter-box">
-          <p class="filter-title">Filtre</p>
-            <div class="filter-list" id="filter-list">
-              <div class="filter-element no-filter" id="filter-element">
-                <div class="filter-img" id="filter-img"></div><p class="filter-text" id="filter-text"></p><div class="filter-remove-btn pointer" onclick="emptyFilter();"></div>
-              </div>
-              <p class='filter-text-placeholder no-filter' id="filter-text-placeholder">Pas de filtre activé</p>
-            </div>
-        </div>
-      </div>
+
       <div class="button-info with-zoom" id="button-info" onclick="toggleLabels()"><p class="button-info-span text" id="button-info-span">?</p>
         <div class="labels-box-wrapper collapsed" id="labels-box-wrapper">
           <p class="label-info">Éléments</p>
@@ -75,8 +57,7 @@
     <!--- END MENU --->
 
     <!-- SVG -->
-    <div class="svg-coor-wrapper" id="svg-coor-wrapper" onclick="toggleOffFilter();turnOffLabels();"></div>
-    <div class="svg-wrapper" id="svg-wrapper" onclick="toggleOffFilter();turnOffLabels();turnOffAbout();"></div>
+    <div class="svg-wrapper" id="svg-wrapper" onclick="turnOffLabels();turnOffAbout();"></div>
     <div class="plus-svg-wrapper hidden" id="plus-svg-wrapper">
       <div class="plus-svg" id="plus-svg"></div>
       <div class="plus-info without-content" id="plus-info">
@@ -89,14 +70,11 @@
       </div>
       <div class="plus-placeholder-div visible" id="plus-placeholder-div"><p class="plus-placeholder" id="placeholder-text"></p></div>
     </div>
-    <div class="pop-up-wrapper" id="pop-up-wrapper"></div>
     <!---------->
 
     <!-- SIDE SHADOWS DIVS -->
-    <div class="shadow-div shadow-div-side shadow-div-left">
-    </div>
-    <div class="shadow-div shadow-div-side shadow-div-right">
-    </div>
+    <div class="shadow-div shadow-div-side shadow-div-left"></div>
+    <div class="shadow-div shadow-div-side shadow-div-right"></div>
     <!----------------------->
 
     <!-- INFO DIV -->
@@ -108,20 +86,15 @@
           <p class="info-category" id="info-category"></p>
         </div>
         <div class="content-div" id="content-div"></div>
-      </div>
 
-      <div class="shadow-div shadow-div-info shadow-top">
-      </div>
+      <div class="shadow-div shadow-div-info shadow-top"></div>
     </div>
     <!------------->
 
     <!--- ABOUT --->
-    <div class="about-wrapper collapsed" id="about-wrapper">
-
-    </div>
+    <div class="about-wrapper collapsed" id="about-wrapper"></div>
     <!------------->
-    <div class="curtain-div" id="curtain-div" onclick="toggleInfoDiv(0);">
-    </div>
+    <div class="curtain-div" id="curtain-div" onclick="toggleInfoDiv(0);"></div>
   </body>
   <!-- Assets files -->
   <script src="./assets/data/0-memes.js" charset="utf-8"></script>
@@ -132,6 +105,7 @@
   <script src="./assets/data/5-link-details.js" charset="utf-8"></script>
   <script src="./assets/data/a-memes.js" charset="utf-8"></script>
   <script src="./assets/data/b-medias.js" charset="utf-8"></script>
+  <script src="./assets/data/c-people.js" charset="utf-8"></script>
   <script src="./assets/data/link-types.js" charset="utf-8"></script>
   <script src="./assets/data/misc-data.js" charset="utf-8"></script>
   <!-- Librairies files -->
@@ -152,7 +126,9 @@
   <script src="./scripts/generate-content.js" charset="utf-8"></script>
   <script src="./scripts/zoom-functions.js" charset="utf-8"></script>
   <script src="./scripts/tooltip.js" charset="utf-8"></script>
-  <script src="./scripts/filter.js" charset="utf-8"></script>
+  <script src="./scripts/filter-events.js" charset="utf-8"></script>
+  <script src="./scripts/filter-d3.js" charset="utf-8"></script>
+  <script src="./scripts/focus.js" charset="utf-8"></script>
   <script src="./scripts/init.js" charset="utf-8"></script>
 
 </html>

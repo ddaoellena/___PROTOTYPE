@@ -3,12 +3,6 @@
 var infoWrapperDiv = document.getElementById('info-wrapper');
 var curtainDiv = document.getElementById('curtain-div');
 var menuButtons = document.getElementsByClassName('menu-button');
-var descriptionP = document.getElementById('description');
-var filterWrapper = document.getElementById('filter-box-wrapper');
-var buttonFilter = document.getElementById('button-filter');
-var whiteStroke = 'border : solid 0.5px white;';
-var blackShadow = '-webkit-box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.75); -moz-box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.75); box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.75);';
-var whiteShadow = '-webkit-box-shadow: 0px 0px 5px 2px rgba(255,255,255,0.5); -moz-box-shadow: 0px 0px 5px 2px rgba(255,255,255,0.5); box-shadow: 0px 0px 5px 2px rgba(255,255,255,0.5);';
 var labelsWrapper = document.getElementById('labels-box-wrapper');
 var labelsBoxElem = document.getElementById('labels-box-elem');
 var labelsBoxLink = document.getElementById('labels-box-link');
@@ -64,26 +58,6 @@ function toggleInfoDiv(a){
   }
 }
 
-function toggleFilter(){
-  if (filterWrapper.classList[1] == 'collapsed') {
-    filterWrapper.classList.remove('collapsed');
-    filterWrapper.classList.add('expanded');
-    filterWrapper.style.display = "block";
-    buttonFilter.setAttribute('style', whiteStroke);
-  }
-  else if (filterWrapper.classList[1] == 'expanded') {
-    toggleOffFilter();
-  }
-}
-function toggleOffFilter(){
-  if (filterWrapper.classList[1] == 'expanded') {
-    filterWrapper.classList.remove('expanded');
-    filterWrapper.classList.add('collapsed');
-    filterWrapper.style.display = "none";
-    buttonFilter.setAttribute('style',blackShadow);
-  }
-}
-
 function addLabels(){
   labelsWrapper.style.display = "block";
   for (var i = 0; i < allTypes.length; i++) {
@@ -103,22 +77,15 @@ function addLabels(){
   for (var i = 0; i < allTypesLink.length; i++) {
     var labelDiv = document.createElement("div");
     labelDiv.setAttribute("class", "label link-label");
-    // var linkWrapper = document.createElement("div");
-    // linkWrapper.setAttribute("class", "link-wrapper");
     var labelStroke = document.createElement("div");
     labelStroke.setAttribute("class", "label-link-stroke");
-    // var labelCircle = document.createElement("div");
-    // labelCircle.setAttribute("class", "label-circle-link");
     labelStroke.style.backgroundColor = allTypesLink[i].color;
-    // labelCircle.style.backgroundColor = allTypesLink[i].color;
 
     var labelText = document.createElement("p");
     labelText.setAttribute("class", "label-text-link");
     labelText.innerHTML = allTypesLink[i].name;
 
-    // labelDiv.appendChild(linkWrapper);
     labelDiv.appendChild(labelStroke);
-    // linkWrapper.appendChild(labelCircle);
     labelDiv.appendChild(labelText);
     labelsBoxLink.appendChild(labelDiv);
   }
@@ -233,34 +200,6 @@ function togglePlusSvg(a){
     case 1:
       toggleInterfaceEl(plusPlaceholderDiv,0);
       toggleStrokeDivSvg(1);
-      break;
-    default:
-  }
-}
-
-function toggleDropdown(a){
-  var dropdownMenu = document.getElementById('dropdown-menu');
-  switch (a) {
-    case 0:
-      dropdownMenu.style.display = "none";
-      break;
-    case 1:
-      dropdownMenu.style.display = "inline-block";
-      break;
-    default:
-  }
-}
-
-function changeDropdown(a){
-  var dropdownElements = document.getElementsByClassName('dropdown-el');
-  switch (a) {
-    case 0:
-      dropdownElements[1].classList.remove("active");
-      dropdownElements[0].classList.add("active");
-      break;
-    case 1:
-      dropdownElements[0].classList.remove("active");
-      dropdownElements[1].classList.add("active");
       break;
     default:
   }

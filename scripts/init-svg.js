@@ -2,7 +2,26 @@
 /* declare global variables here */
 var svgDivWrapper = document.getElementById('svg-wrapper');
 var menuTop = document.getElementById('menu-top');
+var currentView = '';
 
+function setCurrentView(a){
+  switch (a) {
+    case 0:
+      currentView = "memes";
+      break;
+    case 1:
+      currentView = "events";
+      break;
+    case 0:
+      currentView = "people";
+      break;
+    case 0:
+      currentView = "medias";
+      break;
+    default:
+
+  }
+}
 /*
 * functions getDocumentWidth() and getDocumentHeight()
 * self-explanatory
@@ -31,17 +50,16 @@ var filterGray = '<filter id="fGray"><feColorMatrix type="matrix" values="0.3333
 mainSvgDefs.innerHTML = filterBlur + filterBlurSmall + filterGray;
 
 /*
-* draw coordinates functions
+* draw dinates functions
 * @params cw, ch space between dots
 * can change variables inside the function
 */
-var coorDraw = SVG('svg-coor-wrapper').size(vw, vh).attr({id:'coor-svg'}).viewbox(0,0,vw,vh);
 var cw = cw;
 var ch = ch;
 var topOffset = menuTop.getBoundingClientRect().height;
 var viewWidth = vw*2;
 var scale;
-var disScale, xOffset, yOffset, coordSquare, coorSq;
+var disScale, xOffset, yOffset, dSquare, coorSq;
 
 function setSVGVariables(){
   if (vw >= 900 && vw <= 1400) {
@@ -50,8 +68,8 @@ function setSVGVariables(){
     disScale = scale*1.2;
     xOffset = scale*1;
     yOffset = scale*1;
-    coordSquare = 20;
-    coorSq = coordSquare*scale;
+    dSquare = 20;
+    coorSq = dSquare*scale;
   }
   if (vw >= 1400) {
     heightOffset = 40;
@@ -59,27 +77,24 @@ function setSVGVariables(){
     disScale = scale*1.2;
     xOffset = scale*1;
     yOffset = scale*0.85;
-    coordSquare = 20;
-    coorSq = coordSquare*scale;
+    dSquare = 20;
+    coorSq = dSquare*scale;
   }
 }
 window.onload = setSVGVariables();
 
-var timelineGroup = coorDraw.group().attr({class:'timeline-svg-group', id:'timeline-svg-group',  'onclick':'toggleInfoDiv(0);'});
-var dotGroup = coorDraw.group().attr({class:'grid dot-grid', id:'timeline-dot-grid'});
-var tlGroup = coorDraw.group().attr({class:'timeline', id:'timeline'});
-
 function drawTimeline(l){
+  var timelineGroup = draw.group().attr({class:'timeline-svg-group', id:'timeline-svg-group'});
+  var dotGroup = timelineGroup.group().attr({class:'grid dot-grid', id:'timeline-dot-grid'});
+  var tlGroup = timelineGroup.group().attr({class:'timeline', id:'timeline'});
   const r = 1,
         tlHeight= l*5;
-
-  timelineGroup.attr({"visibility":"hidden"});
 
   var dates = ["2016", "2017", "2018", "2019", "2020", "2021"];
 
   for (var x = l; x < viewWidth; x+=l) {
     for (var y = l; y < tlHeight; y+=l) {
-      var circle = coorDraw.circle(r).attr({fill:'#C4C4C4', cx:x, cy:y});
+      var circle = draw.circle(r).attr({fill:'#C4C4C4', cx:x, cy:y});
       dotGroup.add(circle);
       timelineGroup.add(dotGroup);
     }
@@ -87,12 +102,12 @@ function drawTimeline(l){
   /* Labels timeline */
   var dateOff = 5*l;
   for (var x = l; x < viewWidth; x+=l) {
-    var line = coorDraw.line(0, 0, 0, l).move(x, tlHeight);
+    var line = draw.line(0, 0, 0, l).move(x, tlHeight);
     line.stroke({color: '#BFBFBF', width : 1});
     tlGroup.add(line);
   }
   for (var i = 0; i < dates.length; i++) {
-    var dateLine = coorDraw.line(0, 0, 0, l*1.5).move(dateOff + l*24*i, tlHeight);
+    var dateLine = draw.line(0, 0, 0, l*1.5).move(dateOff + l*24*i, tlHeight);
     dateLine.stroke({color: '#BFBFBF', width : 2});
     var dateText = draw.text(dates[i]);
     dateText.font({ fill: '#fff', anchor: 'middle'}).move(dateOff + l*24*i, tlHeight + 50);
@@ -102,117 +117,30 @@ function drawTimeline(l){
   timelineGroup.add(tlGroup);
   timelineGroup.move(0, topOffset);
 }
-drawTimeline(coorSq);
-
-function toggleTimeline(a){
-  var timelineGroup = document.getElementById('timeline-svg-group');
-  switch (a) {
-    case 0:
-      timelineGroup.setAttribute('visibility', 'hidden');
-      break;
-    case 1:
-      timelineGroup.setAttribute('visibility', 'visible');
-      break;
-    default:
-  }
-}
-
-function drawCompass(l){
-  const r = 1;
-  const compassW = vw*0.9;
-  const compassH = 200*scale;
-  var compassX = (vw-compassW)/2;
-  var compassY = topOffset;
-  var midCompass = vw/2;
-
-  var compassGroup = coorDraw.group().attr({class:'compass-svg-group', id:'compass-svg-group'});
-  compassGroup.attr({"visibility":"hidden"});
-  var dotGroup = coorDraw.group().attr({class:'grid dot-grid', id:'compass-dot-grid'});
-  for (var x = l; x < compassW; x+=l) {
-    for (var y = l; y < compassH; y+=l) {
-      var circle = coorDraw.circle(r).attr({fill:'#C4C4C4', cx:x, cy:y, opacity: 1});
-      dotGroup.add(circle);
-      compassGroup.add(dotGroup);
-    }
-  }
-  var nodeWidth = dotGroup.node.getBoundingClientRect().width,
-      nodeHeight = dotGroup.node.getBoundingClientRect().height;
-
-  console.log();
-  var line = coorDraw.line(0,0, 0, nodeHeight).stroke({ width: 2, color:"#848484", linecap: 'round'});
-  dotGroup.add(line);
-  var compassLabels = ["Gauche", "Droite"];
-  var labelW = 120*scale,
-      labelH = 30*scale,
-      labelXOff = labelW/2,
-      labelYOff = labelH/2;
-
-  var compassLabelPos = [{x:nodeWidth/4,y:nodeHeight+labelH*2.5},{x:nodeWidth*3/4, y:nodeHeight+labelH*2.5}];
-
-  for (var i = 0; i < compassLabels.length; i++) {
-    var compassLabelGroup = coorDraw.group().attr({class:'compass-label-group'});
-    var rect = coorDraw.rect(labelW, labelH).attr({'fill':"#FFFFFF"});
-    var text = coorDraw.text(compassLabels[i]).attr({class:'compass-label-text', "font-family": "",anchor: 'middle'}).center(labelXOff, labelYOff);;
-    // text.move(30,0);
-    compassLabelGroup.add(rect).add(text);
-    compassLabelGroup.move(compassLabelPos[i].x, compassLabelPos[i].y)
-    compassGroup.add(compassLabelGroup);
-  }
-  //center compass
-  line.move(nodeWidth/2-0.5,l);
-  dotGroup.move(compassX,compassY);
-}
-drawCompass(coorSq);
-
-function toggleCompass(a){
-  var compassGroup = document.getElementById('compass-svg-group');
-  switch (a) {
-    case 0:
-      compassGroup.setAttribute('visibility', 'hidden');
-      break;
-    case 1:
-      compassGroup.setAttribute('visibility', 'visible');
-      break;
-    default:
-  }
-}
 
 function addAllCircles(type){
-  toggleDropdown(0);
   toggleInfoDiv(0);
   cleanSvg();
   toggleZoomSlider(0);
   cleanCircles();
   cleanD3();
-  toggleOffFilter();
   turnOffLabels();
   togglePlusSvg(0);
   removePopUp();
-  emptyFilter();
   switch (type) {
     case allEvents:
-      toggleInterfaceEl(filterButton, 1);
       toggleInterfaceEl(panSliderGroup, 1);
       $('#placeholder-text').html('Cliquer sur un événement pour voir les liens');
       toggleInterfaceEl(plusSvgWrapper,1);
-      toggleCompass(0);
-      toggleTimeline(1);
-      currentFilter = "events";
-      break;
-    case allPeople:
-      toggleInterfaceEl(filterButton, 1);
-      toggleInterfaceEl(panSliderGroup, 0);
-      $('#placeholder-text').html('Cliquer sur une personnalité pour voir les liens');
-      toggleInterfaceEl(plusSvgWrapper,1);
-      toggleTimeline(0);
-      toggleCompass(1);
-      currentFilter = "people";
+      currentView = "events";
       break;
     default:
   }
   for (var i = 0; i < type.length; i++) {
     addSingleCircle(type[i]);
   }
+  drawTimeline(coorSq);
+  updateFocus(window[currentFocus]);
 }
 
 function cleanCircles(){

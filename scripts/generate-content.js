@@ -24,7 +24,7 @@ function clearPlusInfo(){
     targetPlusDivs[i].innerHTML = '';
   }
   $('#expand-button-plus').remove();
-  $('#add-filter-div').remove();
+  $('#add-focus-div').remove();
 }
 
 function appendImg(obj, target, scale){
@@ -63,6 +63,17 @@ function appendImg(obj, target, scale){
   image.clipWith(clip);
   circleGroup.add(circleBlur).add(circle).add(image);
 }
+/* focus BUTTON*/
+var focusDiv = document.createElement("div");
+focusDiv.setAttribute('class', 'add-focus-div');
+focusDiv.setAttribute('id', 'add-focus-div');
+var focusCircle = document.createElement("div");
+focusCircle.setAttribute('class', 'add-focus-circle');
+var addFocusText = document.createElement("p");
+addFocusText.setAttribute('class', 'add-focus-text');
+addFocusText.innerHTML = "Focus sur cet élément";
+focusDiv.appendChild(focusCircle);
+focusDiv.appendChild(addFocusText);
 
 function appendInfo(obj){
   clearInfo();
@@ -79,22 +90,11 @@ function appendInfo(obj){
   else if (obj.type == 3) {
     categoryTarget.innerHTML = "Site";
   }
-  console.log(obj);
+  focusDiv.setAttribute("onclick", "addFocus("+obj.toString+")");
+  $('#info-category').after(focusDiv);
   $('#content-div').load("./assets/html/"+obj.folder+"/"+obj.html);
 }
 /* Plus div */
-/* FILTER BUTTON*/
-var filterDiv = document.createElement("div");
-filterDiv.setAttribute('class', 'add-filter-div');
-filterDiv.setAttribute('id', 'add-filter-div');
-var filterCircle = document.createElement("div");
-filterCircle.setAttribute('class', 'add-filter-circle');
-var addFilterText = document.createElement("p");
-addFilterText.setAttribute('class', 'add-filter-text');
-addFilterText.innerHTML = "Trouver les récurrences";
-filterDiv.appendChild(filterCircle);
-filterDiv.appendChild(addFilterText);
-
 function appendPlusInfo(obj){
   clearPlusInfo();
   titlePlusTarget.innerHTML = obj.name;
@@ -102,7 +102,6 @@ function appendPlusInfo(obj){
   var iconDiv = document.createElement("div");
   var categoryP = document.createElement("p");
   categoryP.setAttribute('class', 'plus-category');
-  // <p class="plus-category" id="plus-category"></p>
   if (obj.type == 0) {
     classType = "icon-meme";
     categoryP.innerHTML = "Meme";
@@ -122,20 +121,10 @@ function appendPlusInfo(obj){
   categoryDivTarget.appendChild(iconDiv);
   categoryDivTarget.appendChild(categoryP);
 
-  if (obj.type == 0 || obj.type == 3) {
-    filterDiv.setAttribute("onclick", "addToFilter("+obj.toString+")");
-    $('#plus-header').after(filterDiv);
-  }
+  focusDiv.setAttribute("onclick", "addFocus("+obj.toString+")");
+  $('#plus-category-div').after(focusDiv);
 
-  var expandButtonDiv = document.createElement("div");
-  expandButtonDiv.setAttribute('class', 'expand-button-plus-div pointer');
-  expandButtonDiv.setAttribute('id', 'expand-button-plus');
-  expandButtonDiv.setAttribute('onclick', 'toggleInfoDiv(2)');
-  var expandButtonText = document.createElement("p");
-  expandButtonText.innerHTML = "Voir davantage";
-  expandButtonText.setAttribute('class', 'expand-button-text');
-  expandButtonDiv.appendChild(expandButtonText);
-  plusInfo.appendChild(expandButtonDiv);
+
   $(".circle-span").after("&nbsp;");
   $('#plus-info-content').load("./assets/html/"+obj.folder+"/"+obj.htmlPlus);
 }
@@ -206,6 +195,5 @@ function addMaxHeightScroll(){
   var plusInfoSourceWidth = document.getElementById('plus-info-source').getBoundingClientRect().width;
 
   var maxHeight = (plusInfoHeight-(plusHeaderHeight+plusParticipantsHeight+plusContentText+sourceLabel+50))*0.7;
-  // plusInfoSource.setAttribute('style', 'max-width:'+plusInfoSourceWidth+'px;');
   plusInfoSource.setAttribute('style', 'max-height:'+maxHeight+'px;');
 }

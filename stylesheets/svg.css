@@ -19,6 +19,7 @@
   top: 45%;
   left: 0px;
   border-top: 0.5px solid rgba(255, 255, 255, 0.33);
+  background-color: #272727;
 }
 .plus-svg{
   position: absolute;

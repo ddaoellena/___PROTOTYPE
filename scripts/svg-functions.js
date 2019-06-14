@@ -2,7 +2,6 @@ var popUpWrapper = document.getElementById('pop-up-wrapper');
 var popUpGroup = document.getElementById('pop-up-group');
 
 function addPopUp(el){
-  // console.log(el.dataset);
   var svgPlusW = plusSvg.getBoundingClientRect().width,
       svgPlusH = plusSvg.getBoundingClientRect().height;
 
@@ -105,7 +104,6 @@ function removePopUp(){
     colorOffPlus(activeNodes[i]);
   }
   $(".color-on").removeClass("color-on");
-  // activeNodes[i].classList.remove("color-on");
   $('#pop-up-svg').remove();
   $('.pop-up-group').empty();
   $('.pop-up-wrapper').empty();
