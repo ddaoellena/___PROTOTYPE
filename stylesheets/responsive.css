@@ -13,12 +13,12 @@
   /*
   * menus
   */
+  .menu{
+    top: 65px;
+  }
   .menu-top{
     top: 0px;
     height: 50px;
-  }
-  .menu-top{
-    top: 65px;
   }
   .menu-square{
     height: 50px;
