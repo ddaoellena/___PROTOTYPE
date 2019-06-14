@@ -59,7 +59,7 @@ var ch = ch;
 var topOffset = menuTop.getBoundingClientRect().height;
 var viewWidth = vw*2;
 var scale;
-var disScale, xOffset, yOffset, dSquare, coorSq;
+var disScale, xOffset, yOffset, dSquare, coorSq, r;
 
 function setSVGVariables(){
   if (vw >= 900 && vw <= 1400) {
@@ -70,15 +70,17 @@ function setSVGVariables(){
     yOffset = scale*1;
     dSquare = 20;
     coorSq = dSquare*scale;
+    r = 1;
   }
   if (vw >= 1400) {
     heightOffset = 40;
     scale = 1.25;
     disScale = scale*1.5;
     xOffset = scale*1;
-    yOffset = scale*0.9;
+    yOffset = scale*1.1;
     dSquare = 20;
     coorSq = dSquare*scale;
+    r= 2;
   }
 }
 window.onload = setSVGVariables();
@@ -87,8 +89,7 @@ function drawTimeline(l){
   var timelineGroup = draw.group().attr({class:'timeline-svg-group', id:'timeline-svg-group'});
   var dotGroup = timelineGroup.group().attr({class:'grid dot-grid', id:'timeline-dot-grid'});
   var tlGroup = timelineGroup.group().attr({class:'timeline', id:'timeline'});
-  const r = 1,
-        tlHeight= l*5;
+  var tlHeight= l*5;
 
   var dates = ["2016", "2017", "2018", "2019", "2020", "2021"];
 
