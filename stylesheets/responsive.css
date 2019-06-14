@@ -19,6 +19,13 @@
   .menu-top{
     top: 65px;
   }
+  .menu-square{
+    height: 50px;
+    width: 50px;
+  }
+  .button-events{
+    margin: 8px 0 8px 0;
+  }
   .menu-top-text{
     line-height: 50px;
   }
