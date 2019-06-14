@@ -23,16 +23,16 @@ function d3Init(table){
 var svg = d3.select("#main-svg");
 
 function run(graph) {
-  var radius = 28*scale;
-  var radiusMed = 15*scale;
+  var radius = 28;
+  var radiusMed = 15;
 
   let simulation = d3.forceSimulation()
       .force("link", d3.forceLink().id(function(d) { return d.id; }))
       .force("charge", d3.forceManyBody().strength(-400))
   		.force('charge', d3.forceManyBody()
         .strength(-1000)
-        .theta(0.8*scale)
-        .distanceMax(500*scale)
+        .theta(0.8)
+        .distanceMax(500)
       )
   		// .force('collide', d3.forceCollide()
       //   .radius(d => 30)

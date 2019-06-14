@@ -73,10 +73,10 @@ function setSVGVariables(){
   }
   if (vw >= 1400) {
     heightOffset = 40;
-    scale = 1.5;
-    disScale = scale*1.2;
+    scale = 1.25;
+    disScale = scale*1.5;
     xOffset = scale*1;
-    yOffset = scale*0.85;
+    yOffset = scale*0.9;
     dSquare = 20;
     coorSq = dSquare*scale;
   }

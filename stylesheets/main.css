@@ -52,6 +52,10 @@ a:hover{
   font-family: 'VG5000-Regular';
   src: url('../assets/fonts/VG5000-Regular_web.otf');
 }
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('../assets/fonts/IBMPlexSans-Regular.ttf');
+}
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans');
 
 .title{
@@ -425,7 +429,7 @@ p{
   -webkit-appearance: none;
   appearance: none;
   width: 10vw;
-  height: 2vh;
+  height: 15px;
   background: #fff;
   opacity: 0.33;
   border-radius: 20px;
@@ -438,7 +442,7 @@ p{
   -webkit-appearance: none;
   appearance: none;
   width: 10vw;
-  height: 2vh;
+  height: 15px;
   background: #fff;
   opacity: 0.33;
   border-radius: 20px;
@@ -476,8 +480,8 @@ p{
 .zoom-slider::-webkit-slider-thumb{
   -webkit-appearance: none;
   appearance: none;
-  width: 2vh;
-  height: 2vh;
+  width: 15px;
+  height: 15px;
   border-radius: 20px;
   background: #272727;
   cursor: pointer;
@@ -485,6 +489,11 @@ p{
 }
 .zoom-slider::-webkit-slider-thumb:hover{
   border: 1px solid rgba(255, 255, 255, 1);
+  background: #aaaaaa;
+}
+.zoom-slider::-webkit-slider-thumb:active{
+  border: 1px solid rgba(255, 255, 255, 1);
+  background: #aaaaaa;
 }
 .visible{
   display: block;

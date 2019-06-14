@@ -13,7 +13,26 @@
   /*
   * menus
   */
-  .menu-button{
-      background-size: 66%;
+  .menu-top{
+    height: 50px;
+  }
+  .menu-top{
+    top: 65px;
+  }
+  .menu-top-text{
+    line-height: 50px;
+  }
+  .menu-left{
+    left: 15px;
+  }
+  .menu-left{
+    right: 15px;
+  }
+  .info-wrapper.collapsed{
+    bottom: -83%;
+  }
+  .focus.menu{
+    height: 50px;
+    margin: 13px 0px 0px 20px;
   }
 }

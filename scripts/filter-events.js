@@ -72,7 +72,7 @@ function translateTimeline(a){
       tlGroup.setAttribute("transform", "translate(0,0)");
       break;
     case 1:
-      tlGroup.setAttribute("transform", "translate(0,20)");
+      tlGroup.setAttribute("transform", "translate(0,"+20*disScale+")");
       break;
     default:
   }
