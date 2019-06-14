@@ -70,7 +70,7 @@ function setSVGVariables(){
     yOffset = scale*1;
     dSquare = 20;
     coorSq = dSquare*scale;
-    r = 1;
+    tlR = 1;
   }
   if (vw >= 1400) {
     heightOffset = 40;
@@ -80,7 +80,7 @@ function setSVGVariables(){
     yOffset = scale*1.1;
     dSquare = 20;
     coorSq = dSquare*scale;
-    r= 2;
+    tlR= 2;
   }
 }
 window.onload = setSVGVariables();
@@ -95,7 +95,7 @@ function drawTimeline(l){
 
   for (var x = l; x < viewWidth; x+=l) {
     for (var y = l; y < tlHeight; y+=l) {
-      var circle = draw.circle(r).attr({fill:'#C4C4C4', cx:x, cy:y});
+      var circle = draw.circle(tlR).attr({fill:'#C4C4C4', cx:x, cy:y});
       dotGroup.add(circle);
       timelineGroup.add(dotGroup);
     }
