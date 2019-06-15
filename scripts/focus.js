@@ -7,11 +7,18 @@ var focusLabel = document.getElementById('focus-label');
 function updateFocus(foc){
   if (typeof currentFocus !== 'undefined') {
     switch (currentView) {
+      case "memes":
+        if (foc.type == 0) {
+          turnOnD3ParentCircle(foc);
+        } else {
+          addToFilterD3(foc);
+        }
+      break;
       case "events":
         if (foc.type !== 1) {
           addToFilterEvent(foc);
         }
-        break;
+      break;
       default:
     }
   }
@@ -54,6 +61,9 @@ function removeFocus(){
   toggleFocusMenu(0);
   currentFocus = undefined;
   switch (currentView) {
+    case "memes":
+      turnOffAllD3Circles(1);
+      break;
     case "events":
       emptyFilterEvent();
       break;

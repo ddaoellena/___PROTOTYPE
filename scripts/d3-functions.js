@@ -9,22 +9,27 @@ function d3Init(table){
   turnOffLabels();
   cleanSvg();
   run(table);
+  toggleFilterGroup(0);
   switch (table) {
     case memesData:
       setCurrentView(0);
-      return;
+      break;
+    // case peopleData:
+    //   setCurrentView(2);
+    //   break;
     case mediasData:
       setCurrentView(3);
-      return ;
+      break ;
     default:
-      return;
   }
+  updateFocus(window[currentFocus]);
 }
 var svg = d3.select("#main-svg");
 
 function run(graph) {
   var radius = 28;
   var radiusMed = 15;
+  var radiusS = 10;
 
   let simulation = d3.forceSimulation()
       .force("link", d3.forceLink().id(function(d) { return d.id; }))
@@ -69,19 +74,44 @@ function run(graph) {
                      .attr("class", "node-group")
                      .selectAll("circle");
 
+  var filterNodesGroup = svg.append("g")
+                      .attr("class", "filter-nodes-group")
+                      .selectAll("circle").data(graph.nodes.filter(function(d){return d.mainNode == true;})).enter();
+
+  var filterGroup = filterNodesGroup.append("g").attr("class", "filter-group").attr("id", function(d){return "filter-group-"+d.id});
+
   var blurNode = nodeGroup.data(graph.nodes).enter().append("circle")
-                        .attr("class", function(d){return "blur-circle "+ d.type+"-blur"})
+                        .attr("class", function(d){
+                          if (typeof d.parent !== "undefined") {
+                            return "blur-circle "+ d.type+"-blur " + d.parent+"-blur"
+                          }
+                          else {
+                            return "blur-circle "+ d.type+"-blur"
+                          }
+                        })
                         .attr("id", function(d){if (d.mainNode == true) {
                           return d.id+"-blur"
                         }})
                         .attr("r", 2)
 
  var node = nodeGroup.data(graph.nodes).enter().append("circle")
-                .attr("class", "circle-node pointer")
-                .attr("r", 2).on("mouseover", onMouseOver);
+                .attr("class", function(d){
+                  if (d.mainNode == true) {
+                    return "circle-node parent-circle-node circle-node-"+d.type
+                  } else {
+                    return "circle-node circle-node-"+d.type
+                    }
+                  })
+                .attr("r", 2);
 
-  var patternNode = nodeGroup.data(graph.nodes.filter(function(d){return typeof d.subType !== "undefined";})).enter().append("circle")
-                        .attr("class", "pattern-circle pointer")
+ var patternNode = nodeGroup.data(graph.nodes.filter(function(d){return typeof d.subType !== "undefined";})).enter().append("circle")
+                        .attr("class", function(d){
+                          if (typeof d.parent !== "undefined") {
+                            return "pattern-circle "+ d.type+"-pattern " + d.parent+"-pattern pointer"
+                          } else {
+                            return "pattern-circle "+ d.type+"-pattern pointer"
+                          }
+                        })
                         .attr("r", 2);
 
  var tooltip = d3.select("body")
@@ -116,22 +146,36 @@ function run(graph) {
   var imgs = nodeGroup.data(graph.nodes.filter(function(d){return typeof d.img !== "undefined";}))
                 .enter().append("image")
                 .attr("clip-path",function(d){return "url('#circlepath-" + d.id +"')"})
+                .attr("id", function(d){return d.id+"-img"})
                 .attr("class", "image-node pointer")
-                .attr("onclick", "toggleInfoDiv(1)")
                 .call(d3.drag()
                   .on("start", dragstarted)
                   .on("drag", dragged)
                   .on("end", dragended));
 
   imgs.on("mouseover", function(d){
-         t_text = d.name;
-         tooltip.html(t_text)
-         return tooltip.style("visibility", "visible");
+          if (typeof d.name !== "undefined") {
+            tooltip.html(d.name)
+            return tooltip.style("visibility", "visible");
+          }
         })
         .on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
         .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
         .attr("data-id", function(d){return d.id})
-        .attr("onclick", function(d){return "toggleInfoDiv(1);appendInfo("+d.objToString+");displayLinks(this)"});
+        .attr("onclick", function(d){if (typeof d.objToString !== "undefined") {return "toggleInfoDiv(1);appendInfo("+d.objToString+");displayLinks(this);"}});
+
+  // var filterClip = svg.selectAll('clipPath').data(graph.nodes.filter(function(d){return d.mainNode == true;})).enter()
+  //                     .append('clipPath')
+  //                     .attr("id", function(d){return "filter-clip-" + d.id})
+  //                     .append('circle');;
+
+  var filterBlur = filterGroup.append("circle").attr('class', function(d){
+                        return "blur-filter blur-filter-"+d.id
+                      });
+
+  var filterNode = filterGroup.append("circle").attr('class', function(d){
+                        return "circle-filter circle-filter-"+d.id
+                      });
 
   simulation
       .nodes(graph.nodes)
@@ -142,13 +186,28 @@ function run(graph) {
 
   function ticked() {
     circlePaths
-        .attr('r',radius)
+        .attr('r',function(d){
+          switch (d.size) {
+            case "big":
+               return radius
+              break;
+            case "medium":
+               return radiusMed
+              break;
+            case "small":
+               return radiusS
+              break;
+            default:
+          }
+        })
         .style("fill", "#FFFFFF")
         .attr("cx", function (d) { return d.x+5; })
         .attr("cy", function(d) { return d.y-3; });
 
     link
-        .attr("class", function(d){return "node-link link-"+d.source.id+ " link-"+d.target.id})
+        .attr("class", function(d){
+            return "node-link link-"+d.source.id+ " link-"+d.target.id
+          })
         .attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })
@@ -168,7 +227,7 @@ function run(graph) {
           }
         })
         .style("stroke-width", function(d){return d.weight*0.5})
-        .attr('opacity', '0.33');
+        .attr('opacity', "0.33");
 
     blurNode
       .attr("r", function(d){
@@ -178,6 +237,9 @@ function run(graph) {
             break;
           case "medium":
              return radiusMed
+            break;
+          case "small":
+             return radiusS
             break;
           default:
         }
@@ -205,6 +267,9 @@ function run(graph) {
              break;
            case "medium":
               return radiusMed
+             break;
+           case "small":
+              return radiusS
              break;
            default:
          }
@@ -250,20 +315,87 @@ function run(graph) {
     .attr("cy", function(d) { return d.y-3; });
 
     imgs
-       .attr("href", function(d){ return d.folder+d.img })
-       .attr("width",radius*2)
-       .attr("height",radius*2)
-       .attr("x", function (d) { return d.x-radius+5; })
-       .attr("y", function(d) { return d.y-radius-3; });
+       .attr("href", function(d){
+          if (d.mainNode == true) {
+           return d.folder+d.img
+          }
+         })
+       .attr("width",function(d){
+         switch (d.size) {
+           case "big":
+             return radius*2
+             break;
+           case "medium":
+             return radiusMed*2
+             break;
+           case "small":
+              return radiusS*2
+             break;
+           default:
+         }
+       })
+       .attr("height",function(d){
+         switch (d.size) {
+           case "big":
+             return radius*2
+             break;
+           case "medium":
+             return radiusMed*2
+             break;
+           case "small":
+              return radiusS*2
+             break;
+           default:
+         }
+       })
+       .attr("x", function (d) {
+         switch (d.size) {
+           case "big":
+             return d.x-radius+5;
+             break;
+           case "medium":
+            return d.x-radiusMed+5;
+             break;
+           case "small":
+            return d.x-radiusS+5;
+             break;
+           default:
+         }
+      })
+       .attr("y", function(d) {
+         switch (d.size) {
+           case "big":
+             return d.y-radius-3;
+             break;
+           case "medium":
+            return d.y-radiusMed-3;
+             break;
+           case "small":
+            return d.y-radiusS-3;
+             break;
+           default:
+         }
+       });
 
-    // label
-  	// 	 .attr("x", function(d) { return d.x; })
-    //    .attr("y", function (d) { return d.y; })
-    //    .style("font-size", "10px").style("fill", "#333");
+   // filterClip
+   //     .attr('r', radiusS)
+   //     .style("fill", "#FFFFFF")
+   //     .attr("cx", function (d) { return d.x+5; })
+   //     .attr("cy", function(d) { return d.y-radius*2+5; });
+    filterBlur
+         .attr('r', radiusS)
+         .style("opacity", 1)
+         .attr("cx", function (d) { return d.x+5; })
+         .attr("cy", function(d) { return d.y-radius*2+5; })
+         .attr("filter", "url('#fBlur')");
+
+    filterNode
+        .attr('r', radiusS)
+        .style("opacity", 0.33)
+        .attr("cx", function (d) { return d.x+5; })
+        .attr("cy", function(d) { return d.y-radius*2+5; });
   }
-  function onMouseOver(){
-    d3.select(this).attr({r: 30 });
-  }
+
   function dragstarted(d) {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart()
     d.fx = d.x
@@ -301,7 +433,6 @@ function run(graph) {
     popUpAuthor.html(d.author);
     popUpImg.attr("src", d.imgPopUp);
   }
-
 }
 
 function cleanD3(){
@@ -331,5 +462,21 @@ function displayLinks(el){
   var linksToDisplay = document.getElementsByClassName('link-'+el.dataset.id);
   for (var i = 0; i < linksToDisplay.length; i++) {
     linksToDisplay[i].style.opacity = 1;
+  }
+}
+
+function toggleFilterGroup(a){
+  var filterGroups = document.getElementsByClassName('filter-group');
+  for (var i = 0; i < filterGroups.length; i++) {
+    switch (a) {
+      case 0:
+        filterGroups[i].style.visibility= "hidden";
+        break;
+      case 1:
+        filterGroups[i].style.visibility= "visible";
+        break;
+      default:
+    }
+
   }
 }

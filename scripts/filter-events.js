@@ -59,8 +59,8 @@ function addFilterEvents(obj){
   for (var i = 0; i < filteredObjects.length; i++) {
     var filterCircle = draw.circle(1).attr({fill: "#FFFFFF", opacity:0.33, cx:filteredObjects[i].x*xOffset, cy:filteredObjects[i].y*yOffset+50*scale, class:'filter-svg-circle'});
     var filterBlurCircle = draw.circle(1).attr({fill: obj.color, cx:filteredObjects[i].x*xOffset, cy:filteredObjects[i].y*yOffset+50*scale, class:'filter-svg-blur-circle', filter: 'url(#fBlurSmall)'});
-    filterCircle.animate(500, '>', 0).attr({ r: 6*scale });
-    filterBlurCircle.animate(500, '>', 0).attr({ r: 6*scale })
+    filterCircle.animate(400, '>', 0).attr({ r: 6*scale });
+    filterBlurCircle.animate(400, '>', 0).attr({ r: 6*scale })
     filterGroup.add(filterCircle).add(filterBlurCircle);
   }
 }
