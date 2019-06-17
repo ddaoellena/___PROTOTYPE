@@ -12,10 +12,10 @@ function setCurrentView(a){
     case 1:
       currentView = "events";
       break;
-    case 0:
+    case 2:
       currentView = "people";
       break;
-    case 0:
+    case 3:
       currentView = "medias";
       break;
     default:
@@ -41,7 +41,7 @@ var midW = vw/2,
 /*
 * setup SVG div, defs and filter
 */
-var draw = SVG('svg-wrapper').size(vw, vh).attr({id:'main-svg'}).viewbox(0,0,vw,vh);
+var draw = SVG('svg-wrapper').attr({id:'main-svg'});
 var defs = draw.defs().attr({id:'main-svg-defs'});
 var mainSvgDefs = document.getElementById('main-svg-defs');
 var filterBlur = '<filter id="fBlur" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur in="SourceGraphic" stdDeviation="5" /></filter>';
@@ -85,7 +85,13 @@ function setSVGVariables(){
 }
 window.onload = setSVGVariables();
 
+function svgReset(){
+  d3.select("#main-svg").attr("transform","");
+}
+
 function drawTimeline(l){
+  svgReset();
+  draw.size(vw, vh).viewbox(0,0,vw,vh);
   var timelineGroup = draw.group().attr({class:'timeline-svg-group', id:'timeline-svg-group'});
   var dotGroup = timelineGroup.group().attr({class:'grid dot-grid', id:'timeline-dot-grid'});
   var tlGroup = timelineGroup.group().attr({class:'timeline', id:'timeline'});
@@ -128,6 +134,9 @@ function addAllCircles(type){
   turnOffLabels();
   togglePlusSvg(0);
   removePopUp();
+  toggleInterfaceEl(switchDiv,0);
+  drawTimeline(coorSq);
+  setTimlinePos();
   switch (type) {
     case allEvents:
       toggleInterfaceEl(panSliderGroup, 1);
@@ -140,7 +149,6 @@ function addAllCircles(type){
   for (var i = 0; i < type.length; i++) {
     addSingleCircle(type[i]);
   }
-  drawTimeline(coorSq);
   updateFocus(window[currentFocus]);
 }
 

@@ -19,6 +19,13 @@ function updateFocus(foc){
           addToFilterEvent(foc);
         }
       break;
+      case "people":
+        if (foc.type == 2) {
+          turnOnD3ParentCircle(foc);
+        } else {
+          addToFilterD3(foc);
+        }
+      break;
       default:
     }
   }
@@ -63,9 +70,18 @@ function removeFocus(){
   switch (currentView) {
     case "memes":
       turnOffAllD3Circles(1);
+      toggleFilterGroup(0);
       break;
     case "events":
       emptyFilterEvent();
+      break;
+    case "people":
+      turnOffAllD3Circles(1);
+      toggleFilterGroup(0);
+      break;
+    case "medias":
+      turnOffAllD3Circles(1);
+      toggleFilterGroup(0);
       break;
     default:
   }

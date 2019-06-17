@@ -9,6 +9,7 @@ var labelsBoxLink = document.getElementById('labels-box-link');
 var buttonInfoSpan = document.getElementById('button-info-span');
 var buttonInfoInactive = 'color: #272727; -webkit-text-stroke-width: 0.5px;';
 var buttonInfoActive = 'color: #ffffff; -webkit-text-stroke-width: 0px;';
+var switchDiv = document.getElementById('switch-div');
 
 var plusSvgWrapper = document.getElementById('plus-svg-wrapper');
 var plusSvg = document.getElementById('plus-svg');
@@ -40,6 +41,7 @@ function toggleInfoDiv(a){
       infoWrapperDiv.classList.remove("expanded");
       infoWrapperDiv.classList.add("full-collapsed");
       curtainDiv.style.display = "none";
+      toggleExpandBtn(0);
       break;
     case 1:
       infoWrapperDiv.classList.remove("expanded");
@@ -52,6 +54,7 @@ function toggleInfoDiv(a){
       infoWrapperDiv.classList.remove("collapsed");
       infoWrapperDiv.classList.add("expanded");
       curtainDiv.style.display = "block";
+      toggleExpandBtn(1);
       break;
     default:
 
@@ -223,5 +226,47 @@ function toggleTypeInfo(a){
       infoTypes[1].classList.add("active");
       break;
     default:
+  }
+}
+
+function toggleSwitchBtn(a){
+  var memesBtn = document.getElementById('switch-btn-memes');
+  var mediasBtn = document.getElementById('switch-btn-medias');
+  switch (a) {
+    case 0:
+      mediasBtn.classList.remove("active");
+      mediasBtn.classList.add("inactive");
+      memesBtn.classList.remove("inactive");
+      memesBtn.classList.add("active");
+      memesBtn.setAttribute("onclick", "");
+      mediasBtn.setAttribute("onclick", "toggleSwitchBtn(1); d3Init(mediasData);");
+      break;
+    case 1:
+      memesBtn.classList.remove("active");
+      memesBtn.classList.add("inactive");
+      mediasBtn.classList.remove("inactive");
+      mediasBtn.classList.add("active");
+      mediasBtn.setAttribute("onclick", "");
+      memesBtn.setAttribute("onclick", "toggleSwitchBtn(0); d3Init(memesData);");
+      break;
+    default:
+  }
+}
+
+function toggleExpandBtn(a){
+  var expandBtn = document.getElementById('expand-btn')
+  switch (a) {
+    case 0:
+      expandBtn.setAttribute("onclick", "toggleInfoDiv(2)");
+      expandBtn.classList.remove("down");
+      expandBtn.classList.add("up");
+      break;
+    case 1:
+      expandBtn.setAttribute("onclick", "toggleInfoDiv(0)");
+      expandBtn.classList.remove("up");
+      expandBtn.classList.add("down");
+      break;
+    default:
+
   }
 }

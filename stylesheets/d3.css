@@ -49,12 +49,13 @@
 .big-pop-up-author{
   color: rgba(255, 255, 255, 0.33);
 }
-.big-pop-up-img-div{
+.big-pop-up-img-div, .big-pop-up-iframe{
   /* width: 100%; */
   max-width: 520px;
   display: block;
   margin: 0 auto;
 }
+
 .big-pop-up-img{
   width: 100%;
 }

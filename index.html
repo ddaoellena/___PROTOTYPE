@@ -15,7 +15,7 @@
     <!-- open /Applications/Google\ Chrome.app/ --args --allow-file-access-from-files -->
     <!-- MENUS -->
     <div class="menu-top shadow-bottom" id="menu-top">
-      <p class="menu-top-text title-text">Memes view tool</p>
+      <p class="menu-top-text title-text">Explorateur de memes Internet</p>
       <div class="focus-menu wo-focus pointer" id="focus-menu">
         <p class="focus-text" id="focus-text">Focus</p>
         <div class="focus-img" id="focus-img"></div>
@@ -25,22 +25,26 @@
       <p class="menu-top-text about-text" onclick="toggleAbout()">À propos</p>
     </div>
     <div class="menu menu-left menu-filter nav-elems" id="menu-left">
-      <p class="menu-text menu-left-text">Vue en&thinsp;:</p>
-      <div class="menu-button menu-button-left button-memes menu-square pointer" id="button-memes" data-tippy-content="Réseau" onclick="d3Init(memesData); toggleMenu(this);">
+      <p class="menu-text menu-left-text">Vue par&thinsp;:</p>
+      <div class="menu-button menu-button-left button-memes menu-square pointer" id="button-memes" data-tippy-content="Memes/Sites" onclick="d3Init(memesData); toggleSwitchBtn(0); toggleMenu(this);">
         <div class="highlight-box menu-square"></div>
       </div>
-      <div class="menu-button menu-button-left button-events menu-square pointer" id="button-events" data-tippy-content="Chronologie" onclick="addAllCircles(allEvents); toggleMenu(this);">
+      <div class="menu-button menu-button-left button-events menu-square pointer" id="button-events" data-tippy-content="Événements" onclick="addAllCircles(allEvents); toggleMenu(this);">
         <div class="highlight-box menu-square"></div>
       </div>
-      <div class="menu-button menu-button-left button-people menu-square pointer" id="button-people" data-tippy-content="Échiquier" onclick="toggleMenu(this);">
+      <div class="menu-button menu-button-left button-people menu-square pointer" id="button-people" data-tippy-content="Personnalités" onclick="d3Init(peopleData); toggleMenu(this);">
         <div class="highlight-box menu-square"></div>
       </div>
+    </div>
+    <div class="switch-div hidden" id="switch-div">
+      <div class="switch-btn switch-btn-memes active" id="switch-btn-memes" onclick="toggleSwitchBtn(0);"></div>
+      <div class="switch-btn switch-btn-medias inactive" id="switch-btn-medias" onclick="toggleSwitchBtn(1); d3Init(mediasData);"></div>
     </div>
     <!-- MENU RIGHT -->
     <div class="menu menu-right nav-elems" id="menu-right">
       <p class="menu-text menu-left-text">Outils et légende&thinsp;:</p>
       <div class="zoom-slider-wrapper nav-elems" id="zoom-slider-wrapper">
-        <input type="range" min="1" max="100" value="100" class="slider zoom-slider" id='zoom-slider' onchange="">
+        <input class="slider zoom-slider" id='zoom-slider'>
       </div>
 
       <div class="button-info with-zoom" id="button-info" onclick="toggleLabels()"><p class="button-info-span text" id="button-info-span">?</p>
@@ -53,7 +57,7 @@
       </div>
     </div>
     <div class="menu-bottom pan-slider-wrapper nav-elems hidden" id="pan-slider-wrapper">
-      <input type="range" min="1" max="100" value="0" class="slider pan-slider" id='pan-slider' onchange="panTimeline(this.value);">
+      <input type="range" min="1" max="100" value="0" class="slider pan-slider" id='pan-slider' oninput="panTimeline(this.value);">
     </div>
     <!--- END MENU --->
 
@@ -80,7 +84,7 @@
 
     <!-- INFO DIV -->
     <div class="info-wrapper shadow-top full-collapsed" id="info-wrapper">
-      <div class="expand-button h-center pointer" onclick="toggleInfoDiv(2)"></div>
+      <div class="expand-button h-center up pointer" id="expand-btn" onclick="toggleInfoDiv(2)"></div>
         <div class="title-div" id="title-div">
           <div class="info-img" id="info-img"></div>
           <h1 class="title info-title" id="info-title"></h1>
@@ -112,9 +116,8 @@
   <!-- Librairies files -->
   <script src="./libs/blazy.min.js" charset="utf-8"></script>
   <script src="./libs/jquery-3.4.1.min.js" charset="utf-8"></script>
-  <script src="./libs/jquery-ui.js" charset="utf-8"></script>
   <script src="./libs/svg.min.js" charset="utf-8"></script>
-  <script src="./libs/svg-pan-zoom.min.js"></script>
+  <!-- <script src="./libs/svg-pan-zoom.min.js"></script> -->
   <script src="./libs/d3.v5.min.js"></script>
   <script src="./libs/popper.min.js"></script>
   <script src="./libs/index.all.min.js"></script>
@@ -126,7 +129,7 @@
   <script src="./scripts/d3-functions.js" charset="utf-8"></script>
   <script src="./scripts/navigation.js" charset="utf-8"></script>
   <script src="./scripts/generate-content.js" charset="utf-8"></script>
-  <script src="./scripts/zoom-functions.js" charset="utf-8"></script>
+  <script src="./scripts/pan-zoom.js" charset="utf-8"></script>
   <script src="./scripts/tooltip.js" charset="utf-8"></script>
   <script src="./scripts/filter-events.js" charset="utf-8"></script>
   <script src="./scripts/filter-d3.js" charset="utf-8"></script>

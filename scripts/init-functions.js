@@ -217,3 +217,53 @@ function addPropertiesToLinkExamples(){
   }
 }
 addPropertiesToLinkExamples();
+
+/* ----------------- FILTER D3 ----------------- */
+var mainNodes;
+function getMainNodes(table){
+  mainNodes = "";
+  var result = table.nodes.filter(obj => {
+    return obj.mainNode == true;
+  })
+  mainNodes = result;
+};
+
+function addRelatedToD3(table){
+  getMainNodes(table);
+  for (var i = 0; i < mainNodes.length; i++) {
+    mainNodes[i].relatedString = [];
+    if (typeof mainNodes[i].related.memes !== "undefined") {
+      var relatedMemes = mainNodes[i].related.memes;
+      for (var j = 0; j < relatedMemes.length; j++) {
+          var relatedMemesString = allMemes[relatedMemes[j]].toString;
+          mainNodes[i].relatedString.push(relatedMemesString);
+      }
+    }
+    if (typeof mainNodes[i].related.events !== "undefined") {
+      var relatedEvents = mainNodes[i].related.events;
+      for (var j = 0; j < relatedEvents.length; j++) {
+          var relatedEventsString = allEvents[relatedEvents[j]].toString;
+          mainNodes[i].relatedString.push(relatedEventsString);
+      }
+      if (typeof mainNodes[i].related.people !== "undefined") {
+        var relatedPeople = mainNodes[i].related.people;
+        for (var j = 0; j < relatedPeople.length; j++) {
+            var relatedPeopleString = allPeople[relatedPeople[j]].toString;
+            mainNodes[i].relatedString.push(relatedPeopleString);
+        }
+      }
+      if (typeof mainNodes[i].related.medias !== "undefined") {
+        var relatedMedias= mainNodes[i].related.medias;
+        for (var j = 0; j < relatedMedias.length; j++) {
+            var relatedMediasString = allMedias[relatedMedias[j]].toString;
+            mainNodes[i].relatedString.push(relatedMediasString);
+        }
+      }
+      // console.log(mainNodes[i]);
+    }
+  }
+};
+
+addRelatedToD3(memesData);
+addRelatedToD3(peopleData);
+addRelatedToD3(mediasData);

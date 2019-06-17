@@ -19,9 +19,13 @@ var rBlurFirst = r*0.75;
 var rBlurSecond = r*0.5;
 var imgVisibility = "visible";
 
+
+
+
 function addSingleCircle(obj){
+  var timelineTarget = SVG.get('timeline-svg-group');
   // var wrapperGroup = draw.group().attr({class:'wrapper-group', id:obj.toString+'-group', onclick: 'toggleThisCircle(this)', 'data-id':obj.toString});
-  var parentGroup = draw.group().attr({id:obj.toString+'-single-parent',class:'circle circle-object '+obj.circleClass+' generated single pointer', 'onclick':'toggleCircle(this);'+'appendInfo('+obj.toString+');addPlusCircle('+obj.toString+', 1);appendPlusInfo('+obj.toString+')', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
+  var parentGroup = timelineTarget.group().attr({id:obj.toString+'-single-parent',class:'circle circle-object '+obj.circleClass+' generated single pointer', 'onclick':'toggleCircle(this);'+'appendInfo('+obj.toString+');addPlusCircle('+obj.toString+', 1);appendPlusInfo('+obj.toString+')', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
   var parentBlur = draw.circle(rBlurSingle*scale).attr({fill:obj.color, class:'circle-blur blur-single',id:'blur-'+obj.toString, cx:obj.x*xOffset, cy:obj.y*yOffset, filter: 'url(#fBlur)'})
 
   var parentCircle = draw.circle(rSingle*scale).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:obj.x*xOffset, cy:obj.y*yOffset});
@@ -46,7 +50,6 @@ function addSingleCircle(obj){
     dateP.innerHTML = obj.date;
     contentContainer.appendChild(dateP);
   }
-
 
   var appendContent = contentContainer.innerHTML;
 

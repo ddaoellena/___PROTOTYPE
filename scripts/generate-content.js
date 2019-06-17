@@ -17,6 +17,7 @@ function clearInfo(){
   for (var i = 0; i < targetDivs.length; i++) {
     targetDivs[i].innerHTML = '';
   }
+  $(".tag-container").remove();
 }
 
 function clearPlusInfo(){
@@ -92,6 +93,9 @@ function appendInfo(obj){
   }
   focusDiv.setAttribute("onclick", "addFocus("+obj.toString+")");
   $('#info-category').after(focusDiv);
+  if (typeof obj.tag !== "undefined") {
+    addTagTypo(obj, 0);
+  }
   $('#content-div').load("./assets/html/"+obj.folder+"/"+obj.html);
 }
 /* Plus div */
@@ -123,8 +127,9 @@ function appendPlusInfo(obj){
 
   focusDiv.setAttribute("onclick", "addFocus("+obj.toString+")");
   $('#plus-category-div').after(focusDiv);
-
-
+  if (typeof obj.tag !== "undefined") {
+    addTagTypo(obj, 1);
+  }
   $(".circle-span").after("&nbsp;");
   $('#plus-info-content').load("./assets/html/"+obj.folder+"/"+obj.htmlPlus);
 }
@@ -196,4 +201,30 @@ function addMaxHeightScroll(){
 
   var maxHeight = (plusInfoHeight-(plusHeaderHeight+plusParticipantsHeight+plusContentText+sourceLabel+50))*0.7;
   plusInfoSource.setAttribute('style', 'max-height:'+maxHeight+'px;');
+}
+
+function addTagTypo(obj, a){
+
+  var tagContainer = document.createElement("div");
+
+  var tagColor = document.createElement("div");
+  tagColor.setAttribute("class", "tag-color");
+  tagColor.style.backgroundColor = obj.color;
+  var tagP = document.createElement("p");
+  tagP.innerHTML = obj.tag;
+  tagP.setAttribute("class", "tag-label");
+  tagContainer.appendChild(tagColor);
+  tagContainer.appendChild(tagP);
+
+  switch (a) {
+    case 0:
+      tagContainer.setAttribute("class", "tag-container info");
+      $('#info-category').after(tagContainer);
+      break;
+    case 1:
+    tagContainer.setAttribute("class", "tag-container plus");
+      $('#plus-header').after(tagContainer);
+      break;
+    default:
+  }
 }

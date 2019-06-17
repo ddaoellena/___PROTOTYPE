@@ -30,7 +30,7 @@ var usa2016 = {
       children :[{type:3,id:5,link: 21}] //sandersStash
     }],
   x: 500,
-  y: 90,
+  y: 50,
   or: "right"
 }
 
@@ -57,7 +57,7 @@ var hwndu = {
     linkDetail : 13
   }],
   x: 600,
-  y: 90,
+  y: 50,
   or: "right"
 }
 
@@ -90,7 +90,7 @@ var fra2017= {
       children :[{type:3,id:0,link: 22}] //Risitas réappropriation
   }],
     x: 800,
-    y: 90,
+    y: 50,
     or: "right"
 }
 
@@ -102,7 +102,7 @@ var mediaLayoffs= {
   children : [
   ],
     x: 1560,
-    y: 90
+    y: 50
 }
 
 var usa2020= {
@@ -121,7 +121,7 @@ var usa2020= {
   },
     ],
     x: 2400,
-    y: 90,
+    y: 50,
     or: "down"
 }
 

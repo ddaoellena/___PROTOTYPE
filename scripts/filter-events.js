@@ -55,13 +55,14 @@ function displayFilterEvent(){
 function addFilterEvents(obj){
   $('.filter-svg-group').remove();
   translateTimeline(1);
-  var filterGroup = draw.group().attr({class:'filter-svg-group', id:'filter-svg-group'});
+  var timelineTarget = SVG.get('timeline-svg-group');
+  var filterGroup = timelineTarget.group().attr({class:'filter-svg-group', id:'filter-svg-group'});
   for (var i = 0; i < filteredObjects.length; i++) {
-    var filterCircle = draw.circle(1).attr({fill: "#FFFFFF", opacity:0.33, cx:filteredObjects[i].x*xOffset, cy:filteredObjects[i].y*yOffset+50*scale, class:'filter-svg-circle'});
-    var filterBlurCircle = draw.circle(1).attr({fill: obj.color, cx:filteredObjects[i].x*xOffset, cy:filteredObjects[i].y*yOffset+50*scale, class:'filter-svg-blur-circle', filter: 'url(#fBlurSmall)'});
+    var filterCircle = draw.circle(1).attr({fill: obj.color, opacity:1, cx:filteredObjects[i].x*xOffset, cy:filteredObjects[i].y*yOffset+50*scale, class:'filter-svg-circle'});
+    // var filterBlurCircle = draw.circle(1).attr({fill: obj.color, cx:filteredObjects[i].x*xOffset, cy:filteredObjects[i].y*yOffset+50*scale, class:'filter-svg-blur-circle', filter: 'url(#fBlurSmall)'});
     filterCircle.animate(400, '>', 0).attr({ r: 6*scale });
-    filterBlurCircle.animate(400, '>', 0).attr({ r: 6*scale })
-    filterGroup.add(filterCircle).add(filterBlurCircle);
+    // filterBlurCircle.animate(400, '>', 0).attr({ r: 6*scale })
+    filterGroup.add(filterCircle);
   }
 }
 
