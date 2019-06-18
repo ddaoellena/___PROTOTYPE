@@ -85,8 +85,6 @@ const mediasData = {
     {id:'4chan-node-46', parent:"4chan", size:'medium', type:'media', subType:'news',  name:"How the alt-right uses internet trolling to confuse you into dismissing its ideology", author:"Vox", link:'https://www.vox.com/2016/11/23/13659634/alt-right-trolling'},
     {id:'4chan-node-47', parent:"4chan", size:'medium', type:'media', subType:'news',  name:"Trump's Troll Army Is Having a Hard Time Voting", author:"Gizmodo", link:'https://gizmodo.com/trumps-troll-army-is-having-a-hard-time-voting-1788712609'},
     {id:'4chan-node-48', parent:"4chan", size:'medium', type:'media', subType:'news',  name:"The rise of 4chan politics", author:"TechCrunch", link:'https://techcrunch.com/2016/12/21/the-rise-of-4chan-politics/'},
-
-
     /* DISCORD */
     {id:'discord-node-1', parent:"discord", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"Discord insoumis", author:"Wikipedia", link:'https://fr.wikipedia.org/wiki/Discord_insoumis'},
     {id:'discord-node-2', parent:"discord", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"Un an dans l'intimité de la Taverne des Patriotes, repaire de militants nationalistes", author:"Slate", link:'http://www.slate.fr/story/165929/taverne-des-patriotes-election-presidentielle-2017-front-national-militants-extreme-droite-discord'},
@@ -101,7 +99,23 @@ const mediasData = {
     {id:'discord-node-11', parent:"discord", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"", author:"", link:''},
     {id:'discord-node-12', parent:"discord", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"", author:"", link:''},
     {id:'discord-node-13', parent:"discord", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"", author:"", link:''},
-
+    /* DISCORD */
+    {id:'jvc1825-node-1', parent:"jvc1825", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"VIDÉO - Marlène Schiappa sur jeuxvideo.com : \"Ce qui m'inquiète, ce sont les autres femmes qui sont harcelées sur le forum 18-25\"", author:"LCI", link:"https://www.lci.fr/societe/video-marlene-schiappa-sur-jeuxvideo-com-ce-qui-m-inquiete-ce-sont-les-autres-femmes-qui-sont-harcelees-sur-le-forum-18-25-2069489.html"},
+    {id:'jvc1825-node-2', parent:"jvc1825", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"Cyber-harcèlement : jeuxvideo.com, c'est quoi ce site dont les forums font polémique", author:"LCI", link:"https://www.lci.fr/societe/cyber-harcelement-trolls-jeuxvideo-com-blabla-18-25-nadia-daam-c-est-quoi-ce-site-dont-les-forums-font-polemique-2069311.html"},
+    {id:'jvc1825-node-3', parent:"jvc1825", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:" Cyberharcèlement organisé chez jeuxvideo.com : Marlène Schiappa interpelle Twitter et Webedia", author:"Numérama", link:" https://www.numerama.com/politique/303164-cyberharcelement-organise-chez-jeuxvideo-com-marlene-schiappa-interpelle-twitter-et-webedia.html"},
+    {id:'jvc1825-node-4', parent:"jvc1825", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"Affaire Nadia Daam: jeuxvideo.com a-t-il fait des progrès ?", author:"L’Express", link:" https://lexpansion.lexpress.fr/high-tech/jeuxvideo-com-ou-en-est-la-moderation-du-meilleur-pire-forum-du-net-francais_2060915.html"},
+    {id:'jvc1825-node-5', parent:"jvc1825", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"Jean-Luc Mélenchon : \"Discord Les Insoumis\", le collectif militant issu de jeuxvideo.com", author:"RTL", link:"https://www.rtl.fr/actu/politique/jean-luc-melenchon-jeuxvideo-com-discord-les-insoumis-le-collectif-militant-7787758186"},
+    {id:'jvc1825-node-6', parent:"jvc1825", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"Un seul utilisateur générait plus de 6 % des liens redirigeant vers des sites de « réinformation »", author:"Le Monde - Les Décodeurs", link:"https://www.lemonde.fr/les-decodeurs/article/2017/04/02/les-forums-de-jeuxvideo-com-fers-de-lance-de-la-campagne-de-marine-le-pen_5104551_4355770.html"},
+    {id:'jvc1825-node-7', parent:"jvc1825", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"Antisémitisme, homophobie, fanatisme : Jeuxvideo.com, la ruche à fiel", author:"L’Obs", link:" https://www.nouvelobs.com/medias/20150924.OBS6430/antisemitisme-homophobie-fanatisme-jeuxvideo-com-la-ruche-a-fiel.html"},
+    {id:'jvc1825-node-8', parent:"jvc1825", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:" Un faux foulard rouge se fait passer pour un organisateur de la manifestation à la télévision", author:"CNews", link:" https://www.cnews.fr/france/2019-01-29/un-faux-foulard-rouge-se-fait-passer-pour-un-organisateur-de-la-manifestation-la"},
+    {id:'jvc1825-node-9', parent:"jvc1825", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"Quand Florian Philippot utilise Risitas pour draguer la communauté de Jeuxvideo.com", author:"Les Inrockuptibles", link:"https://www.lesinrocks.com/2017/01/18/actualite/actualite/florian-philippot-utilise-risitas-draguer-communaute-de-jeuxvideo-com/"},
+    {id:'jvc1825-node-10', parent:"jvc1825", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"FLORIAN PHILIPPOT - PARLONS-EN #01 - TROMELIN", author:"Le Monde - Pixels", link:" https://www.lemonde.fr/pixels/article/2017/01/17/apres-jean-luc-melenchon-florian-phillippot-muliplie-les-clins-d-il-aux-forums-de-jeuxvideo-com_5064103_4408996.html"},
+    {id:'jvc1825-node-11', parent:"jvc1825", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"La troll de guerre des bataillons «antisystème»", author:"Libération", link:" https://www.liberation.fr/politiques/2017/03/20/la-troll-de-guerre-des-bataillons-antisysteme_1557137"},
+    {id:'jvc1825-node-12', parent:"jvc1825", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"A Issou, le harcèlement en ligne continue : tirons-en des leçons", author:"L’Obs", link:"https://www.nouvelobs.com/rue89/notre-epoque/20180222.OBS2590/a-issou-le-harcelement-en-ligne-continue-tirons-en-des-lecons.html"},
+    {id:'jvc1825-node-13', parent:"jvc1825", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"Le site Jeuxvideo.com va se plier au \"code de conduite\" de l'UE contre les discours haineux sur internet", author:"France TV Info", link:" https://www.francetvinfo.fr/internet/reseaux-sociaux/twitter/le-site-jeuxvideo-com-va-se-plier-au-code-de-conduite-de-l-ue-contre-les-discours-haineux-sur-internet_3174837.html"},
+    {id:'jvc1825-node-14', parent:"jvc1825", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"Deux membres du forum \"18-25\" de jeuxvideo.com condamnés à 6 mois de prison avec sursis pour avoir harcelé la journaliste Nadia Daam", author:"France TV Info", link:"https://www.francetvinfo.fr/societe/harcelement-sexuel/direct-harcelement-en-ligne-suivez-le-proces-des-internautes-qui-s-en-sont-pris-a-la-journaliste-nadia-daam_2831915.html"},
+    {id:'jvc1825-node-15', parent:"jvc1825", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"La nuit irréelle d'un député LREM sur Twitter", author:"L’Express", link:"https://www.lexpress.fr/actualite/politique/la-nuit-surrealiste-d-un-depute-lrem-sur-twitter_2055042.html"},
+    // {id:'jvc1825-node-12', parent:"jvc1825", size:'medium', type:'media', subType:'news', folder:'', imgPopUp:'', name:"", author:"", link:''},
     /* THE_DONALD */
     {id:'r-the-donald-node-1', parent:"r-the-donald", size:'medium', type:'media', subType:'news',  name:"\"The Great Meme War\" : comment les trolls de 4chan ont porté Trump au pouvoir", author:"Les Inrockuptibles", link:'https://www.lesinrocks.com/2017/03/28/medias/medias/the-great-meme-war-comment-les-trolls-de-4chan-ont-port%C3%A9-trump-au-pouvoir/'},
     {id:'r-the-donald-node-2', parent:"r-the-donald", size:'medium', type:'media', subType:'news',  name:"Reddit, 4Chan : la victoire de Trump, c’est la victoire des trolls", author:"L'Obs", link:'https://www.nouvelobs.com/rue89/rue89-sur-les-reseaux/20161109.RUE4199/reddit-4chan-la-victoire-de-trump-c-est-la-victoire-des-trolls.html'},
@@ -169,7 +183,7 @@ const mediasData = {
     {source:'4chan', target:'4chan-node-46', type:'neutral', weight:1},
     {source:'4chan', target:'4chan-node-47', type:'neutral', weight:1},
     {source:'4chan', target:'4chan-node-48', type:'neutral', weight:1},
-    /* 4CHAN to NODES */
+    /* DISCORD to NODES */
     {source:'discord', target:'discord-node-1', type:'neutral', weight:1},
     {source:'discord', target:'discord-node-2', type:'neutral', weight:1},
     {source:'discord', target:'discord-node-3', type:'neutral', weight:1},
@@ -183,6 +197,22 @@ const mediasData = {
     {source:'discord', target:'discord-node-11', type:'neutral', weight:1},
     {source:'discord', target:'discord-node-12', type:'neutral', weight:1},
     {source:'discord', target:'discord-node-13', type:'neutral', weight:1},
+    /* jvc1825 to NODES */
+    {source:'jvc1825', target:'jvc1825-node-1', type:'neutral', weight:1},
+    {source:'jvc1825', target:'jvc1825-node-2', type:'neutral', weight:1},
+    {source:'jvc1825', target:'jvc1825-node-3', type:'neutral', weight:1},
+    {source:'jvc1825', target:'jvc1825-node-4', type:'neutral', weight:1},
+    {source:'jvc1825', target:'jvc1825-node-5', type:'neutral', weight:1},
+    {source:'jvc1825', target:'jvc1825-node-6', type:'neutral', weight:1},
+    {source:'jvc1825', target:'jvc1825-node-7', type:'neutral', weight:1},
+    {source:'jvc1825', target:'jvc1825-node-8', type:'neutral', weight:1},
+    {source:'jvc1825', target:'jvc1825-node-9', type:'neutral', weight:1},
+    {source:'jvc1825', target:'jvc1825-node-10', type:'neutral', weight:1},
+    {source:'jvc1825', target:'jvc1825-node-11', type:'neutral', weight:1},
+    {source:'jvc1825', target:'jvc1825-node-12', type:'neutral', weight:1},
+    {source:'jvc1825', target:'jvc1825-node-13', type:'neutral', weight:1},
+    {source:'jvc1825', target:'jvc1825-node-14', type:'neutral', weight:1},
+    {source:'jvc1825', target:'jvc1825-node-15', type:'neutral', weight:1},
     /*  THE DONALD to NODES */
     {source:'r-the-donald', target:'r-the-donald-node-1', type:'neutral', weight:1},
     {source:'r-the-donald', target:'r-the-donald-node-2', type:'neutral', weight:1},

@@ -178,7 +178,7 @@ function addPlusCircle(obj, expand){
     firstLinkLine.stroke({ color: obj.children[i].linkColor, width: 1, linecap: 'round', opacity:opacityLink});
     // var firstLinkLineBlur = draw.line(obj.x, obj.y, obj.x+placeCircle(pos[i])[0], obj.y+placeCircle(pos[i])[1]);
     // firstLinkLineBlur.stroke({ color: obj.children[i].linkColor, width: 3, linecap: 'round', opacity:opacityLink/3});
-    var firstLinkCircle = plusDraw.circle(rLink).attr({class:'link-circle pointer '+ obj.children[i].linkClass, fill:'#C4C4C4', 'fill-opacity':"0.66", cx:x+(placeCircle(pos[i])[0]/2), cy:y+(placeCircle(pos[i])[1]/2), "onclick": "toggleAllCircles(); addPopUp(this); appendLinkInfo("+obj.children[i].linkToString+","+obj.children[i].linkDetailToString+");", "data-type":"link"});
+    var firstLinkCircle = plusDraw.circle(rLink).attr({class:'link-circle pointer '+ obj.children[i].linkClass, fill:'#C4C4C4', 'fill-opacity':"0.66", cx:x+(placeCircle(pos[i])[0]/2), cy:y+(placeCircle(pos[i])[1]/2), "onclick": "addPopUp(this); appendLinkInfo("+obj.children[i].linkToString+","+obj.children[i].linkDetailToString+");", "data-type":"link"});
     var firstLinkCircleBlur = plusDraw.circle(rLink*1.2).attr({class:'link-circle-blur', fill:obj.children[i].linkColor, 'fill-opacity':"1", cx:x+(placeCircle(pos[i])[0]/2), cy:y+(placeCircle(pos[i])[1]/2), filter: 'url(#fBlur)'});
     firstLinkGroup.add(firstLinkLine).add(firstLinkCircleBlur).add(firstLinkCircle);
     firstChildrenGroup.add(firstLinkGroup);
@@ -242,7 +242,7 @@ function addPlusCircle(obj, expand){
            var secondLinkGroup = plusDraw.group().attr({class:'generated link-group'});
            var secondLinkLine = plusDraw.line(childX, childY, childX+placeCircle(pos[i])[0]*secondDis, childY+placeCircle(pos[i])[1]*secondDis);
            secondLinkLine.stroke({ color: obj.children[i].children[j].linkColor, width: 1, linecap: 'round', opacity:opacityLink});
-           var secondLinkCircle = plusDraw.circle(rLink).attr({class:'link-circle pointer ' + classRotation[j] + ' '+ obj.children[i].children[j].linkClass, fill:'#C4C4C4','fill-opacity':"0.66", cx:childX+(placeCircle(pos[i])[0]/2)*0.75, cy:childY+(placeCircle(pos[i])[1]/2)*0.75, "onclick": "toggleAllCircles(); addPopUp(this); appendLinkInfo("+obj.children[i].children[j].linkToString+","+obj.children[i].children[j].linkDetailToString+")", "data-type":"link"});
+           var secondLinkCircle = plusDraw.circle(rLink).attr({class:'link-circle pointer ' + classRotation[j] + ' '+ obj.children[i].children[j].linkClass, fill:'#C4C4C4','fill-opacity':"0.66", cx:childX+(placeCircle(pos[i])[0]/2)*0.75, cy:childY+(placeCircle(pos[i])[1]/2)*0.75, "onclick": "addPopUp(this); appendLinkInfo("+obj.children[i].children[j].linkToString+","+obj.children[i].children[j].linkDetailToString+")", "data-type":"link"});
            var secondLinkCircleBlur = plusDraw.circle(rLink*1.2).attr({class:'link-circle-blur ' + classRotation[j] , fill:obj.children[i].children[j].linkColor,'fill-opacity':".75", cx:childX+(placeCircle(pos[i])[0]/2)*secondDis, cy:childY+(placeCircle(pos[i])[1]/2)*secondDis, filter: 'url(#fBlur)'});
 
            secondLinkGroup.add(secondLinkLine).add(secondLinkCircleBlur).add(secondLinkCircle);
