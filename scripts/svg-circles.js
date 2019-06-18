@@ -25,7 +25,7 @@ var imgVisibility = "visible";
 function addSingleCircle(obj){
   var timelineTarget = SVG.get('timeline-svg-group');
   // var wrapperGroup = draw.group().attr({class:'wrapper-group', id:obj.toString+'-group', onclick: 'toggleThisCircle(this)', 'data-id':obj.toString});
-  var parentGroup = timelineTarget.group().attr({id:obj.toString+'-single-parent',class:'circle circle-object '+obj.circleClass+' generated single pointer', 'onclick':'toggleCircle(this);'+'appendInfo('+obj.toString+');addPlusCircle('+obj.toString+', 1);appendPlusInfo('+obj.toString+')', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
+  var parentGroup = timelineTarget.group().attr({id:obj.toString+'-single-parent',class:'circle circle-object '+obj.circleClass+' generated single pointer', 'onclick':'addPlusCircle('+obj.toString+', 1);appendPlusInfo('+obj.toString+');turnOnSingleEventCircle(this);'});
   var parentBlur = draw.circle(rBlurSingle*scale).attr({fill:obj.color, class:'circle-blur blur-single',id:'blur-'+obj.toString, cx:obj.x*xOffset, cy:obj.y*yOffset, filter: 'url(#fBlur)'})
 
   var parentCircle = draw.circle(rSingle*scale).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:obj.x*xOffset, cy:obj.y*yOffset});
@@ -33,7 +33,7 @@ function addSingleCircle(obj){
   var circleClip = draw.circle(r*scale).attr({fill:'#FFFFFF', cx:obj.x*xOffset, cy:obj.y*yOffset});
   var parentClip = draw.clip().add(circleClip).attr({class:'clip-path'});
   var parentImage = draw.image('./assets/pics/'+obj.folder+'/'+obj.imgThumbnail, r*scale, r*scale);
-  parentImage.attr({class:'cirle-image', filter:'url(#fGray)'});
+  parentImage.attr({class:'cirle-image image-event-single', filter:''});
   parentImage.move(obj.x*xOffset-(r*scale)/2, obj.y*yOffset-(r*scale)/2);
   parentImage.clipWith(parentClip);
   parentGroup.add(parentBlur).add(parentCircle).add(parentImage);
@@ -111,7 +111,7 @@ function addPlusCircle(obj, expand){
   * Parent group
   */
   var wrapperGroup = plusDraw.group().attr({class:state+ ' wrapper-group', id:obj.toString+'-group', onclick: 'toggleThisCircle(this)', 'data-id':obj.toString});
-  var parentGroup = plusDraw.group().attr({id:obj.toString+'-parent',class:'circle '+obj.circleClass+' generated parent pointer '+stroke, 'onclick':'toggleCircle(this); appendInfo('+obj.toString+'); appendPlusInfo('+obj.toString+')', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
+  var parentGroup = plusDraw.group().attr({id:obj.toString+'-parent',class:'plus-circle '+obj.circleClass+' generated parent pointer '+stroke, 'onclick':'toggleCircle(this); appendInfo('+obj.toString+'); appendPlusInfo('+obj.toString+')', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)'});
   var parentBlur = plusDraw.circle(rBlur*scale).attr({fill:obj.color, class:'circle-blur', cx:x, cy:y, filter: 'url(#fBlur)'})
 
   var parentCircle = plusDraw.circle(r*scale).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:x, cy:y});
@@ -119,7 +119,7 @@ function addPlusCircle(obj, expand){
   var circleClip = plusDraw.circle(r*scale).attr({fill:'#FFFFFF', cx:x, cy:y});
   var parentClip = plusDraw.clip().add(circleClip).attr({class:'clip-path'});
   var parentImage = plusDraw.image('./assets/pics/'+obj.folder+'/'+obj.imgThumbnail, r*scale, r*scale);
-  parentImage.attr({class:'cirle-image', filter:'url(#fGray)'});
+  parentImage.attr({class:'cirle-image', filter:''});
   parentImage.move(x-r*scale/2, y-r*scale/2);
   parentImage.clipWith(parentClip);
   parentGroup.add(parentBlur).add(parentCircle).add(parentImage);
@@ -185,7 +185,7 @@ function addPlusCircle(obj, expand){
     /*
     * First children circle group
     */
-    var firstCircleGroup = plusDraw.group().attr({class:'circle '+obj.children[i].circleClass+' generated children pointer', id:'first-group-'+i, 'onclick':'toggleCircle(this); addPopUp(this);'+'appendInfo('+obj.children[i].toString+'); appendPlusInfo('+obj.children[i].toString+')', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)', "data-type":"group"});
+    var firstCircleGroup = plusDraw.group().attr({class:'plus-circle '+obj.children[i].circleClass+' generated children pointer', id:'first-group-'+i, 'onclick':'toggleCircle(this); addPopUp(this);'+'appendInfo('+obj.children[i].toString+'); appendPlusInfo('+obj.children[i].toString+')', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)', "data-type":"group"});
     var firstCircleGroupBlur = plusDraw.circle(rBlurFirst).attr({fill:obj.children[i].color, class:'circle-blur', cx:x+placeCircle(pos[i])[0], cy:y+placeCircle(pos[i])[1], filter: 'url(#fBlur)'});
     var firstCircle = plusDraw.circle(rFirst).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:x+placeCircle(pos[i])[0], cy:y+placeCircle(pos[i])[1]});
     /*create clip for images*/
@@ -248,7 +248,7 @@ function addPlusCircle(obj, expand){
            secondLinkGroup.add(secondLinkLine).add(secondLinkCircleBlur).add(secondLinkCircle);
            secondLinkGroup.rotate(rotation[j],childX,childY);
            secondChildrenGroup.add(secondLinkGroup);
-           var secondCircleGroup = plusDraw.group().attr({class:'circle '+obj.children[i].children[j].circleClass+' generated children pointer',id:"second-group-"+i+"-"+j,'onclick':'toggleCircle(this); addPopUp(this);'+'appendInfo('+obj.children[i].children[j].toString+');appendPlusInfo('+obj.children[i].children[j].toString+')', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)', "data-type":"group"});
+           var secondCircleGroup = plusDraw.group().attr({class:'plus-circle '+obj.children[i].children[j].circleClass+' generated children pointer',id:"second-group-"+i+"-"+j,'onclick':'toggleCircle(this); addPopUp(this);'+'appendInfo('+obj.children[i].children[j].toString+');appendPlusInfo('+obj.children[i].children[j].toString+')', 'onmouseenter':'colorOn(this)', 'onmouseleave':'colorOff(this)', "data-type":"group"});
            var secondCircleGroupBlur = plusDraw.circle(rBlurSecond).attr({fill:obj.children[i].children[j].color, cx:childX+placeCircle(pos[i])[0]*secondDis, cy:childY+placeCircle(pos[i])[1]*secondDis, filter:'url(#fBlur)'})
            var secondCircle = plusDraw.circle(rSecond).attr({fill:'#C4C4C4', 'fill-opacity':"0.7", cx:childX+placeCircle(pos[i])[0]*secondDis, cy:childY+placeCircle(pos[i])[1]*secondDis});
            /*create clip for images*/
@@ -330,4 +330,54 @@ function toggleThisCircle(el){
     default:
 
   }
+}
+
+/*
+* function toggleAllCircles()
+* remove active class from all circles
+* and make all pictures gray
+*/
+function toggleAllSingleCircles(a){
+var circleList = document.getElementsByClassName('circle');
+  switch (a) {
+    case 0:
+    for (var i = 0; i < circleList.length; i++) {
+      circleList[i].classList.remove('active');
+      circleList[i].setAttribute('stroke', '');
+      circleList[i].childNodes[0].setAttribute("filter", "0");
+      circleList[i].childNodes[2].setAttribute("filter", "url(#fGray)");
+    }
+    break;
+    case 1:
+    for (var i = 0; i < circleList.length; i++) {
+      circleList[i].classList.add('active');
+      circleList[i].setAttribute('stroke', '');
+      circleList[i].childNodes[0].setAttribute("filter", "url(#fBlur)");
+      circleList[i].childNodes[2].setAttribute("filter", "");
+    }
+    break;
+  default:
+ }
+}
+/*
+* function toggleAllCircles()
+* remove active class from all circles
+* and make all pictures gray
+*/
+function toggleAllPlusCircles(){
+var circleList = document.getElementsByClassName('plus-circle');
+ for (var i = 0; i < circleList.length; i++) {
+   circleList[i].classList.remove('active');
+   circleList[i].setAttribute('stroke', '');
+   circleList[i].childNodes[2].setAttribute("filter", "url(#fGray)");
+ }
+}
+
+function turnOnSingleEventCircle(el){
+  var singleEventCircles = document.getElementsByClassName("circle-object");
+  for (var i = 0; i < singleEventCircles.length; i++) {
+    singleEventCircles[i].childNodes[1].setAttribute('stroke-width', '0');
+  }
+  el.childNodes[1].setAttribute('stroke', '#83E1FF');
+  el.childNodes[1].setAttribute('stroke-width', '5');
 }

@@ -252,6 +252,27 @@ function toggleSwitchBtn(a){
     default:
   }
 }
+function appendSwitchLabel(a){
+  var switchLabel = document.getElementById('switch-label')
+  switch (a) {
+    case 0:
+      switchLabel.innerHTML = "";
+      switchLabel.classList.remove("active");
+      switchLabel.classList.add("inactive");
+      break;
+    case 1:
+      switchLabel.innerHTML = "Memes";
+      switchLabel.classList.remove("inactive");
+      switchLabel.classList.add("active");
+      break;
+    case 2:
+      switchLabel.innerHTML = "Sites";
+      switchLabel.classList.remove("inactive");
+      switchLabel.classList.add("active");
+      break;
+    default:
+  }
+}
 
 function toggleExpandBtn(a){
   var expandBtn = document.getElementById('expand-btn')
@@ -267,6 +288,5 @@ function toggleExpandBtn(a){
       expandBtn.classList.add("down");
       break;
     default:
-
   }
 }

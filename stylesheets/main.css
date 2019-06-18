@@ -249,6 +249,23 @@ p{
 .switch-btn.inactive{
   cursor: pointer;
 }
+.switch-label{
+  display: inline-block;
+  position: relative;
+  margin-left: 5px;
+  top: -5px;
+  opacity: 0;
+  -webkit-transition: opacity .3s ease 0s;
+  -moz-transition: opacity .3s ease 0s;
+  -o-transition: opacity .3s ease 0s;
+  transition: opacity .3s ease 0s;
+}
+.switch-label.active{
+  opacity: 1;
+}
+.switch-label.inactive{
+  opacity: 0;
+}
 .button-info{
   position: absolute;
   width: 40px;
@@ -318,27 +335,44 @@ p{
   color: rgb(255, 255, 255);
   line-height: 2em;
 }
-.focus-menu{
+.focus-menu, .tag-filter{
   width: auto;
   height: 40px;
   margin: 7.5px 0px 0 20px;
 }
-.focus-menu.wo-focus{
+.tag-filter{
+  display: inline-block;
+}
+.focus-menu.wo-focus, .tag-filter.wo-tag{
   display: none;
 }
-.focus-menu.w-focus{
+.focus-menu.w-focus .tag-filter.w-tag{
   display: inline-block;
 }
 .focus-img{
   display: inline-block;
   vertical-align: middle;
+  position: relative;
+  top: -2px;
 }
-.focus-text, .focus-label{
+.tag-container.tag-filter-div{
+  display: inline-block;
+  position: relative;
+  top: 0px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.tag-filter-text{
+  position: relative;
+  top: 2px;
+}
+
+.focus-text, .focus-label, .tag-filter-text{
   line-height: 30px;
   display: inline-block;
   vertical-align: middle;
 }
-.focus-text{
+.focus-text, .tag-filter-text{
   margin: -5px 5px 0px 5px;
   color: rgba(255,255,255, 0.33);
 }
@@ -351,14 +385,14 @@ p{
   vertical-align: middle;
   margin: -5px 10px 0px 5px;
 }
-.focus-remove-btn{
+.focus-remove-btn, .tag-filter-remove-btn{
   width: 15px;
   height: 15px;
   border: 1px solid rgb(255,255,255);
   border-radius: 30px;
   opacity: 0.33;
   display: inline-block;
-  margin-top: -5px;
+  margin-top: -3px;
   vertical-align: middle;
   -webkit-transition: opacity .2s ease 0s;
   -moz-transition: opacity .2s ease 0s;
@@ -368,7 +402,7 @@ p{
   background-repeat: no-repeat;
   background-position: center;
 }
-.focus-remove-btn:hover{
+.focus-remove-btn:hover, .tag-filter-remove-btn:hover{
   opacity: 1;
 }
 
@@ -662,6 +696,7 @@ pointer-events:auto;
   display: flex;
 }
 /* TAG DIV */
+
 .tag-container{
  position: relative;
  height: 1em;
@@ -670,6 +705,12 @@ pointer-events:auto;
  background-color: #C4C4C4;
  border-radius: 0.75em;
  top: -12.5%;
+ cursor: pointer;
+}
+.tag-container-div{
+  position: relative;
+  display: inline-block;
+  top: -5px;
 }
 .tag-container.info{
   margin-left: 10px;
@@ -698,6 +739,32 @@ pointer-events:auto;
   vertical-align: middle;
   line-height: 1em;
 }
+.add-tag-div{
+  display: inline-block;
+  cursor: pointer;
+  opacity: 0.33;
+  -webkit-transition: opacity 0.3s ease 0s;
+  -moz-transition: opacity 0.3s ease 0s;
+  -o-transition: opacity 0.3s ease 0s;
+  transition: opacity 0.3s ease 0s;
+}
+.add-tag-div:hover{
+  opacity: 1;
+}
+.add-tag-btn{
+  position: relative;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border: solid 1px rgb(255, 255, 255);
+  border-radius: 20px;
+  margin: 0px 5px 0px 5px;
+  top: 4px;
+  background-size: 50%;
+  background-image: url('../assets/pics/navigation/tag-filter.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
 /* EXPAND BUTTON */
 .expand-button{
   position: absolute;
@@ -713,6 +780,7 @@ pointer-events:auto;
 	margin: auto;
   background-repeat: no-repeat;
   background-position: center;
+  background-size: 66%;
   background-image: url('../assets/pics/navigation/expand-btn.svg');
   -moz-transition: transform 0.3s ease;
   -webkit-transition: transform 0.3s ease;

@@ -1,7 +1,9 @@
 function d3Init(table){
   svgReset();
   toggleInfoDiv(0);
+  removeTagFilter()
   toggleInterfaceEl(panSliderGroup, 0);
+  $("#menu-right-text").html("Zoom et légende&thinsp;:");
   if (table == peopleData) {
     toggleInterfaceEl(switchDiv,0);
     toggleInterfaceEl(plusSvgWrapper,1);
@@ -36,12 +38,15 @@ function d3Init(table){
 }
 var svg = d3.select("#main-svg");
 
+function resetD3Cursor(){
+  svg.style("cursor", "default");
+}
 
 function dragged(d) {
   d3.select("#d3-group").attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
 }
 var zoom = d3.zoom()
-  .scaleExtent([0.75, 1.25])
+  .scaleExtent([0.65, 1.35])
   .on("zoom", zoomed);
 
 var input = d3.select("#zoom-slider").datum({})
@@ -91,7 +96,8 @@ function run(graph) {
     }
 
   svg.attr("width", vw*2).attr("height", vh*2).attr("viewBox", '0 0 ' + vw*2 + " " + vh*2);
-  svg.style("cursor", "move").style("cursor", "grab");
+  svg.style("cursor", "grab");
+  svg.on("click", function(){if (d3.event.defaultPrevented) return;})
   svg.call(zoom).on("dblclick.zoom", null);
 
   var defs = d3.select("#main-svg-defs");
@@ -119,7 +125,7 @@ function run(graph) {
   var link = d3Group.append("g").attr("class", "link-group")
                 .selectAll("line")
                 .data(graph.links)
-                .enter().append("line");
+                .enter().append("line").style("cursor", "default");
 
   var nodeGroup = d3Group.append("g")
                      .attr("class", "node-group")
@@ -137,11 +143,14 @@ function run(graph) {
                             return "blur-circle "+ d.type+"-blur " + d.parent+"-blur"
                           }
                           else {
-                            return "blur-circle "+ d.type+"-blur"
+                            return "blur-circle "+ d.type+"-blur main-node-blur"
                           }
                         })
                         .attr("id", function(d){if (d.mainNode == true) {
                           return d.id+"-blur"
+                        }})
+                        .attr("data-tag", function(d){if(d.mainNode == true) {
+                          return window[d.objToString].tagClass + '-blur'
                         }})
                         .attr("r", 2)
 
@@ -163,13 +172,15 @@ function run(graph) {
                             return "pattern-circle "+ d.type+"-pattern pointer"
                           }
                         })
+                        .on("click", function(){if (d3.event.defaultPrevented) return;})
                         .attr("r", 2);
 
  var tooltip = d3.select("body")
                 .append("div")
-                .attr("class", "tooltip")
-                .html("");
+                .attr("class", "tooltip");
 
+ var tooltipText =  tooltip.append("p").attr("class", "tooltip-text tooltip-title").html("");
+ var tooltipLabel =  tooltip.append("p").attr("class", "tooltip-text tooltip-label").html("");
  var popUp = d3.select("body")
                 .append("div")
                 .attr("class", "big-pop-up-wrapper")
@@ -184,8 +195,51 @@ function run(graph) {
  var popUpImgDiv = popUp.append("div").attr("class", "big-pop-up-img-div");
  var popUpImg = popUpImgDiv.append("img").attr("class", "big-pop-up-img");
 
+ link.on("mouseover", function(d){
+        if (typeof d.linkDesc !== "undefined") {
+          tooltipText.html(d.linkDesc);
+          switch (d.type) {
+            case "neutral":
+              tooltipLabel.html("Lien neutre");
+              break;
+            case "bad":
+              tooltipLabel.html("Lien de conflit");
+              break;
+            case "good":
+              tooltipLabel.html("Lien d'intérêt");
+              break;
+            default:
+          }
+          d3.select(this).style("stroke-width", function(d){return d.weight*1}).attr('opacity', "1");
+          return tooltip.style("visibility", "visible");
+        }
+       })
+       .on("mousemove", function(){
+            return tooltip.style("left",(event.pageX+10)+"px").style("top", (event.pageY+10)+"px");
+        })
+       .on("mouseout", function(){
+         link.style("stroke-width", function(d){return d.weight*0.5}).attr('opacity', "0.25");
+         return tooltip.style("visibility", "hidden");
+         });
+
+
  patternNode.on("mouseover", function(d){
-        tooltip.html(d.author)
+        tooltipText.html(d.author);
+        switch (d.subType) {
+          case "news":
+            tooltipLabel.html("Article de presse");
+            break;
+          case "wiki":
+            tooltipLabel.html("");
+            break;
+          case "site":
+            tooltipLabel.html("Site internet");
+            break;
+          case "radio":
+            tooltipLabel.html("Émission radio");
+            break;
+          default:
+        }
         return tooltip.style("visibility", "visible");
        })
        .on("mousemove", function(){
@@ -200,6 +254,9 @@ function run(graph) {
                 .attr("clip-path",function(d){return "url('#circlepath-" + d.id +"')"})
                 .attr("id", function(d){return d.id+"-img"})
                 .attr("class", "image-node pointer")
+                .attr("data-tag", function(d){if(d.mainNode == true) {
+                  return window[d.objToString].tagClass + '-img'
+                }})
                 .call(d3.drag()
                   .on("start", dragstarted)
                   .on("drag", dragged)
@@ -207,10 +264,23 @@ function run(graph) {
 
   imgs.on("mouseover", function(d){
           if (typeof d.name !== "undefined") {
-            tooltip.html(d.name)
+            tooltipText.html(d.name);
+            switch (d.type) {
+              case "meme":
+                tooltipLabel.html("Meme");
+                break;
+              case "site":
+                tooltipLabel.html("Site");
+                break;
+              case "people":
+                tooltipLabel.html("Personnalité");
+                break;
+              default:
+            }
             return tooltip.style("visibility", "visible");
           }
         })
+        .on("click", function(){if (d3.event.defaultPrevented) return;})
         .on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
         .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
         .attr("data-id", function(d){return d.id})
@@ -396,9 +466,9 @@ function run(graph) {
     imgs
        .attr("onclick", function(d){if (typeof d.objToString !== "undefined") {
          if (d.type == "people") {
-            return "addPlusCircle("+d.objToString+", 1);appendPlusInfo("+d.objToString+");displayLinks(this);"
+            return "addPlusCircle("+d.objToString+", 1);appendPlusInfo("+d.objToString+");displayLinks(this); turnOffD3Div();"
          } else {
-            return "toggleInfoDiv(1);appendInfo("+d.objToString+");displayLinks(this);"
+            return "toggleInfoDiv(1);appendInfo("+d.objToString+");displayLinks(this); turnOffD3Div();"
          }
         }
        })

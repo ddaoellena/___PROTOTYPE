@@ -16,6 +16,10 @@
     <!-- MENUS -->
     <div class="menu-top shadow-bottom" id="menu-top">
       <p class="menu-top-text title-text">Explorateur de memes Internet</p>
+      <div class="tag-filter wo-tag " id="tag-filter">
+        <p class="tag-filter-text" id="tag-filter-text">Filtre</p>
+        <div class="tag-filter-remove-btn pointer" id="tag-filter-remove-btn" onclick="removeTagFilter()"></div>
+      </div>
       <div class="focus-menu wo-focus pointer" id="focus-menu">
         <p class="focus-text" id="focus-text">Focus</p>
         <div class="focus-img" id="focus-img"></div>
@@ -37,12 +41,13 @@
       </div>
     </div>
     <div class="switch-div hidden" id="switch-div">
-      <div class="switch-btn switch-btn-memes active" id="switch-btn-memes" onclick="toggleSwitchBtn(0);"></div>
-      <div class="switch-btn switch-btn-medias inactive" id="switch-btn-medias" onclick="toggleSwitchBtn(1); d3Init(mediasData);"></div>
+      <div class="switch-btn switch-btn-memes active" id="switch-btn-memes" onclick="toggleSwitchBtn(0);" onmouseover="appendSwitchLabel(1);" onmouseout="appendSwitchLabel(0);"></div>
+      <div class="switch-btn switch-btn-medias inactive" id="switch-btn-medias" onclick="toggleSwitchBtn(1); d3Init(mediasData);" onmouseover="appendSwitchLabel(2);" onmouseout="appendSwitchLabel(0);"></div>
+      <p class="switch-label" id="switch-label"></p>
     </div>
     <!-- MENU RIGHT -->
     <div class="menu menu-right nav-elems" id="menu-right">
-      <p class="menu-text menu-left-text">Outils et légende&thinsp;:</p>
+      <p class="menu-text menu-right-text" id="menu-right-text">Zoom et légende&thinsp;:</p>
       <div class="zoom-slider-wrapper nav-elems" id="zoom-slider-wrapper">
         <input class="slider zoom-slider" id='zoom-slider'>
       </div>
@@ -133,6 +138,7 @@
   <script src="./scripts/tooltip.js" charset="utf-8"></script>
   <script src="./scripts/filter-events.js" charset="utf-8"></script>
   <script src="./scripts/filter-d3.js" charset="utf-8"></script>
+  <script src="./scripts/filter-tag.js" charset="utf-8"></script>
   <script src="./scripts/focus.js" charset="utf-8"></script>
   <script src="./scripts/init.js" charset="utf-8"></script>
 

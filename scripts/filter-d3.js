@@ -32,6 +32,7 @@ function filterObjD3(obj){
 
 function turnOnD3ParentCircle(obj){ //turn on parent node if focus is same type
   turnOffAllD3Circles(0);
+  toggleFilterGroup(0);
   document.getElementById(obj.nodeClass+'-img').setAttribute("opacity", "1");
   document.getElementById(obj.nodeClass+'-img').setAttribute("filter", "");
   document.getElementById(obj.nodeClass+'-blur').setAttribute('opacity', '1'); //blur circle of parent
@@ -101,9 +102,12 @@ function addFilterD3Circle(obj){
       var groupToToggle = document.getElementsByClassName('filter-group-'+filteredD3[i]);
       turnOnD3ParentCircleFocus(filteredD3[i]);
       for (var j = 0; j < groupToToggle.length; j++) {
-        groupToToggle[j].childNodes[0].style.fill = obj.color; //set Color Blur;
+        groupToToggle[j].childNodes[0].style.fill = obj.color;
+        groupToToggle[j].childNodes[0].setAttribute("fill-opacity", "0.5");
+        groupToToggle[j].childNodes[0].setAttribute("stroke-width", "1");
+        groupToToggle[j].childNodes[0].setAttribute("stroke", obj.color);
         groupToToggle[j].style.visibility= "visible";
-      }      // groupToToggle.childNodes[2].setAttribute("href", "./assets/pics/"+obj.folder+"/"+obj.imgThumbnail); // setImg
+      }
 
   }
 }

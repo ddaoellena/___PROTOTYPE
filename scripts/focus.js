@@ -17,10 +17,21 @@ function updateFocus(foc){
       case "events":
         if (foc.type !== 1) {
           addToFilterEvent(foc);
+          turnOnFilteredEvents();
+        } else {
+          emptyFilterEvent();
+          focusEventOnEvents(foc);
         }
       break;
       case "people":
         if (foc.type == 2) {
+          turnOnD3ParentCircle(foc);
+        } else {
+          addToFilterD3(foc);
+        }
+      break;
+      case "medias":
+        if (foc.type == 3) {
           turnOnD3ParentCircle(foc);
         } else {
           addToFilterD3(foc);
@@ -35,6 +46,7 @@ function addFocus(obj){
   console.log(obj);
   toggleFocusMenu(1);
   addToFocusDiv(obj);
+  removeTagFilter();
   currentFocus = obj.toString;
   updateFocus(window[currentFocus]);
   console.log(currentFocus);

@@ -91,6 +91,7 @@ function svgReset(){
 
 function drawTimeline(l){
   svgReset();
+  resetD3Cursor();
   draw.size(vw, vh).viewbox(0,0,vw,vh);
   var timelineGroup = draw.group().attr({class:'timeline-svg-group', id:'timeline-svg-group'});
   var dotGroup = timelineGroup.group().attr({class:'grid dot-grid', id:'timeline-dot-grid'});
@@ -131,12 +132,14 @@ function addAllCircles(type){
   toggleZoomSlider(0);
   cleanCircles();
   cleanD3();
+  removeTagFilter();
   turnOffLabels();
   togglePlusSvg(0);
   removePopUp();
   toggleInterfaceEl(switchDiv,0);
   drawTimeline(coorSq);
   setTimlinePos();
+  $("#menu-right-text").html("Légende&thinsp;:");
   switch (type) {
     case allEvents:
       toggleInterfaceEl(panSliderGroup, 1);
@@ -164,25 +167,13 @@ function cleanSvg(){
     mainSvgChildren[i].remove();
   }
 }
-/*
-* function toggleAllCircles()
-* remove active class from all circles
-* and make all pictures gray
-*/
-function toggleAllCircles(){
-var circleList = document.getElementsByClassName('circle');
- for (var i = 0; i < circleList.length; i++) {
-   circleList[i].classList.remove('active');
-   circleList[i].setAttribute('stroke', '');
-   circleList[i].childNodes[2].setAttribute("filter", "url(#fGray)");
- }
-}
+
 /*
 * function toggleCircle()
 * add active class to the targeted circles and add stroke
 */
 function toggleCircle(el){
-  toggleAllCircles();
+  toggleAllPlusCircles();
 
   el.classList.toggle('active');
 

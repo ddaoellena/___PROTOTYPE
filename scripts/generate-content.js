@@ -18,13 +18,14 @@ function clearInfo(){
     targetDivs[i].innerHTML = '';
   }
   $(".tag-container").remove();
+  $(".add-tag-div").remove();
 }
 
 function clearPlusInfo(){
   for (var i = 0; i < targetPlusDivs.length; i++) {
     targetPlusDivs[i].innerHTML = '';
   }
-  $('#expand-button-plus').remove();
+  $(".tag-container").remove();
   $('#add-focus-div').remove();
 }
 
@@ -204,27 +205,44 @@ function addMaxHeightScroll(){
 }
 
 function addTagTypo(obj, a){
-
+  var tagContainerDiv = document.createElement("div");
   var tagContainer = document.createElement("div");
-
   var tagColor = document.createElement("div");
   tagColor.setAttribute("class", "tag-color");
   tagColor.style.backgroundColor = obj.color;
   var tagP = document.createElement("p");
   tagP.innerHTML = obj.tag;
-  tagP.setAttribute("class", "tag-label");
   tagContainer.appendChild(tagColor);
   tagContainer.appendChild(tagP);
+  var addFilterDiv = document.createElement("div");
+  addFilterDiv.setAttribute("class", "add-tag-div");
+  var addFilterBtn = document.createElement("div");
+  addFilterBtn.setAttribute("class", "add-tag-btn");
+  addFilterDiv.appendChild(addFilterBtn);
 
   switch (a) {
     case 0:
+      tagContainerDiv.setAttribute("class", "tag-container-div");
+      tagContainerDiv.setAttribute("id", "tag-container-div");
       tagContainer.setAttribute("class", "tag-container info");
-      $('#info-category').after(tagContainer);
+      addFilterDiv.setAttribute("onclick", "addTagFilter("+obj.toString+")");
+      tagP.setAttribute("class", "tag-label");
+      tagContainerDiv.appendChild(tagContainer)
+      tagContainerDiv.appendChild(addFilterDiv);
+      $('#info-category').after(tagContainerDiv);
       break;
     case 1:
-    tagContainer.setAttribute("class", "tag-container plus");
+      tagContainer.setAttribute("class", "tag-container plus");
+      tagContainer.setAttribute("id", "tag-container-plus");
+      tagP.setAttribute("class", "tag-label");
       $('#plus-header').after(tagContainer);
       break;
+    case 2:
+      tagContainer.setAttribute("class", "tag-container tag-filter-div");
+      tagContainer.setAttribute("id", "tag-container-filter");
+      tagP.setAttribute("class", "tag-label tag-label-filter");
+      $('#tag-filter-text').after(tagContainer);
+    break;
     default:
   }
 }

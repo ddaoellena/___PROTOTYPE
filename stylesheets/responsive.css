@@ -29,6 +29,7 @@
   .menu-square, .button-info{
     height: 50px;
     width: 50px;
+    background-size: 30px;
   }
   .button-events{
     margin: 8px 0 8px 0;
@@ -44,9 +45,23 @@
   .menu-left{
     left: 15px;
   }
+  .switch-div{
+    height: 50px;
+    top: 97px;
+    left: 75px;
+  }
+  .switch-btn{
+    height: 50px;
+    width: 50px;
+  }
+  .switch-label{
+    font-size: 1em;
+    top: -18px;
+  }
   .menu-right{
     right: 15px;
   }
+
   .button-info.with-zoom{
     top: 215px;
   }
@@ -70,5 +85,8 @@
   .focus-remove-btn{
     height: 20px;
     width: 20px;
+  }
+  .plus-svg{
+    top: 1px;
   }
 }

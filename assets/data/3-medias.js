@@ -1,32 +1,50 @@
 var fourChan = {
   name : "4chan",
   toString : "fourChan",
-  id :0
+  nodeClass : "4chan",
+  id :0,
+  tag: "Plateforme",
+  tagClass: "plateforme"
 }
 var reddit = {
   name : "Reddit",
   toString : "reddit",
-  id :1
+  nodeClass : "reddit",
+  id :1,
+  tag: "Plateforme",
+  tagClass: "plateforme"
 }
 var discord = {
   name : "Discord",
   toString : "discord",
-  id :2
+  nodeClass : "discord",
+  id :2,
+  tag: "Plateforme",
+  tagClass: "plateforme"
 }
 var jvc1825 = {
   name : "Forum 18-25 Jeuvideo.com",
   toString : "jvc1825",
-  id :3
+  nodeClass : "jvc1825",
+  id :3,
+  tag: "Forum",
+  tagClass: "forum"
 }
 var rTheDonald = {
   name : "/r/The_Donald",
   toString : "rTheDonald",
-  id :4
+  nodeClass : "r-the-donald",
+  id :4,
+  tag: "Forum",
+  tagClass: "forum"
 }
 var sandersStash = {
   name : "Bernie Sanders' Dank Meme Stash",
   toString : "sandersStash",
-  id :5
+  nodeClass : "sanders-stash",
+  id :5,
+  tag: "Forum",
+  tagClass: "forum"
 }
 
 var allMedias = [fourChan, reddit, discord, jvc1825, rTheDonald, sandersStash];

@@ -18,7 +18,7 @@ function addProperties(table){
     case allEvents:
       tableType = 1,
       tableFolder = "1-events";
-      color = '#60F5FF';
+      color = '#83E1FF';
       circleClass = 'event-circle';
       break;
     case allPeople:
