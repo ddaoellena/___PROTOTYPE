@@ -34,17 +34,18 @@
   -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
-  z-index: 10;
+  z-index: 1000;
 }
 .big-pop-up-title-div{
   display: inline-block;
-  margin: 0px 10px 10px 0px;
+  margin: 0px 10px 5px 0px;
   float: left;
+  height: 80%;
 }
 .big-pop-up-title{
   hyphens: auto;
   font-size: 0.9em;
-  line-height: 1.2em;
+  line-height: 1.5em;
 }
 .big-pop-up-author-div{
   margin: 0px 0px 10px 0px;

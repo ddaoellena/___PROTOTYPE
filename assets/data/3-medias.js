@@ -46,5 +46,12 @@ var sandersStash = {
   tag: "Forum",
   tagClass: "forum"
 }
-
-var allMedias = [fourChan, reddit, discord, jvc1825, rTheDonald, sandersStash];
+var twitter = {
+  name : "Twitter",
+  toString : "twitter",
+  nodeClass : "twitter",
+  id :6,
+  tag: "Plateforme",
+  tagClass: "plateforme"
+}
+var allMedias = [fourChan, reddit, discord, jvc1825, rTheDonald, sandersStash, twitter];

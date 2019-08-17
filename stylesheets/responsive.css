@@ -31,6 +31,9 @@
     width: 50px;
     background-size: 30px;
   }
+  .highlight-box{
+    box-shadow: inset 1px 1px 1px rgba(255, 255, 255, .4), inset -1px -1px 1px rgba(0, 0, 0, .4);
+  }
   .button-events{
     margin: 8px 0 8px 0;
   }
@@ -51,12 +54,12 @@
     left: 75px;
   }
   .switch-btn{
-    height: 50px;
-    width: 50px;
+    height: 35px;
+    width: 35px;
   }
   .switch-label{
     font-size: 1em;
-    top: -18px;
+    top: -5px;
   }
   .menu-right{
     right: 15px;
@@ -88,5 +91,14 @@
   }
   .plus-svg{
     top: 1px;
+  }
+  .tag-filter{
+    height: 50px;
+  }
+  .tag-filter-text{
+    line-height: 43px;
+  }
+  .title-div{
+    margin: 20px 15px 25px 15px
   }
 }

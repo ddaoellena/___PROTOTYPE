@@ -3,7 +3,7 @@ d3.select("#timeline-svg-group").call(d3.drag()
 
 function panTimeline(d){
    var timeline = document.querySelector('#timeline-svg-group');
-   timeline.style.transform = "translate(" + -d*12 + "px, " + topOffset + "px)";
+   timeline.style.transform = "translate(" + -d*14.8 + "px, " + topOffset + "px)";
    // console.log(d)
 }
 

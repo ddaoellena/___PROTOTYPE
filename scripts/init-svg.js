@@ -57,7 +57,7 @@ mainSvgDefs.innerHTML = filterBlur + filterBlurSmall + filterGray;
 var cw = cw;
 var ch = ch;
 var topOffset = menuTop.getBoundingClientRect().height;
-var viewWidth = vw*2;
+var viewWidth = vw*2.5;
 var scale;
 var disScale, xOffset, yOffset, dSquare, coorSq, r;
 
@@ -108,7 +108,7 @@ function drawTimeline(l){
     }
   }
   /* Labels timeline */
-  var dateOff = 5*l;
+  var dateOff = 15*l;
   for (var x = l; x < viewWidth; x+=l) {
     var line = draw.line(0, 0, 0, l).move(x, tlHeight);
     line.stroke({color: '#BFBFBF', width : 1});

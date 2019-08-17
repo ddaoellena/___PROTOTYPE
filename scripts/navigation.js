@@ -209,18 +209,18 @@ function togglePlusSvg(a){
 }
 
 function toggleTypeInfo(a){
-  var infoRessources = document.getElementById('info-ressources-div');
+  var infoDescription = document.getElementById('info-description-div');
   var infoGallery = document.getElementById('info-gallery-div');
   var infoTypes = document.getElementsByClassName('info-type');
   switch (a) {
     case 0:
       infoGallery.classList.remove("active");
-      infoRessources.classList.add("active");
+      infoDescription.classList.add("active");
       infoTypes[1].classList.remove("active");
       infoTypes[0].classList.add("active");
       break;
     case 1:
-      infoRessources.classList.remove("active");
+      infoDescription.classList.remove("active");
       infoGallery.classList.add("active");
       infoTypes[0].classList.remove("active");
       infoTypes[1].classList.add("active");

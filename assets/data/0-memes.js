@@ -51,7 +51,7 @@ var npcMeme = {
   tagClass: "personnage"
 }
 var honker = {
-  name : "Honker",
+  name : "Honkler/Clown World",
   toString : "honker",
   id :6,
   nodeClass: "honker",
@@ -155,5 +155,13 @@ var article13Meme = {
   tag: "Symbole",
   tagClass: "symbole"
 }
+var hashtag = {
+  name : "Hashtag",
+  toString : "hashtag",
+  id :19,
+  nodeClass: "hashtag",
+  tag: "Symbole",
+  tagClass: "symbole"
+}
 var allMemes= [pepe, godEmperor, yangGang, pizzagate, risitas, npcMeme, honker,
-    okSymbol, macronGate, subscribePewdiepie, maga, australian, wojak, echoes, milk, removeKebab, learnToCode, jawad, article13Meme];
+    okSymbol, macronGate, subscribePewdiepie, maga, australian, wojak, echoes, milk, removeKebab, learnToCode, jawad, article13Meme, hashtag];

@@ -46,9 +46,7 @@ var hillaryClinton = {
     link : 0,
     linkDetail: 0
   }
-  ],
-
-  or : "down"
+  ]
 }
 
 var andrewYang = {
@@ -83,9 +81,7 @@ var shiaLaboeuf = {
   id:4,
   tag: "Médiatique",
   children: [
-  ],
-  x:580,
-  y:160
+  ]
 }
 
 var marineLePen={
@@ -95,9 +91,7 @@ var marineLePen={
   id:5,
   tag: "Politique",
   children: [
-  ],
-  x:1080,
-  y:80
+  ]
 }
 
 var jeanLucMelenchon={
@@ -107,9 +101,7 @@ var jeanLucMelenchon={
   id:6,
   tag: "Politique",
   children: [
-  ],
-  x:320,
-  y:80
+  ]
 }
 
 var florianPhilippot={
@@ -119,27 +111,50 @@ var florianPhilippot={
   id:7,
   tag: "Politique",
   children: [
-  ],
-  x:1080,
-  y:160
+  ]
 }
-
 var emmanuelMacron={
   name : "Emmanuel Macron",
   toString : "emmanuelMacron",
   nodeClass: "emmanuel-macron",
   tag: "Politique",
   id:8,
-  relatedMemes : [],
-  relatedEvents: [],
   children: [
-  ],
-  x:580,
-  y:80
+  ]
+}
+
+var jawadBendaoud={
+  name : "Jawad Bendaoud",
+  toString : "jawadBendaoud",
+  nodeClass: "jawad-bendaoud",
+  tag: "Médiatique",
+  id:9,
+  children: [
+  ]
+}
+
+var sargon={
+  name : "Sargon of Akkad",
+  toString : "sargon",
+  nodeClass: "sargon",
+  tag: "Politique",
+  id:11,
+  children: [
+  ]
+}
+
+var sargon={
+  name : "Sargon of Akkad",
+  toString : "sargon",
+  nodeClass: "sargon",
+  tag: "Politique",
+  id:11,
+  children: [
+  ]
 }
 
 var allPeople = [
   //USA
   donaldTrump, hillaryClinton, andrewYang, bernieSanders, shiaLaboeuf,
   //France
-  marineLePen, jeanLucMelenchon, florianPhilippot, emmanuelMacron];
+  marineLePen, jeanLucMelenchon, florianPhilippot, emmanuelMacron, jawadBendaoud, sargon];

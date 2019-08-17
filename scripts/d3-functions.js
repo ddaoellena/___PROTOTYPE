@@ -73,6 +73,7 @@ function resetD3Zoom(){
 // function reset
 function run(graph) {
   var radius = 28;
+  var radiusLarge = 20;
   var radiusMed = 15;
   var radiusS = 10;
 
@@ -99,7 +100,6 @@ function run(graph) {
   svg.style("cursor", "grab");
   svg.on("click", function(){if (d3.event.defaultPrevented) return;})
   svg.call(zoom).on("dblclick.zoom", null);
-
   var defs = d3.select("#main-svg-defs");
 
   var newsPattern = defs.append("pattern").attr("width", 1).attr("height", 1).attr('id', 'news-icon');
@@ -113,7 +113,9 @@ function run(graph) {
   var radioPattern = defs.append("pattern").attr("width", 1).attr("height", 1).attr('id', 'radio-icon');
   var radioImage = radioPattern.append("image").attr('href', './assets/pics/navigation/radio.svg').attr('height', radiusMed*1.5).attr('width', radiusMed*1.5).attr('x', radiusMed/4).attr('y', radiusMed/4);
 
-  var popUpCurtain = svg.append("rect").attr("width", vw).attr("height", vh).attr('class', 'big-pop-up-curtain').attr('id', 'big-pop-up-curtain').attr('onclick','turnOffD3Div(); turnOffLinks(); toggleInfoDiv(0);');
+  var popUpCurtain = svg.append("rect").attr("width", vw).attr("height", vh).attr('class', 'big-pop-up-curtain').attr('id', 'big-pop-up-curtain')
+                        .attr('onclick','turnOffD3Div(); turnOffLinks(); toggleInfoDiv(0);');
+
   var circlePaths = svg.selectAll('clipPaths')
                       .data(graph.nodes.filter(function(d){return typeof d.img !== "undefined";})).enter()
                       .append('clipPath')
@@ -171,8 +173,8 @@ function run(graph) {
                           } else {
                             return "pattern-circle "+ d.type+"-pattern pointer"
                           }
-                        })
-                        .on("click", function(){if (d3.event.defaultPrevented) return;})
+                        }).on('mousedown.drag', null)
+                        // .on("click", function(){if (d3.event.defaultPrevented) return;})
                         .attr("r", 2);
 
  var tooltip = d3.select("body")
@@ -316,6 +318,9 @@ function run(graph) {
             case "big":
                return radius
               break;
+            case "large":
+               return radiusLarge
+              break;
             case "medium":
                return radiusMed
               break;
@@ -360,6 +365,9 @@ function run(graph) {
           case "big":
              return radius+radius/10
             break;
+          case "large":
+             return radiusLarge
+            break;
           case "medium":
              return radiusMed
             break;
@@ -395,6 +403,9 @@ function run(graph) {
          switch (d.size) {
            case "big":
               return radius
+             break;
+           case "large":
+              return radiusLarge
              break;
            case "medium":
               return radiusMed
@@ -482,6 +493,9 @@ function run(graph) {
            case "big":
              return radius*2
              break;
+           case "large":
+             return radiusLarge*2;
+             break;
            case "medium":
              return radiusMed*2
              break;
@@ -495,6 +509,9 @@ function run(graph) {
          switch (d.size) {
            case "big":
              return radius*2
+             break;
+           case "large":
+             return radiusLarge*2;
              break;
            case "medium":
              return radiusMed*2
@@ -510,6 +527,9 @@ function run(graph) {
            case "big":
              return d.x-radius+5;
              break;
+           case "large":
+             return d.x-radiusLarge+5;
+             break;
            case "medium":
             return d.x-radiusMed+5;
              break;
@@ -523,6 +543,9 @@ function run(graph) {
          switch (d.size) {
            case "big":
              return d.y-radius-3;
+             break;
+           case "large":
+             return d.y-radiusLarge-3;
              break;
            case "medium":
             return d.y-radiusMed-3;
